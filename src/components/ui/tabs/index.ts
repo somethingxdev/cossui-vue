@@ -1,0 +1,6 @@
+export { default as Tabs } from './Tabs.vue'
+export { default as TabsList } from './TabsList.vue'
+export { default as TabsContent, default as TabsPanel } from './TabsPanel.vue'
+export { default as TabsTab, default as TabsTrigger } from './TabsTab.vue'
+export type { TabsSize, TabsVariant } from './variants'
+export { Tabs as TabsPrimitive } from '@vase-ui/vue/tabs'

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>coss ui for Vue</title>
+    <meta name="description" content="The accessible components of coss ui, ported to Vue and built on Vase UI." />
+    <script>
+      // Applies the saved theme before the first paint, with the storage key of VueUse useDark.
+      try {
+        const mode = localStorage.getItem('vueuse-color-scheme') || 'auto'
+        const dark = mode === 'dark' || (mode === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.toggle('dark', dark)
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

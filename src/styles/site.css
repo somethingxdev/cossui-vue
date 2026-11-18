@@ -1,0 +1,66 @@
+@import './globals.css';
+
+@font-face {
+  font-family: 'Cal Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/CalSansVF.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Cal Sans';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/CalSansVF-Italic.woff2') format('woff2');
+}
+
+@theme {
+  --font-sans: 'Cal Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+}
+
+/* The site swaps the neutral coss accent for Vue green. Dark text keeps buttons readable on it. */
+:root {
+  --primary: #42b883;
+  --primary-foreground: #052e1d;
+  --ring: #42b883;
+  --brand: #2c8a5f;
+}
+
+.dark {
+  --primary: #42b883;
+  --primary-foreground: #052e1d;
+  --ring: #42b883;
+  --brand: #42b883;
+}
+
+@utility container {
+  @apply mx-auto max-w-[1416px] px-4 lg:px-6;
+}
+
+@layer base {
+  body {
+    @apply bg-sidebar;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-brand) 24%, transparent);
+  }
+}
+
+@layer components {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-light);
+  }
+
+  .dark .shiki,
+  .dark .shiki span {
+    color: var(--shiki-dark);
+  }
+}

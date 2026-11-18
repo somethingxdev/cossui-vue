@@ -1,0 +1,28 @@
+import { Combobox as ComboboxPrimitive } from '@vase-ui/vue/combobox'
+
+export { default as Combobox } from './Combobox.vue'
+export { default as ComboboxChip } from './ComboboxChip.vue'
+export { default as ComboboxChipRemove } from './ComboboxChipRemove.vue'
+export { default as ComboboxChips } from './ComboboxChips.vue'
+export { default as ComboboxChipsInput } from './ComboboxChipsInput.vue'
+export { default as ComboboxClear } from './ComboboxClear.vue'
+export { default as ComboboxEmpty } from './ComboboxEmpty.vue'
+export { default as ComboboxGroup } from './ComboboxGroup.vue'
+export { default as ComboboxGroupLabel } from './ComboboxGroupLabel.vue'
+export { default as ComboboxInput } from './ComboboxInput.vue'
+export { default as ComboboxItem } from './ComboboxItem.vue'
+export { default as ComboboxList } from './ComboboxList.vue'
+export { default as ComboboxPopup } from './ComboboxPopup.vue'
+export { default as ComboboxRow } from './ComboboxRow.vue'
+export { default as ComboboxSeparator } from './ComboboxSeparator.vue'
+export { default as ComboboxStatus } from './ComboboxStatus.vue'
+export { default as ComboboxTrigger } from './ComboboxTrigger.vue'
+export { ComboboxContext } from './context'
+export type { ComboboxContextValue } from './context'
+export { ComboboxCollection, ComboboxValue } from '@vase-ui/vue/combobox'
+
+export const createComboboxItems = ComboboxPrimitive.createItems
+
+export const useComboboxFilter = ComboboxPrimitive.useFilter
+
+export { ComboboxPrimitive }
