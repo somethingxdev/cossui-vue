@@ -1,13 +1,20 @@
 import type { Component } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
+export interface ComponentPage {
+  default: Component
+  /** The example shown above Installation, from the frontmatter. */
+  preview?: string
+}
+
 export interface SourceFile {
   name: string
   code: string
 }
 
-const demos = import.meta.glob<Component>('../demos/*Demo.vue', { import: 'default' })
-const demoSources = import.meta.glob<string>('../demos/*Demo.vue', { query: '?raw', import: 'default' })
+const examples = import.meta.glob<Component>('../examples/*.vue', { import: 'default' })
+const exampleSources = import.meta.glob<string>('../examples/*.vue', { query: '?raw', import: 'default' })
+const pages = import.meta.glob<ComponentPage>('../content/components/*.md')
 const componentSources = import.meta.glob<string>('../components/ui/*/*.{vue,ts}', { query: '?raw', import: 'default' })
 
 const KNOWN_DEPENDENCIES = [
@@ -17,18 +24,19 @@ const KNOWN_DEPENDENCIES = [
   '@vueuse/core',
 ]
 
-function demoPath(slug: string): string {
-  const pascal = slug.replace(/(?:^|-)([a-z])/g, (_, letter: string) => letter.toUpperCase())
-  return `../demos/${pascal}Demo.vue`
-}
-
-export function getDemo(slug: string): Component | undefined {
-  const load = demos[demoPath(slug)]
+/** An example from `src/examples`, such as `button-1`. */
+export function getExample(name: string): Component | undefined {
+  const load = examples[`../examples/${name}.vue`]
   return load && defineAsyncComponent(load)
 }
 
-export async function loadDemoSource(slug: string): Promise<string> {
-  return (await demoSources[demoPath(slug)]?.()) ?? ''
+export async function loadExampleSource(name: string): Promise<string> {
+  return (await exampleSources[`../examples/${name}.vue`]?.()) ?? ''
+}
+
+/** The markdown page of a component, from `src/content/components`. */
+export async function loadComponentPage(slug: string): Promise<ComponentPage | undefined> {
+  return pages[`../content/components/${slug}.md`]?.()
 }
 
 export async function loadComponentFiles(slug: string): Promise<SourceFile[]> {
@@ -38,16 +46,6 @@ export async function loadComponentFiles(slug: string): Promise<SourceFile[]> {
     name: path.slice(prefix.length),
     code: await load(),
   })))
-}
-
-export function exportedNames(files: SourceFile[]): string[] {
-  const index = files.find(file => file.name === 'index.ts')?.code ?? ''
-  const names = [
-    ...index.matchAll(/^export \{([^}]+)\}/gm),
-  ].flatMap(([, list]) =>
-    list!.split(',').map(item => item.trim().split(/\s+as\s+/).pop()!),
-  )
-  return names.filter(name => /^[A-Z]/.test(name) && !name.endsWith('Primitive'))
 }
 
 /** Other components of this library that the files import, such as `button`. */

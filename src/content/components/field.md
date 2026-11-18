@@ -1,0 +1,134 @@
+---
+preview: field-1
+---
+
+## Usage
+
+```ts
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  FieldValidity,
+} from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+```
+
+```vue
+<Field>
+  <FieldLabel>Name</FieldLabel>
+  <Input type="text" placeholder="Enter your name" />
+  <FieldDescription>Visible on your profile</FieldDescription>
+  <FieldError>Please enter a valid name</FieldError>
+  <FieldValidity v-slot="validity">
+    <p v-if="validity.error">
+      {{ validity.error }}
+    </p>
+  </FieldValidity>
+</Field>
+```
+
+## API Reference
+
+### Field
+
+Root component. Styled wrapper for `Field.Root` from Vase UI with flex column layout.
+
+### FieldLabel
+
+Label for the field. Styled wrapper for `Field.Label` from Vase UI.
+
+### FieldItem
+
+Container for field items. Styled wrapper for `Field.Item` from Vase UI.
+
+### FieldDescription
+
+Description text for the field. Styled wrapper for `Field.Description` from Vase UI with muted foreground color.
+
+### FieldError
+
+Error message for the field. Styled wrapper for `Field.Error` from Vase UI with destructive foreground color. Without a default slot it shows the native validation message; the default slot receives the field `state`.
+
+### FieldControl
+
+Alias for `Field.Control` from Vase UI. Use this to register a custom or third-party control with the field context so it participates in labelling, validation, and error state.
+
+Note that `Textarea` does not require `FieldControl`: it wraps `Field.Control` internally and integrates with `Field` the same way `Input` and other built-in controls do.
+
+### FieldValidity
+
+Alias for `Field.Validity` from Vase UI. Its default slot receives the field validity state.
+
+## Examples
+
+### Required Field
+
+<ComponentPreview name="field-2" />
+
+### Disabled Field
+
+<ComponentPreview name="field-3" />
+
+### With Error
+
+Enter an invalid email address and press enter to see the error.
+
+<ComponentPreview name="field-4" />
+
+### With Validity
+
+<ComponentPreview name="field-5" />
+
+### Input Group
+
+<ComponentPreview name="field-6" />
+
+### Autocomplete Field
+
+<ComponentPreview name="field-7" />
+
+### Combobox Field
+
+<ComponentPreview name="field-8" />
+
+### Combobox Multiple Field
+
+<ComponentPreview name="field-9" />
+
+### Textarea Field
+
+<ComponentPreview name="field-10" />
+
+### Select Field
+
+<ComponentPreview name="field-11" />
+
+### Checkbox Field
+
+<ComponentPreview name="field-12" />
+
+### Checkbox Group Field
+
+<ComponentPreview name="field-13" />
+
+### Radio Group Field
+
+<ComponentPreview name="field-14" />
+
+### Switch Field
+
+<ComponentPreview name="field-15" />
+
+### Slider Field
+
+<ComponentPreview name="field-16" />
+
+### Number Field
+
+<ComponentPreview name="field-17" />
+
+### Complete Form Example
+
+<ComponentPreview name="field-18" />
