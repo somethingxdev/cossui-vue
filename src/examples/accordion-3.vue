@@ -10,9 +10,9 @@ import {
 <template>
   <Accordion class="w-full" multiple>
     <AccordionItem value="item-1">
-      <AccordionTrigger>What is Vase UI?</AccordionTrigger>
+      <AccordionTrigger>What is UI SDK?</AccordionTrigger>
       <AccordionPanel>
-        Vase UI is a library of high-quality unstyled Vue components for
+        UI SDK is a library of high-quality unstyled Vue components for
         design systems and web apps.
       </AccordionPanel>
     </AccordionItem>
@@ -26,7 +26,7 @@ import {
     <AccordionItem value="item-3">
       <AccordionTrigger>Can I use it for my project?</AccordionTrigger>
       <AccordionPanel>
-        Of course! Vase UI is free and open source.
+        Of course! UI SDK is free and open source.
       </AccordionPanel>
     </AccordionItem>
   </Accordion>

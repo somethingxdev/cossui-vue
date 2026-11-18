@@ -18,7 +18,7 @@ type Item = (typeof items)[number]
 </script>
 
 <template>
-  <Select :default-value="items[0]" :item-to-string-value="(item: Item) => item.value">
+  <Select :default-value="items[0]" :item-to-value="(item: Item) => item.value">
     <SelectTrigger aria-label="Select framework with command" class="py-1">
       <SelectValue v-slot="{ value: item }">
         <span class="flex flex-col">

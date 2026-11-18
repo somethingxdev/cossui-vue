@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { ComboboxListProps } from '@vase-ui/vue/combobox'
 import type { HTMLAttributes } from 'vue'
-import { Combobox as ComboboxPrimitive } from '@vase-ui/vue/combobox'
+import * as ComboboxPrimitive from '@ui-sdk/vue/combobox'
 import { cn } from '../../../lib/utils'
 import { ScrollArea } from '../scroll-area'
+
+type ComboboxListProps = InstanceType<typeof ComboboxPrimitive.ComboboxList>['$props']
 
 interface Props extends /* @vue-ignore */ ComboboxListProps {
   class?: HTMLAttributes['class']
@@ -13,20 +14,30 @@ defineOptions({ inheritAttrs: false })
 
 const props = defineProps<Props>()
 
-// The `item` slot is forwarded only when given: the part renders the filtered items when it has one.
+defineSlots<{
+  default?: () => any
+  // Called once per visible entry of the root's `items`: an item, a group or a separator.
+  item?: (props: { item: any }) => any
+}>()
 </script>
 
 <template>
-  <ScrollArea overscroll-contain scrollbar-gutter scroll-fade>
-    <ComboboxPrimitive.List
+  <!-- The popup only has a max height, so the viewport's `h-full` resolves to nothing: it shrinks as a flex item instead. -->
+  <ScrollArea
+    class="flex flex-col *:data-[slot=scroll-area-viewport]:min-h-0"
+    overscroll-contain
+    scrollbar-gutter
+    scroll-fade
+  >
+    <ComboboxPrimitive.ComboboxList
+      v-slot="{ state }"
       v-bind="$attrs"
-      data-slot="combobox-list"
-      :class="cn('not-empty:scroll-py-1 not-empty:px-1 not-empty:py-1 in-data-has-overflow-y:pe-3', props.class)"
+      :class="cn('not-empty:scroll-py-1 not-empty:px-1 not-empty:py-1 in-data-overflow-y:pe-3', props.class)"
     >
-      <template v-if="$slots.item" #item="slotProps">
-        <slot name="item" v-bind="slotProps" />
+      <template v-if="$slots.item">
+        <slot v-for="item in state.items" name="item" :item="item" />
       </template>
       <slot />
-    </ComboboxPrimitive.List>
+    </ComboboxPrimitive.ComboboxList>
   </ScrollArea>
 </template>

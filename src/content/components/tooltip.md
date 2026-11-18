@@ -6,10 +6,9 @@ preview: tooltip-1
 
 ```ts
 import {
+  createTooltipController,
   Tooltip,
-  TooltipCreateHandle,
   TooltipPopup,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 ```
@@ -27,49 +26,46 @@ import {
 
 ### Tooltip
 
-Root component. Alias for `Tooltip.Root` from Vase UI. Supports `v-model:open` and `default-open`.
+Root component. Alias for `Tooltip` from UI SDK. Supports `v-model:open`, `default-open`, `delay` and `close-delay`. See the [UI SDK Tooltip docs](https://ui-sdk.dev/docs/components/tooltip) for every prop and event.
 
 ### TooltipTrigger
 
-Trigger element that shows the tooltip on hover/focus. Alias for `Tooltip.Trigger` from Vase UI. Use the `as` prop to render it as another component.
+Trigger element that shows the tooltip on hover/focus. Wrapper for `TooltipTrigger` from UI SDK. Use the `as` prop to render it as another component.
 
 ### TooltipPopup
 
-Popup container that displays the tooltip content. Also exported as `TooltipContent`.
+Popup container that displays the tooltip content. Styled wrapper for `TooltipContent` from UI SDK, which renders in the browser's top layer and positions itself, so there is no portal or positioner. Also exported as `TooltipContent`. Its default slot receives `{ state }`; `state.payload` is the payload of the trigger that opened it.
 
-| Prop           | Type                                     | Default    | Description                                                                                               |
-| -------------- | ---------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------- |
-| `side`         | `"top" \| "bottom" \| "left" \| "right"` | `"top"`    | Side of the trigger to position the tooltip                                                               |
-| `align`        | `"start" \| "center" \| "end"`           | `"center"` | Alignment relative to the trigger                                                                         |
-| `side-offset`  | `number`                                 | `4`        | Distance from the trigger in pixels                                                                       |
-| `anchor`       | `Element \| VirtualElement \| ...`       | -          | Element to position the tooltip against, instead of the trigger                                           |
-| `portal-props` | `TooltipPortalProps`                     | -          | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Tooltip portal API |
+| Prop          | Type                                                         | Default    | Description                                                                        |
+| ------------- | ------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------- |
+| `side`        | `"top" \| "bottom" \| "left" \| "right" \| "start" \| "end"` | `"top"`    | Side of the trigger to position the tooltip                                        |
+| `align`       | `"start" \| "center" \| "end"`                               | `"center"` | Alignment relative to the trigger                                                  |
+| `side-offset` | `number`                                                     | `4`        | Distance from the trigger in pixels                                                |
+| `anchor`      | `Element \| string \| { x, y } \| ...`                       | -          | Element, selector or point to position the tooltip against, instead of the trigger |
 
-### TooltipProvider
+Other `TooltipContent` props from UI SDK, such as `align-offset`, `collision-padding` and `container`, are forwarded.
 
-Provider for grouping tooltips. Alias for `Tooltip.Provider` from Vase UI.
+### createTooltipController
 
-### TooltipCreateHandle
-
-Creates a handle for detached tooltip triggers. Returns a handle object to attach to multiple triggers for animated transitions.
+Creates a controller for detached tooltip triggers, from UI SDK. Pass it as `controller` to the `Tooltip` and to triggers elsewhere in the tree.
 
 ## Examples
 
 ### Grouped Tooltips
 
-To group multiple tooltips so they appear instantly after the first one is opened, wrap them in `TooltipProvider`. The grouping logic ensures that once a tooltip becomes visible, the adjacent tooltips will be shown instantly.
+Tooltips group on their own, without a provider. Once a tooltip is open, or was a moment ago, the adjacent tooltips are shown instantly.
 
 <ComponentPreview name="tooltip-2" />
 
-### Animated Tooltips
+### Detached Triggers
 
-You can create animated tooltips that smoothly transition between different triggers using detached triggers. This pattern allows multiple triggers to share a single tooltip popup, with automatic animations for position, size, and content changes.
+Multiple triggers can share a single tooltip popup. The popup moves to the trigger that opened it and shows that trigger's content.
 
 To create detached triggers:
 
-1. Create a handle using `TooltipCreateHandle`
-2. Attach the same handle to multiple `TooltipTrigger` components
+1. Create a controller using `createTooltipController`
+2. Pass it as `controller` to multiple `TooltipTrigger` components
 3. Each trigger provides a `payload` prop identifying the content to show
-4. Use a single `Tooltip` component with the handle and read `payload` from its default slot to render the popup
+4. Use a single `Tooltip` component with the same `controller`, and read `state.payload` from the default slot of `TooltipPopup`
 
 <ComponentPreview name="tooltip-3" />

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { ToggleProps } from '@vase-ui/vue/toggle'
 import type { HTMLAttributes } from 'vue'
 import type { ToggleVariants } from './variants'
-import { Toggle as TogglePrimitive } from '@vase-ui/vue/toggle'
+import * as TogglePrimitive from '@ui-sdk/vue/toggle'
 import { cn } from '../../../lib/utils'
 import { toggleVariants } from './variants'
+
+type ToggleProps = InstanceType<typeof TogglePrimitive.Toggle>['$props']
 
 interface Props extends /* @vue-ignore */ ToggleProps {
   variant?: ToggleVariants['variant']
@@ -16,10 +17,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <TogglePrimitive
-    data-slot="toggle"
-    :class="cn(toggleVariants({ variant: props.variant, size: props.size }), props.class)"
-  >
+  <TogglePrimitive.Toggle :class="cn(toggleVariants({ variant: props.variant, size: props.size }), props.class)">
     <slot />
-  </TogglePrimitive>
+  </TogglePrimitive.Toggle>
 </template>

@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { AccordionRootProps } from '@vase-ui/vue/accordion'
-import { Accordion as AccordionPrimitive } from '@vase-ui/vue/accordion'
+import * as AccordionPrimitive from '@ui-sdk/vue/accordion'
 
-interface Props extends /* @vue-ignore */ AccordionRootProps {}
+type AccordionProps = InstanceType<typeof AccordionPrimitive.Accordion>['$props']
+
+interface Props extends /* @vue-ignore */ AccordionProps {}
 
 defineProps<Props>()
 </script>
 
 <template>
-  <AccordionPrimitive.Root data-slot="accordion">
+  <AccordionPrimitive.Accordion>
     <slot />
-  </AccordionPrimitive.Root>
+  </AccordionPrimitive.Accordion>
 </template>

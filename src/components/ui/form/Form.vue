@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import type { FormProps } from '@vase-ui/vue/form'
-import { Form as FormPrimitive } from '@vase-ui/vue/form'
+import type { FormHTMLAttributes } from 'vue'
+import { provide } from 'vue'
 
-interface Props extends /* @vue-ignore */ FormProps {}
+interface Props extends /* @vue-ignore */ FormHTMLAttributes {
+  errors?: Record<string, string | string[]>
+}
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+// A string key, so Field reads the errors without importing this component.
+provide('form-errors', () => props.errors)
 </script>
 
 <template>
-  <FormPrimitive data-slot="form">
+  <form data-slot="form">
     <slot />
-  </FormPrimitive>
+  </form>
 </template>

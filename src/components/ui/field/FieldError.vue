@@ -1,24 +1,27 @@
 <script setup lang="ts">
-import type { FieldErrorProps } from '@vase-ui/vue/field'
-import type { HTMLAttributes } from 'vue'
-import { Field as FieldPrimitive } from '@vase-ui/vue/field'
+import type { HTMLAttributes, Ref } from 'vue'
+import * as FieldPrimitive from '@ui-sdk/vue/field'
+import { inject } from 'vue'
 import { cn } from '../../../lib/utils'
+
+type FieldErrorProps = InstanceType<typeof FieldPrimitive.FieldError>['$props']
 
 interface Props extends /* @vue-ignore */ FieldErrorProps {
   class?: HTMLAttributes['class']
 }
 
 const props = defineProps<Props>()
+
+const error = inject<Ref<string | undefined> | undefined>('field-error', undefined)
 </script>
 
 <template>
-  <FieldPrimitive.Error
-    data-slot="field-error"
-    :class="cn('text-destructive-foreground text-xs', props.class)"
-  >
-    <!-- The part shows the native message only when it gets no default slot. -->
-    <template v-if="$slots.default" #default="{ state }">
-      <slot :state="state" />
+  <FieldPrimitive.FieldError :class="cn('text-destructive-foreground text-xs', props.class)">
+    <!-- The part shows the browser's message only when it gets no default slot. -->
+    <template v-if="$slots.default || error" #default="{ state }">
+      <slot :state="state">
+        {{ error }}
+      </slot>
     </template>
-  </FieldPrimitive.Error>
+  </FieldPrimitive.FieldError>
 </template>

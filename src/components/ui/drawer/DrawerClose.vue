@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { DrawerCloseProps } from '@vase-ui/vue/drawer'
-import { Drawer as DrawerPrimitive } from '@vase-ui/vue/drawer'
+import type { Component } from 'vue'
+import * as DrawerPrimitive from '@ui-sdk/vue/drawer'
 
-interface Props extends /* @vue-ignore */ DrawerCloseProps {}
+type DrawerCloseProps = InstanceType<typeof DrawerPrimitive.DrawerClose>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ DrawerCloseProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <DrawerPrimitive.Close data-slot="drawer-close">
-    <slot />
-  </DrawerPrimitive.Close>
+  <DrawerPrimitive.DrawerClose>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </DrawerPrimitive.DrawerClose>
 </template>

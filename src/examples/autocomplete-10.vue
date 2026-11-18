@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   Autocomplete,
-  AutocompleteCollection,
   AutocompleteEmpty,
   AutocompleteGroup,
   AutocompleteGroupLabel,
@@ -80,21 +79,19 @@ const groupedTags: TagGroup[] = groupTags(tagsData)
 </script>
 
 <template>
-  <Autocomplete :items="groupedTags">
+  <Autocomplete>
     <div class="flex flex-col items-start gap-2">
       <AutocompleteInput aria-label="Search tags" placeholder="e.g. feature" />
     </div>
     <AutocompletePopup>
       <AutocompleteEmpty>No tags found.</AutocompleteEmpty>
       <AutocompleteList>
-        <template #item="{ item: group }: { item: TagGroup }">
-          <AutocompleteGroup :key="group.value" :items="group.items">
+        <template v-for="group in groupedTags" :key="group.value">
+          <AutocompleteGroup>
             <AutocompleteGroupLabel>{{ group.value }}</AutocompleteGroupLabel>
-            <AutocompleteCollection v-slot="{ item: tag }: { item: Tag }">
-              <AutocompleteItem :key="tag.id" :value="tag">
-                {{ tag.label }}
-              </AutocompleteItem>
-            </AutocompleteCollection>
+            <AutocompleteItem v-for="tag in group.items" :key="tag.id" :value="tag.id">
+              {{ tag.label }}
+            </AutocompleteItem>
           </AutocompleteGroup>
           <AutocompleteSeparator v-if="group.value !== 'Team'" />
         </template>

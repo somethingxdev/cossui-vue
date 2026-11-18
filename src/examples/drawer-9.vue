@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SnapPoint } from '@ui-sdk/vue/drawer'
 import { shallowRef } from 'vue'
 import { Button } from '../components/ui/button'
 import {
@@ -11,8 +12,8 @@ import {
   DrawerTrigger,
 } from '../components/ui/drawer'
 
-const snapPoints = ['300px', 1]
-const snapPoint = shallowRef<string | number | null>(snapPoints[0])
+const snapPoints: SnapPoint[] = ['300px', 1]
+const snapPoint = shallowRef<SnapPoint | null>(snapPoints[0])
 </script>
 
 <template>
@@ -20,7 +21,6 @@ const snapPoint = shallowRef<string | number | null>(snapPoints[0])
     v-model:snap-point="snapPoint"
     position="bottom"
     :snap-points="snapPoints"
-    snap-to-sequential-points
   >
     <DrawerTrigger :as="Button" variant="outline">
       With snap points

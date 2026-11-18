@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CircleAlertIcon, CircleCheckIcon, InfoIcon, LoaderCircleIcon, TriangleAlertIcon } from '@lucide/vue'
-import { Toast as ToastPrimitive } from '@vase-ui/vue/toast'
+import * as ToastPrimitive from '@ui-sdk/vue/toast'
 import { computed } from 'vue'
 import { buttonVariants } from '../button'
 
@@ -32,9 +32,9 @@ const icon = computed(() => TOAST_ICONS[props.type as keyof typeof TOAST_ICONS])
       />
     </div>
     <div class="flex flex-col gap-0.5">
-      <ToastPrimitive.Title class="font-medium" data-slot="toast-title" />
-      <ToastPrimitive.Description class="text-muted-foreground" data-slot="toast-description" />
+      <ToastPrimitive.ToastTitle class="font-medium" />
+      <ToastPrimitive.ToastDescription class="text-muted-foreground" />
     </div>
   </div>
-  <ToastPrimitive.Action :class="buttonVariants({ size: 'xs' })" data-slot="toast-action" />
+  <ToastPrimitive.ToastAction :class="buttonVariants({ size: 'xs' })" />
 </template>

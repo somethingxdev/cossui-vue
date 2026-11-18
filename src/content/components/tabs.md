@@ -25,21 +25,21 @@ import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs'
 
 ### Tabs
 
-Root component. Styled wrapper for `Tabs.Root` from Vase UI.
+Root component. Styled wrapper for `Tabs` from UI SDK.
 
 | Prop            | Type                         | Default        | Description                                     |
 | --------------- | ---------------------------- | -------------- | ----------------------------------------------- |
-| `default-value` | `any`                        | `0`            | The tab that is active initially (uncontrolled) |
-| `v-model:value` | `any`                        | -              | The active tab (controlled)                     |
+| `default-value` | `string \| null`             | first tab      | The tab that is active initially (uncontrolled) |
+| `v-model:value` | `string \| null`             | -              | The active tab (controlled)                     |
 | `orientation`   | `"horizontal" \| "vertical"` | `"horizontal"` | The layout direction of the tabs                |
 
-| Event          | Payload                 | Description                                           |
-| -------------- | ----------------------- | ----------------------------------------------------- |
-| `value-change` | `(value, eventDetails)` | Fired when the active tab changes, with event details |
+| Event          | Payload            | Description                                           |
+| -------------- | ------------------ | ----------------------------------------------------- |
+| `value-change` | `(value, details)` | Fired when the active tab changes, with event details |
 
 ### TabsList
 
-Container for tab triggers. Styled wrapper for `Tabs.List` from Vase UI. It also renders the active tab indicator (`Tabs.Indicator`).
+Container for tab triggers. Styled wrapper for `TabsList` from UI SDK. It also renders the active tab indicator (`TabsIndicator`).
 
 | Prop      | Type                        | Default     | Description                         |
 | --------- | --------------------------- | ----------- | ----------------------------------- |
@@ -48,20 +48,20 @@ Container for tab triggers. Styled wrapper for `Tabs.List` from Vase UI. It also
 
 ### TabsTab
 
-Individual tab trigger. Styled wrapper for `Tabs.Tab` from Vase UI. Also exported as `TabsTrigger`.
+Individual tab trigger. Styled wrapper for `TabsTab` from UI SDK. The active tab has `data-selected`. Also exported as `TabsTrigger`.
 
 | Prop    | Type                        | Default | Description                                   |
 | ------- | --------------------------- | ------- | --------------------------------------------- |
-| `value` | `any`                       | -       | The value that identifies this tab (required) |
+| `value` | `string`                    | -       | The value that identifies this tab (required) |
 | `size`  | `"sm" \| "default" \| "lg"` | -       | Overrides the size inherited from `TabsList`  |
 
 ### TabsPanel
 
-Content panel for each tab. Styled wrapper for `Tabs.Panel` from Vase UI. Also exported as `TabsContent`.
+Content panel for each tab. Styled wrapper for `TabsPanel` from UI SDK. Also exported as `TabsContent`.
 
-| Prop    | Type  | Default | Description                                           |
-| ------- | ----- | ------- | ----------------------------------------------------- |
-| `value` | `any` | -       | The value of the tab this panel belongs to (required) |
+| Prop    | Type     | Default | Description                                           |
+| ------- | -------- | ------- | ----------------------------------------------------- |
+| `value` | `string` | -       | The value of the tab this panel belongs to (required) |
 
 ## Examples
 

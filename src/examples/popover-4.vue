@@ -14,11 +14,10 @@ import { Popover, PopoverPopup, PopoverTrigger } from '../components/ui/popover'
       type="password"
     />
     <div class="absolute inset-y-0 end-0 flex items-center pe-1.5">
-      <Popover>
+      <Popover open-on-hover>
         <PopoverTrigger
           :as="Button"
           aria-label="Password requirements"
-          open-on-hover
           size="icon-xs"
           variant="ghost"
         >

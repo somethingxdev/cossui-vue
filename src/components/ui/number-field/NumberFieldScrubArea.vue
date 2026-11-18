@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { NumberFieldScrubAreaProps } from '@vase-ui/vue/number-field'
 import type { HTMLAttributes } from 'vue'
-import { NumberField as NumberFieldPrimitive } from '@vase-ui/vue/number-field'
+import * as NumberFieldPrimitive from '@ui-sdk/vue/number-input'
 import { inject } from 'vue'
 import { cn } from '../../../lib/utils'
 import { Label } from '../label'
 import { NumberFieldContext } from './context'
 import CursorGrowIcon from './CursorGrowIcon.vue'
+
+type NumberFieldScrubAreaProps = InstanceType<typeof NumberFieldPrimitive.NumberInputScrubArea>['$props']
 
 interface Props extends /* @vue-ignore */ NumberFieldScrubAreaProps {
   label: string
@@ -25,15 +26,12 @@ const { fieldId } = context
 </script>
 
 <template>
-  <NumberFieldPrimitive.ScrubArea
-    data-slot="number-field-scrub-area"
-    :class="cn('flex cursor-ew-resize', props.class)"
-  >
+  <NumberFieldPrimitive.NumberInputScrubArea :class="cn('flex cursor-ew-resize', props.class)">
     <Label class="cursor-ew-resize" :for="fieldId">
       {{ props.label }}
     </Label>
-    <NumberFieldPrimitive.ScrubAreaCursor class="drop-shadow-[0_1px_1px_#0008] filter">
+    <NumberFieldPrimitive.NumberInputScrubAreaCursor class="drop-shadow-[0_1px_1px_#0008] filter">
       <CursorGrowIcon />
-    </NumberFieldPrimitive.ScrubAreaCursor>
-  </NumberFieldPrimitive.ScrubArea>
+    </NumberFieldPrimitive.NumberInputScrubAreaCursor>
+  </NumberFieldPrimitive.NumberInputScrubArea>
 </template>

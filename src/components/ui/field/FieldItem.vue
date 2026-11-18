@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { FieldItemProps } from '@vase-ui/vue/field'
 import type { HTMLAttributes } from 'vue'
-import { Field as FieldPrimitive } from '@vase-ui/vue/field'
+import * as FieldPrimitive from '@ui-sdk/vue/field'
 import { cn } from '../../../lib/utils'
 
-interface Props extends /* @vue-ignore */ FieldItemProps {
+type FieldProps = InstanceType<typeof FieldPrimitive.Field>['$props']
+
+interface Props extends /* @vue-ignore */ FieldProps {
   class?: HTMLAttributes['class']
 }
 
@@ -12,7 +13,8 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <FieldPrimitive.Item data-slot="field-item" :class="cn('flex', props.class)">
+  <!-- A field of its own, so a FieldLabel inside names this item's control and not the group around it. -->
+  <FieldPrimitive.Field :class="cn('flex', props.class)">
     <slot />
-  </FieldPrimitive.Item>
+  </FieldPrimitive.Field>
 </template>

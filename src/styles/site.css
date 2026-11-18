@@ -67,6 +67,7 @@
 
 /* Markdown docs pages (src/content), matching the coss docs typography. */
 @layer components {
+  /* The prose rules stop at examples and at popups, which render in place in the top layer. */
   .docs-prose {
     @apply flex flex-col;
 
@@ -74,44 +75,44 @@
       @apply mt-0;
     }
 
-    & h2 {
+    & h2:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply mt-12 mb-4 scroll-m-20 font-heading font-semibold text-xl;
     }
 
-    & h3 {
+    & h3:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply mt-8 mb-4 scroll-m-20 font-heading font-semibold text-lg;
     }
 
-    & p {
+    & p:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply my-4 text-muted-foreground leading-relaxed;
     }
 
-    & ul {
+    & ul:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply my-4 ml-6 list-disc text-muted-foreground [&>li]:mt-2;
     }
 
-    & a {
+    & a:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply font-medium text-foreground underline underline-offset-4;
     }
 
-    & :not(pre) > code {
+    & :not(pre) > code:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply rounded-md bg-muted px-1.5 py-0.5 font-mono text-foreground text-sm;
     }
 
-    & table {
+    & table:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply my-4 w-full overflow-hidden text-sm;
     }
 
-    & th,
-    & td {
+    & th:not(:where([popover], [popover] *, [data-slot='preview'] *)),
+    & td:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply border-b px-3 py-2 text-left align-top;
     }
 
-    & th {
+    & th:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply font-medium;
     }
 
-    & td {
+    & td:not(:where([popover], [popover] *, [data-slot='preview'] *)) {
       @apply text-muted-foreground;
     }
 

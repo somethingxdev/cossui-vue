@@ -14,18 +14,12 @@ import {
 
 interface Country {
   code: string
-  value: string | null
+  value: string
   continent: string
   label: string
 }
 
 const countries: Country[] = [
-  {
-    code: '',
-    continent: '',
-    label: 'Select country',
-    value: null,
-  },
   {
     code: 'af',
     continent: 'Asia',
@@ -1152,9 +1146,9 @@ const countries: Country[] = [
 </script>
 
 <template>
-  <Combobox :default-value="countries[0]" :items="countries">
+  <Combobox :items="countries">
     <ComboboxTrigger :as="Button" class="w-full justify-between font-normal" variant="outline">
-      <ComboboxValue />
+      <ComboboxValue placeholder="Select country" />
       <ChevronsUpDownIcon class="-me-1!" />
     </ComboboxTrigger>
     <ComboboxPopup aria-label="Select country">
@@ -1172,7 +1166,7 @@ const countries: Country[] = [
       <ComboboxEmpty>No countries found.</ComboboxEmpty>
       <ComboboxList>
         <template #item="{ item: country }: { item: Country }">
-          <ComboboxItem :key="country.code" :value="country">
+          <ComboboxItem :key="country.code" :value="country.value">
             {{ country.label }}
           </ComboboxItem>
         </template>

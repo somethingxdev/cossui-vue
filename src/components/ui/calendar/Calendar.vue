@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { CalendarRootProps } from '@vase-ui/vue/calendar'
 import type { CalendarBaseProps, CalendarDaySlotProps } from './CalendarBase.vue'
-import { Calendar as CalendarPrimitive } from '@vase-ui/vue/calendar'
+import * as CalendarPrimitive from '@ui-sdk/vue/calendar'
 import CalendarBase from './CalendarBase.vue'
 
-export interface CalendarProps
-  extends /* @vue-ignore */ CalendarRootProps<Temporal.PlainDate | Temporal.PlainDateTime | Temporal.ZonedDateTime, boolean>,
-  /* @vue-ignore */ CalendarBaseProps {}
+type CalendarRootProps = InstanceType<typeof CalendarPrimitive.Calendar>['$props']
+
+export interface CalendarProps extends /* @vue-ignore */ Omit<CalendarRootProps, 'class'>, /* @vue-ignore */ CalendarBaseProps {}
 
 defineProps<CalendarProps>()
 
@@ -16,7 +15,7 @@ defineSlots<{
 </script>
 
 <template>
-  <CalendarBase :root="CalendarPrimitive.Root">
+  <CalendarBase :root="CalendarPrimitive.Calendar">
     <template v-if="$slots.day" #day="slotProps">
       <slot name="day" v-bind="slotProps" />
     </template>

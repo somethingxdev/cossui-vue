@@ -30,7 +30,7 @@ import { CheckboxGroup } from '@/components/ui/checkbox-group'
 
 ### CheckboxGroup
 
-Styled wrapper for `CheckboxGroup` from Vase UI. Provides shared state management for a group of checkboxes with flex column layout. Supports `v-model:value`.
+Styled wrapper for [`CheckboxGroup`](https://ui-sdk.dev/docs/components/checkbox#group) from UI SDK. Provides shared state management for a group of checkboxes with flex column layout. Supports `v-model:value`.
 
 ## Examples
 

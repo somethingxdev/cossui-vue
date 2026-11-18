@@ -12,8 +12,7 @@ const OTP_LENGTH = 6
       <OTPFieldInput
         v-for="n in OTP_LENGTH"
         :key="n"
-        :aria-label="`Character ${n} of ${OTP_LENGTH}`"
-        class="placeholder:text-muted-foreground focus-visible:placeholder:text-transparent"
+        :index="n - 1"
         placeholder="•"
       />
     </OTPField>

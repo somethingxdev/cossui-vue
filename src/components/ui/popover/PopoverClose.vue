@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { PopoverCloseProps } from '@vase-ui/vue/popover'
-import { Popover as PopoverPrimitive } from '@vase-ui/vue/popover'
+import type { Component } from 'vue'
+import * as PopoverPrimitive from '@ui-sdk/vue/popover'
 
-interface Props extends /* @vue-ignore */ PopoverCloseProps {}
+type PopoverCloseProps = InstanceType<typeof PopoverPrimitive.PopoverClose>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ PopoverCloseProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <PopoverPrimitive.Close data-slot="popover-close">
-    <slot />
-  </PopoverPrimitive.Close>
+  <PopoverPrimitive.PopoverClose>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </PopoverPrimitive.PopoverClose>
 </template>

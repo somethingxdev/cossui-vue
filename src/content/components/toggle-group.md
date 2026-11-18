@@ -20,7 +20,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
 ### ToggleGroup
 
-Root component. Styled wrapper for `ToggleGroup` from Vase UI. Provides shared variant and size to child toggles via provide/inject. Supports `v-model:value`.
+Root component. Styled wrapper for `ToggleGroup` from [UI SDK](https://ui-sdk.dev/docs/components/toggle#group). Provides shared variant and size to child toggles via provide/inject. Supports `v-model:value`; the value is always an array, also without `multiple`.
 
 | Prop          | Type                         | Default        | Description                               |
 | ------------- | ---------------------------- | -------------- | ----------------------------------------- |
@@ -30,7 +30,7 @@ Root component. Styled wrapper for `ToggleGroup` from Vase UI. Provides shared v
 
 ### ToggleGroupItem
 
-Individual toggle button within the group. Styled wrapper for `Toggle` from Vase UI. Inherits variant and size from the parent ToggleGroup.
+Individual toggle button within the group. Styled wrapper for `Toggle` from UI SDK. Inherits variant and size from the parent ToggleGroup.
 
 ### ToggleGroupSeparator
 

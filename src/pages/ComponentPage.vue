@@ -17,8 +17,20 @@ const router = useRouter()
 const slug = computed(() => String(route.params.slug))
 const doc = computed(() => componentDocs.find(item => item.slug === slug.value))
 const page = computedAsync(() => loadComponentPage(slug.value))
-const vaseUrl = computed(() => doc.value?.vase
-  ? `https://vase-ui.com/components/${slug.value}`
+// The folder names follow coss ui. These are built on a UI SDK component with another name.
+const UI_SDK_PAGES: Record<string, string> = {
+  'checkbox-group': 'checkbox',
+  'context-menu': 'menu',
+  'fieldset': 'field',
+  'form': 'field',
+  'number-field': 'number-input',
+  'otp-field': 'otp-input',
+  'preview-card': 'hover-card',
+  'radio-group': 'radio',
+  'toggle-group': 'toggle',
+}
+const uiSdkUrl = computed(() => doc.value?.uiSdk
+  ? `https://ui-sdk.dev/docs/components/${UI_SDK_PAGES[slug.value] ?? slug.value}`
   : undefined)
 const cossUrl = computed(() => doc.value?.coss
   ? `https://coss.com/ui/docs/components/${slug.value}`
@@ -77,9 +89,9 @@ function onContentClick(event: MouseEvent): void {
   >
     <template #actions>
       <Button
-        v-if="vaseUrl"
+        v-if="uiSdkUrl"
         as="a"
-        :href="vaseUrl"
+        :href="uiSdkUrl"
         target="_blank"
         rel="noreferrer"
         size="xs"

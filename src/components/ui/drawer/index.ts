@@ -1,5 +1,3 @@
-import { Drawer as DrawerPrimitive } from '@vase-ui/vue/drawer'
-
 export { default as Drawer } from './Drawer.vue'
 export { default as DrawerBackdrop } from './DrawerBackdrop.vue'
 export { default as DrawerBar } from './DrawerBar.vue'
@@ -18,12 +16,7 @@ export { default as DrawerMenuSeparator } from './DrawerMenuSeparator.vue'
 export { default as DrawerMenuTrigger } from './DrawerMenuTrigger.vue'
 export { default as DrawerPanel } from './DrawerPanel.vue'
 export { default as DrawerPopup } from './DrawerPopup.vue'
-export { default as DrawerSwipeArea } from './DrawerSwipeArea.vue'
 export { default as DrawerTitle } from './DrawerTitle.vue'
 export { default as DrawerTrigger } from './DrawerTrigger.vue'
-export { default as DrawerViewport } from './DrawerViewport.vue'
-export { DrawerContent, DrawerPortal } from '@vase-ui/vue/drawer'
-
-export const DrawerCreateHandle = DrawerPrimitive.createHandle
-
-export { DrawerPrimitive }
+export { createDrawerController as DrawerCreateHandle } from '@ui-sdk/vue/drawer'
+export * as DrawerPrimitive from '@ui-sdk/vue/drawer'

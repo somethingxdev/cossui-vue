@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import type { ToggleGroupProps } from '@vase-ui/vue/toggle-group'
 import type { HTMLAttributes } from 'vue'
 import type { ToggleVariants } from '../toggle'
-import { ToggleGroup as ToggleGroupPrimitive } from '@vase-ui/vue/toggle-group'
+import * as ToggleGroupPrimitive from '@ui-sdk/vue/toggle'
 import { provide } from 'vue'
 import { cn } from '../../../lib/utils'
 import { ToggleGroupContext } from './context'
 
+type ToggleGroupProps = InstanceType<typeof ToggleGroupPrimitive.ToggleGroup>['$props']
+
 interface Props extends /* @vue-ignore */ ToggleGroupProps {
   variant?: ToggleVariants['variant']
   size?: ToggleVariants['size']
-  orientation?: ToggleGroupProps['orientation']
+  orientation?: 'horizontal' | 'vertical'
   class?: HTMLAttributes['class']
 }
 
@@ -24,8 +25,7 @@ provide(ToggleGroupContext, props)
 </script>
 
 <template>
-  <ToggleGroupPrimitive
-    data-slot="toggle-group"
+  <ToggleGroupPrimitive.ToggleGroup
     :data-size="props.size"
     :data-variant="props.variant"
     :orientation="props.orientation"
@@ -43,5 +43,5 @@ provide(ToggleGroupContext, props)
     )"
   >
     <slot />
-  </ToggleGroupPrimitive>
+  </ToggleGroupPrimitive.ToggleGroup>
 </template>

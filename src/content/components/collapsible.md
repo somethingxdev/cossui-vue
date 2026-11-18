@@ -25,12 +25,12 @@ import {
 
 ### Collapsible
 
-Root component. Alias for `Collapsible.Root` from Vase UI. Supports `v-model:open` and `default-open`.
+Root component. Alias for `Collapsible` from UI SDK. Supports `v-model:open` and `default-open`.
 
 ### CollapsibleTrigger
 
-Trigger button that toggles the collapsible panel. Alias for `Collapsible.Trigger` from Vase UI.
+Trigger button that toggles the collapsible panel. Alias for `CollapsibleTrigger` from UI SDK. It has `data-open` while the panel is open.
 
 ### CollapsiblePanel
 
-Collapsible content panel. Styled wrapper for `Collapsible.Panel` from Vase UI with animated height transitions. Also exported as `CollapsibleContent`.
+Collapsible content panel. Styled wrapper for `CollapsiblePanel` from UI SDK with animated height transitions. Also exported as `CollapsibleContent`.

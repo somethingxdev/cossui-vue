@@ -16,18 +16,17 @@ function handleSave(event: MouseEvent) {
       anchor: event.currentTarget as Element,
       sideOffset: 6,
     },
-    timeout: 2000,
+    duration: 2000,
     title: 'Draft saved',
   })
 }
 </script>
 
 <template>
-  <Tooltip>
+  <Tooltip :delay="0">
     <TooltipTrigger
       :as="Button"
       aria-label="Save"
-      :delay="0"
       size="icon"
       variant="outline"
       @click="handleSave"

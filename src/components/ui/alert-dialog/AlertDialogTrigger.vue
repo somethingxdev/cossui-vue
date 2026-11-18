@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { AlertDialogTriggerProps } from '@vase-ui/vue/alert-dialog'
-import { AlertDialog as AlertDialogPrimitive } from '@vase-ui/vue/alert-dialog'
+import type { Component } from 'vue'
+import * as AlertDialogPrimitive from '@ui-sdk/vue/alert-dialog'
 
-interface Props extends /* @vue-ignore */ AlertDialogTriggerProps {}
+type AlertDialogTriggerProps = InstanceType<typeof AlertDialogPrimitive.AlertDialogTrigger>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ AlertDialogTriggerProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger">
-    <slot />
-  </AlertDialogPrimitive.Trigger>
+  <AlertDialogPrimitive.AlertDialogTrigger>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </AlertDialogPrimitive.AlertDialogTrigger>
 </template>

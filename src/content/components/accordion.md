@@ -28,7 +28,7 @@ import {
 
 ### Accordion
 
-Root component. Alias for `Accordion.Root` from Vase UI.
+Root component. Wrapper for `Accordion` from UI SDK.
 
 | Prop            | Type      | Default | Description                                         |
 | --------------- | --------- | ------- | --------------------------------------------------- |
@@ -39,15 +39,15 @@ Root component. Alias for `Accordion.Root` from Vase UI.
 
 ### AccordionItem
 
-Individual accordion item container. Styled wrapper for `Accordion.Item` from Vase UI with bottom border styling.
+Individual accordion item container. Styled wrapper for `AccordionItem` from UI SDK with bottom border styling.
 
 ### AccordionTrigger
 
-Trigger button that toggles the accordion panel. Styled wrapper for `Accordion.Trigger` from Vase UI. Includes a built-in chevron icon that rotates when expanded.
+Trigger button that toggles the accordion panel. Styled wrapper for `AccordionHeader` and `AccordionTrigger` from UI SDK. Includes a built-in chevron icon that rotates when expanded.
 
 ### AccordionPanel
 
-Collapsible content panel. Styled wrapper for `Accordion.Panel` from Vase UI with animated height transitions. Also exported as `AccordionContent`.
+Collapsible content panel. Styled wrapper for `AccordionPanel` from UI SDK with animated height transitions. Also exported as `AccordionContent`.
 
 ## Examples
 

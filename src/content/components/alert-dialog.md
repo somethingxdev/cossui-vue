@@ -40,20 +40,21 @@ import {
 
 ### AlertDialog
 
-Root component. Alias for `AlertDialog.Root` from Vase UI. Supports `v-model:open`.
+Root component. Alias for `AlertDialog` from [UI SDK](https://ui-sdk.dev/docs/components/alert-dialog). Supports `v-model:open`. An alert dialog is always modal and never closes on an outside press.
 
 ### AlertDialogTrigger
 
-Trigger button that opens the alert dialog. Styled wrapper for `AlertDialog.Trigger` from Vase UI.
+Trigger button that opens the alert dialog. Wrapper for `AlertDialogTrigger` from UI SDK. Pass `as` to render another component, such as `Button`.
 
 ### AlertDialogPopup
 
-Popup container that displays the alert dialog content. Also exported as `AlertDialogContent`.
+Popup container that displays the alert dialog content. Styled wrapper for `AlertDialogContent` from UI SDK, which renders in the browser's top layer, so there is no portal. Also exported as `AlertDialogContent`.
 
-| Prop                  | Type                     | Default | Description                                                                                                    |
-| --------------------- | ------------------------ | ------- | -------------------------------------------------------------------------------------------------------------- |
-| `bottomStickOnMobile` | `boolean`                | `true`  | When true, sticks to the bottom of the screen on mobile devices                                                |
-| `portalProps`         | `AlertDialogPortalProps` | -       | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Alert Dialog portal API |
+| Prop                  | Type      | Default | Description                                                     |
+| --------------------- | --------- | ------- | --------------------------------------------------------------- |
+| `bottomStickOnMobile` | `boolean` | `true`  | When true, sticks to the bottom of the screen on mobile devices |
+
+Other props, such as `keepMounted`, `container`, `initialFocus` and `finalFocus`, are forwarded to `AlertDialogContent`.
 
 ### AlertDialogHeader
 
@@ -87,27 +88,23 @@ Unlike [Dialog](/docs/components/dialog), alert dialog has no `AlertDialogPanel`
 
 ### AlertDialogTitle
 
-Title component. Styled wrapper for `AlertDialog.Title` from Vase UI.
+Title component. Styled wrapper for `AlertDialogTitle` from UI SDK.
 
 ### AlertDialogDescription
 
-Description component. Styled wrapper for `AlertDialog.Description` from Vase UI.
+Description component. Styled wrapper for `AlertDialogDescription` from UI SDK.
 
 ### AlertDialogClose
 
-Close button component. Styled wrapper for `AlertDialog.Close` from Vase UI.
-
-### AlertDialogPortal
-
-Portal component for rendering outside the DOM hierarchy. Alias for `AlertDialog.Portal` from Vase UI.
+Close button component. Wrapper for `AlertDialogClose` from UI SDK. Pass `as` to render another component, and `value` to report which answer closed the dialog.
 
 ### AlertDialogBackdrop
 
-Backdrop/overlay component. Also exported as `AlertDialogOverlay`. Styled wrapper for `AlertDialog.Backdrop` from Vase UI.
+Backdrop/overlay component. Also exported as `AlertDialogOverlay`. Styled wrapper for `AlertDialogBackdrop` from UI SDK. `AlertDialogPopup` renders it internally.
 
-### AlertDialogViewport
+### createAlertDialogController
 
-Viewport component for positioning. Styled wrapper for `AlertDialog.Viewport` from Vase UI.
+Creates a controller that opens and closes an alert dialog from anywhere. Pass it to `AlertDialog` as `controller`.
 
 ## Examples
 

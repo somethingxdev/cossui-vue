@@ -53,10 +53,8 @@ async function onSubmit(event: SubmitEvent) {
       <FieldLabel>Favorite items</FieldLabel>
       <Combobox :items="items" multiple required>
         <ComboboxChips>
-          <ComboboxValue v-slot="{ value }: { value: Fruit[] }">
-            <ComboboxChip v-for="item in value" :key="item.value" :aria-label="item.label">
-              {{ item.label }}
-            </ComboboxChip>
+          <ComboboxValue v-slot="{ value }: { value: string[] }">
+            <ComboboxChip v-for="item in value" :key="item" :value="item" />
             <ComboboxChipsInput :placeholder="value.length > 0 ? undefined : 'Select items…'" />
           </ComboboxValue>
         </ComboboxChips>
@@ -64,7 +62,7 @@ async function onSubmit(event: SubmitEvent) {
           <ComboboxEmpty>No items found.</ComboboxEmpty>
           <ComboboxList>
             <template #item="{ item }">
-              <ComboboxItem :key="item.value" :value="item">
+              <ComboboxItem :key="item.value" :value="item.value">
                 {{ item.label }}
               </ComboboxItem>
             </template>

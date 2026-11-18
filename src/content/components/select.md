@@ -18,7 +18,6 @@ import {
 ```vue
 <script setup lang="ts">
 const items = [
-  { label: 'Select framework', value: null },
   { label: 'Next.js', value: 'next' },
   { label: 'Vite', value: 'vite' },
   { label: 'Astro', value: 'astro' },
@@ -27,12 +26,12 @@ const items = [
 
 <template>
   <Select :items="items">
+    <SelectLabel>Frameworks</SelectLabel>
     <SelectTrigger>
-      <SelectValue />
+      <SelectValue placeholder="Select framework" />
     </SelectTrigger>
     <SelectPopup>
-      <SelectLabel>Frameworks</SelectLabel>
-      <SelectItem v-for="item in items" :key="item.value" :value="item">
+      <SelectItem v-for="item in items" :key="item.value" :value="item.value">
         {{ item.label }}
       </SelectItem>
     </SelectPopup>
@@ -44,11 +43,11 @@ const items = [
 
 ### Select
 
-Root component. Alias for `Select.Root` from Vase UI. Supports `v-model:value` and `v-model:open`.
+Root component. Re-export of `Select` from UI SDK; it renders no element, so put `aria-label` on `SelectTrigger`. Supports `v-model:value` and `v-model:open`, and `item-to-value` / `item-to-label` / `is-item-equal-to-value` for object values. See the [UI SDK Select docs](https://ui-sdk.dev/docs/components/select).
 
 ### SelectTrigger
 
-Trigger button that opens the select dropdown. Styled wrapper for `Select.Trigger` from Vase UI.
+Trigger button that opens the select dropdown. Styled wrapper for `SelectTrigger` from UI SDK.
 
 | Prop   | Type                        | Default     | Description                      |
 | ------ | --------------------------- | ----------- | -------------------------------- |
@@ -56,41 +55,42 @@ Trigger button that opens the select dropdown. Styled wrapper for `Select.Trigge
 
 ### SelectValue
 
-Displays the selected value. Styled wrapper for `Select.Value` from Vase UI. Use the default slot (`v-slot="{ value }"`) to render the value yourself.
+Displays the selected value. Styled wrapper for `SelectValue` from UI SDK; takes `placeholder`. Use the default slot (`v-slot="{ value, label, labels, placeholder }"`) to render the value yourself.
 
 ### SelectPopup
 
-Popup container for select options. Also exported as `SelectContent`.
+Popup container for select options: a styled `SelectContent` from UI SDK with a `SelectList` inside, shown in the browser's top layer (no portal). `class` goes to the list. Also exported as `SelectContent`.
 
-| Prop                   | Type                                                                       | Default    | Description                                                                                              |
-| ---------------------- | -------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------- |
-| `alignItemWithTrigger` | `boolean`                                                                  | `true`     | Aligns the selected item with the trigger                                                                |
-| `sideOffset`           | `number`                                                                   | `4`        | Distance from the trigger in pixels                                                                      |
-| `side`                 | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Side of the trigger to place the popup on                                                                |
-| `align`                | `"start" \| "center" \| "end"`                                             | `"start"`  | Alignment of the popup relative to the trigger                                                           |
-| `alignOffset`          | `number`                                                                   | `0`        | Offset along the alignment axis in pixels                                                                |
-| `anchor`               | `Element \| null`                                                          | -          | Element to position the popup against                                                                    |
-| `portalProps`          | `SelectPortalProps`                                                        | -          | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Select portal API |
+| Prop                   | Type                                                         | Default    | Description                                                                                                |
+| ---------------------- | ------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------- |
+| `alignItemWithTrigger` | `boolean`                                                    | `true`     | Places the selected item over the trigger; opens below when nothing is selected, on touch, or without room |
+| `sideOffset`           | `number`                                                     | `4`        | Distance from the trigger in pixels                                                                        |
+| `side`                 | `"top" \| "bottom" \| "left" \| "right" \| "start" \| "end"` | `"bottom"` | Side of the trigger to place the popup on                                                                  |
+| `align`                | `"start" \| "center" \| "end"`                               | `"start"`  | Alignment of the popup relative to the trigger                                                             |
+| `alignOffset`          | `number`                                                     | `0`        | Offset along the alignment axis in pixels                                                                  |
+| `anchor`               | `Element \| string \| null`                                  | -          | Element or CSS selector to position the popup against                                                      |
+
+Other `SelectContent` props (`keepMounted`, `container`, `collisionPadding`) pass through.
 
 ### SelectItem
 
-Individual select option. Styled wrapper for `Select.Item` from Vase UI with built-in indicator.
+Individual select option. Styled wrapper for `SelectItem` from UI SDK with built-in indicator. `value` is required; pass `label` when the content isn't plain text.
 
 ### SelectGroup
 
-Groups related select items. Alias for `Select.Group` from Vase UI.
+Groups related select items. Wrapper for `SelectGroup` from UI SDK.
 
 ### SelectLabel
 
-Label for all options in the popup. Styled wrapper for `Select.Label` from Vase UI. Clicking it focuses the select trigger without opening the popup.
+Visible label for the select, placed next to the trigger. Styled wrapper for `SelectLabel` from UI SDK. Clicking it focuses the select trigger without opening the popup.
 
 ### SelectGroupLabel
 
-Label for a select group. Styled wrapper for `Select.GroupLabel` from Vase UI.
+Label for a select group. Styled wrapper for `SelectGroupLabel` from UI SDK.
 
 ### SelectSeparator
 
-Visual separator between items. Styled wrapper for `Select.Separator` from Vase UI.
+Visual separator between items. Styled wrapper for `SelectSeparator` from UI SDK.
 
 ### SelectButton
 

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { SeparatorProps } from '@vase-ui/vue/separator'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '../../../lib/utils'
 import { Separator } from '../separator'
 
+type SeparatorProps = InstanceType<typeof Separator>['$props']
+
 interface Props extends /* @vue-ignore */ SeparatorProps {
-  orientation?: SeparatorProps['orientation']
+  orientation?: 'horizontal' | 'vertical'
   class?: HTMLAttributes['class']
 }
 

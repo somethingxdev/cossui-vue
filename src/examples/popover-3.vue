@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { BellIcon, UserIcon } from '@lucide/vue'
+import { ref } from 'vue'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
 import { Button } from '../components/ui/button'
 import {
+  createPopoverController,
   Popover,
-  PopoverCreateHandle,
   PopoverDescription,
   PopoverPopup,
   PopoverTitle,
   PopoverTrigger,
 } from '../components/ui/popover'
 
-const popoverHandle = PopoverCreateHandle<'notifications' | 'profile'>()
+const popoverHandle = createPopoverController<'notifications' | 'profile'>()
+const payload = ref<unknown>()
 </script>
 
 <template>
@@ -19,7 +21,7 @@ const popoverHandle = PopoverCreateHandle<'notifications' | 'profile'>()
     <PopoverTrigger
       :as="Button"
       aria-label="Notifications"
-      :handle="popoverHandle"
+      :controller="popoverHandle"
       payload="notifications"
       size="icon"
       variant="outline"
@@ -29,14 +31,14 @@ const popoverHandle = PopoverCreateHandle<'notifications' | 'profile'>()
     <PopoverTrigger
       :as="Button"
       aria-label="Profile"
-      :handle="popoverHandle"
+      :controller="popoverHandle"
       payload="profile"
       size="icon"
       variant="outline"
     >
       <UserIcon aria-hidden="true" />
     </PopoverTrigger>
-    <Popover v-slot="{ payload }" :handle="popoverHandle">
+    <Popover :controller="popoverHandle" @payload-change="payload = $event">
       <PopoverPopup
         :aria-label="payload === 'profile' ? 'Profile' : 'Notifications'"
         class="min-w-none"

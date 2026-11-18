@@ -23,13 +23,13 @@ const items = [
 </script>
 
 <template>
-  <Autocomplete mode="both" :items="items">
+  <Autocomplete inline-complete :items="items">
     <AutocompleteInput aria-label="Search items" placeholder="Search items…" />
     <AutocompletePopup>
       <AutocompleteEmpty>No items found.</AutocompleteEmpty>
       <AutocompleteList>
         <template #item="{ item }">
-          <AutocompleteItem :key="item.value" :value="item">
+          <AutocompleteItem :key="item.value" :value="item.value">
             {{ item.label }}
           </AutocompleteItem>
         </template>

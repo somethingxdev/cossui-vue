@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue'
+import { useAsyncOptions } from '@ui-sdk/vue/async-options'
 import {
   Autocomplete,
   AutocompleteInput,
@@ -7,7 +7,6 @@ import {
   AutocompleteList,
   AutocompletePopup,
   AutocompleteStatus,
-  useAutocompleteFilter,
 } from '../components/ui/autocomplete'
 import { Spinner } from '../components/ui/spinner'
 
@@ -23,100 +22,49 @@ const top100Movies: Movie[] = [
   { id: '14', title: 'Inception', year: 2010 },
 ]
 
-async function searchMovies(
-  query: string,
-  filter: (item: string, query: string) => boolean,
-): Promise<Movie[]> {
+async function searchMovies(query: string): Promise<Movie[]> {
   await new Promise(resolve => setTimeout(resolve, Math.random() * 500 + 100))
   if (Math.random() < 0.01 || query === 'will_error')
     throw new Error('Network error')
+  const text = query.toLowerCase()
   return top100Movies.filter(
-    movie => filter(movie.title, query) || filter(movie.year.toString(), query),
+    movie => movie.title.toLowerCase().includes(text) || movie.year.toString().includes(text),
   )
 }
 
-const searchValue = shallowRef('')
-const isLoading = shallowRef(false)
-const searchResults = shallowRef<Movie[]>([])
-const error = shallowRef<string | null>(null)
-
-const { contains } = useAutocompleteFilter({ sensitivity: 'base' })
-
-watch(searchValue, (query, _, onCleanup) => {
-  if (!query) {
-    searchResults.value = []
-    isLoading.value = false
-    return
-  }
-
-  isLoading.value = true
-  error.value = null
-  let ignore = false
-
-  const timeoutId = setTimeout(async () => {
-    try {
-      const results = await searchMovies(query, contains)
-      if (!ignore)
-        searchResults.value = results
-    }
-    catch {
-      if (!ignore) {
-        error.value = 'Failed to fetch movies. Please try again.'
-        searchResults.value = []
-      }
-    }
-    finally {
-      if (!ignore)
-        isLoading.value = false
-    }
-  }, 300)
-
-  onCleanup(() => {
-    clearTimeout(timeoutId)
-    ignore = true
-  })
-})
-
-const resultsText = computed(() => `${searchResults.value.length} result${searchResults.value.length === 1
-  ? ''
-  : 's'} found`)
+const { state: results, setQuery } = useAsyncOptions(searchMovies, { debounce: 300, minLength: 1 })
 </script>
 
 <template>
-  <Autocomplete
-    v-model:value="searchValue"
-    :filter="null"
-    :items="searchResults"
-    :item-to-string-value="(item: unknown) => (item as Movie).title"
-  >
-    <AutocompleteInput placeholder="e.g. Pulp Fiction or 1994" />
-    <AutocompletePopup v-if="searchValue !== ''" :aria-busy="isLoading || undefined">
-      <AutocompleteStatus class="text-muted-foreground">
-        <span v-if="isLoading" class="flex items-center justify-between gap-2 text-muted-foreground">
+  <Autocomplete :filter="false" :status="results.status" @value-change="setQuery">
+    <AutocompleteInput aria-label="Search movies" placeholder="e.g. Pulp Fiction or 1994" />
+    <AutocompletePopup v-if="results.query !== ''">
+      <AutocompleteStatus v-slot="{ state }" class="text-muted-foreground">
+        <span v-if="state.loading" class="flex items-center justify-between gap-2 text-muted-foreground">
           Searching...
           <Spinner class="size-4.5 sm:size-4" />
         </span>
-        <span v-else-if="error" class="font-normal text-destructive text-sm">{{ error }}</span>
-        <span v-else-if="searchResults.length === 0" class="font-normal text-muted-foreground text-sm">
-          Movie or year "{{ searchValue }}" does not exist in the Top 100 IMDb movies
+        <span v-else-if="state.status === 'error'" class="font-normal text-destructive text-sm">
+          Failed to fetch movies. Please try again.
+        </span>
+        <span v-else-if="results.items.length === 0" class="font-normal text-muted-foreground text-sm">
+          Movie or year "{{ results.query }}" does not exist in the Top 100 IMDb movies
         </span>
         <template v-else>
-          {{ resultsText }}
+          {{ results.items.length }} result{{ results.items.length === 1 ? '' : 's' }} found
         </template>
       </AutocompleteStatus>
       <AutocompleteList>
-        <template #item="{ item: movie }: { item: Movie }">
-          <AutocompleteItem :key="movie.id" :value="movie">
-            <div class="flex w-full flex-col gap-1">
-              <div class="font-medium">
-                {{ movie.title }}
-              </div>
-              <div class="text-muted-foreground text-xs">
-                {{ movie.year }}
-              </div>
+        <AutocompleteItem v-for="movie in results.items" :key="movie.id" :value="movie.title" :label="movie.title">
+          <div class="flex w-full flex-col gap-1">
+            <div class="font-medium">
+              {{ movie.title }}
             </div>
-          </AutocompleteItem>
-        </template>
+            <div class="text-muted-foreground text-xs">
+              {{ movie.year }}
+            </div>
+          </div>
+        </AutocompleteItem>
       </AutocompleteList>
     </AutocompletePopup>
   </Autocomplete>

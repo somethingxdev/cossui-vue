@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { AutocompleteTriggerProps } from '@vase-ui/vue/autocomplete'
-import { Autocomplete as AutocompletePrimitive } from '@vase-ui/vue/autocomplete'
+import * as AutocompletePrimitive from '@ui-sdk/vue/autocomplete'
+
+type AutocompleteTriggerProps = InstanceType<typeof AutocompletePrimitive.AutocompleteTrigger>['$props']
 
 interface Props extends /* @vue-ignore */ AutocompleteTriggerProps {}
 
@@ -8,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <AutocompletePrimitive.Trigger data-slot="autocomplete-trigger">
+  <AutocompletePrimitive.AutocompleteTrigger>
     <slot />
-  </AutocompletePrimitive.Trigger>
+  </AutocompletePrimitive.AutocompleteTrigger>
 </template>

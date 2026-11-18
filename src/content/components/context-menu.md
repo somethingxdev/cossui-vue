@@ -51,27 +51,29 @@ import {
 
 ### ContextMenu
 
-Root component. Alias for `ContextMenu.Root` from Vase UI.
+Root component. Alias for `Menu` from UI SDK, where a context menu is a menu opened by a context trigger. Every part except `ContextMenuTrigger` and `ContextMenuPopup` is the matching part of [Menu](/docs/components/menu) under a `ContextMenu` name.
 
 ### ContextMenuTrigger
 
-An area that opens the menu on right click or long press. Renders a `<div>` element.
+An area that opens the menu on right click or long press. Wrapper for `MenuContextTrigger` from UI SDK, which renders a `<div>`. Give it `tabindex="0"` so Shift+F10 can open the menu from the keyboard.
 
 ### ContextMenuPopup
 
 Popup container that displays the menu content at the pointer.
 
-| Prop          | Type                                                                       | Default    | Description                                                                                                    |
-| ------------- | -------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
-| `side`        | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Side of the anchor to position the popup                                                                       |
-| `align`       | `"start" \| "center" \| "end"`                                             | `"center"` | Alignment relative to the anchor                                                                               |
-| `sideOffset`  | `number`                                                                   | `4`        | Distance from the anchor in pixels                                                                             |
-| `alignOffset` | `number`                                                                   | -          | Offset along the alignment axis                                                                                |
-| `portalProps` | `ContextMenuPortalProps`                                                   | -          | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Context Menu portal API |
+| Prop          | Type                                                         | Default    | Description                                                  |
+| ------------- | ------------------------------------------------------------ | ---------- | ------------------------------------------------------------ |
+| `side`        | `"top" \| "bottom" \| "left" \| "right" \| "start" \| "end"` | `"bottom"` | Side of the pointer to position the popup                    |
+| `align`       | `"start" \| "center" \| "end"`                               | `"start"`  | Alignment relative to the pointer                            |
+| `sideOffset`  | `number`                                                     | `4`        | Distance from the pointer in pixels                          |
+| `alignOffset` | `number`                                                     | -          | Offset along the alignment axis                              |
+| `anchor`      | `Element \| string \| { x, y } \| null`                      | -          | What to position the popup against (defaults to the pointer) |
+
+Other `MenuContent` props from UI SDK, such as `collisionPadding`, `keepMounted` and `container`, pass through. There is no portal: the popup renders in the browser's top layer.
 
 ### ContextMenuGroup
 
-Groups related menu items. Styled wrapper for `ContextMenu.Group` from Vase UI.
+Groups related menu items. Alias for `MenuGroup` from UI SDK.
 
 ### ContextMenuItem
 
@@ -96,7 +98,7 @@ Properties
 
 ### ContextMenuLinkItem
 
-Link menu item for navigation. **`LinkItem`** renders a native **`<a>`** when you pass **`href`**. Styled like **`ContextMenuItem`**.
+Link menu item for navigation. A `ContextMenuItem` rendered as a native **`<a>`**, or as the component you pass to **`as`**.
 
 | Prop           | Type                         | Default     | Description                                                    |
 | -------------- | ---------------------------- | ----------- | -------------------------------------------------------------- |
@@ -123,7 +125,7 @@ Docs
 
 ### ContextMenuCheckboxItem
 
-Checkbox menu item. Supports `v-model:checked`.
+Checkbox menu item. Supports `v-model:checked` and `default-checked`.
 
 | Prop      | Type                    | Default     | Description                                              |
 | --------- | ----------------------- | ----------- | -------------------------------------------------------- |
@@ -131,11 +133,11 @@ Checkbox menu item. Supports `v-model:checked`.
 
 ### ContextMenuRadioGroup
 
-Groups radio menu items. Styled wrapper for `ContextMenu.RadioGroup` from Vase UI. Supports `v-model:value`.
+Groups radio menu items. Alias for `MenuRadioGroup` from UI SDK. Supports `v-model:value`.
 
 ### ContextMenuRadioItem
 
-Radio menu item. Styled wrapper for `ContextMenu.RadioItem` from Vase UI. Requires a `value`.
+Radio menu item. Styled wrapper for `MenuRadioItem` from UI SDK. Requires a `value`.
 
 ### ContextMenuGroupLabel
 
@@ -151,11 +153,11 @@ Visual separator between menu items.
 
 ### ContextMenuShortcut
 
-Displays keyboard shortcut text. Custom component (not a Vase UI wrapper).
+Displays keyboard shortcut text. Custom component (not a UI SDK wrapper).
 
 ### ContextMenuSub
 
-Submenu container. Alias for `ContextMenu.SubmenuRoot` from Vase UI.
+Submenu container. Alias for `MenuSub` from UI SDK.
 
 ### ContextMenuSubTrigger
 

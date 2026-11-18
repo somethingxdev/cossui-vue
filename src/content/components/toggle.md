@@ -18,7 +18,7 @@ Toggle
 
 ### Toggle
 
-Styled wrapper for `Toggle` from Vase UI with variant and size options. Supports `v-model:pressed`.
+Styled wrapper for `Toggle` from [UI SDK](https://ui-sdk.dev/docs/components/toggle) with variant and size options. Supports `v-model:pressed`.
 
 | Prop      | Type                        | Default     | Description                 |
 | --------- | --------------------------- | ----------- | --------------------------- |

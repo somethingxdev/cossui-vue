@@ -34,7 +34,7 @@ const items = [
       <ComboboxEmpty>No items found.</ComboboxEmpty>
       <ComboboxList>
         <template #item="{ item }">
-          <ComboboxItem :key="item.value" :value="item">
+          <ComboboxItem :key="item.value" :value="item.value">
             {{ item.label }}
           </ComboboxItem>
         </template>

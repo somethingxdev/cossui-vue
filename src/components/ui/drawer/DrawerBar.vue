@@ -19,7 +19,7 @@ const horizontal = computed(() => position.value === 'left' || position.value ==
     aria-hidden="true"
     data-slot="drawer-bar"
     :class="cn(
-      'absolute flex touch-none items-center justify-center p-3 before:rounded-full before:bg-input',
+      'absolute flex items-center justify-center p-3 before:rounded-full before:bg-input',
       horizontal ? 'inset-y-0 before:h-12 before:w-1' : 'inset-x-0 before:h-1 before:w-12',
       position === 'top' && 'bottom-0',
       position === 'bottom' && 'top-0',

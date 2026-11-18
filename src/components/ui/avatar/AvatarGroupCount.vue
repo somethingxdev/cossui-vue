@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { AvatarRootProps } from '@vase-ui/vue/avatar'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '../../../lib/utils'
 import Avatar from './Avatar.vue'
 import AvatarFallback from './AvatarFallback.vue'
+
+type AvatarRootProps = InstanceType<typeof Avatar>['$props']
 
 interface Props extends /* @vue-ignore */ AvatarRootProps {
   class?: HTMLAttributes['class']

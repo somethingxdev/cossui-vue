@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { DatePickerTriggerProps } from '@vase-ui/vue/date-picker'
-import { DatePicker as DatePickerPrimitive } from '@vase-ui/vue/date-picker'
+import type { Component } from 'vue'
+import * as DatePickerPrimitive from '@ui-sdk/vue/date-picker'
 
-interface Props extends /* @vue-ignore */ DatePickerTriggerProps {}
+type DatePickerTriggerProps = InstanceType<typeof DatePickerPrimitive.DatePickerTrigger>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ DatePickerTriggerProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <DatePickerPrimitive.Trigger data-slot="date-picker-trigger">
-    <slot />
-  </DatePickerPrimitive.Trigger>
+  <DatePickerPrimitive.DatePickerTrigger>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </DatePickerPrimitive.DatePickerTrigger>
 </template>

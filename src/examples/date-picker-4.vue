@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CalendarIcon } from '@lucide/vue'
+import { addDays, formatDate, todayDate } from '@ui-sdk/vue/date'
 import { shallowRef } from 'vue'
 import { Button } from '../components/ui/button'
 import {
@@ -9,9 +10,9 @@ import {
   DatePickerTrigger,
 } from '../components/ui/date-picker'
 
-const today = Temporal.Now.plainDateISO()
-const date = shallowRef<Temporal.PlainDate | null>(today)
-const month = shallowRef(today.toPlainYearMonth())
+const today = todayDate()
+const date = shallowRef<string | null>(today)
+const month = shallowRef(today.slice(0, 7))
 
 const presets = [
   { label: 'Today', days: 0 },
@@ -21,17 +22,16 @@ const presets = [
 ]
 
 function selectPreset(days: number): void {
-  const preset = today.add({ days })
-  date.value = preset
-  month.value = preset.toPlainYearMonth()
+  date.value = addDays(today, days)
+  month.value = date.value.slice(0, 7)
 }
 </script>
 
 <template>
-  <DatePicker v-model:value="date">
+  <DatePicker v-model:value="date" v-model:month="month">
     <DatePickerTrigger :as="Button" class="w-full justify-start" variant="outline">
       <CalendarIcon aria-hidden="true" />
-      {{ date ? date.toLocaleString('en-US', { dateStyle: 'long' }) : 'Pick a date' }}
+      {{ date ? formatDate(date, 'en-US', { dateStyle: 'long' }) : 'Pick a date' }}
     </DatePickerTrigger>
     <DatePickerPopup aria-label="Choose a date">
       <div class="flex max-sm:flex-col">
@@ -49,7 +49,7 @@ function selectPreset(days: number): void {
             </Button>
           </div>
         </div>
-        <DatePickerCalendar v-model:month="month" class="max-sm:pb-3 sm:ps-2" />
+        <DatePickerCalendar class="max-sm:pb-3 sm:ps-2" />
       </div>
     </DatePickerPopup>
   </DatePicker>

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { FieldsetLegendProps } from '@vase-ui/vue/fieldset'
 import type { HTMLAttributes } from 'vue'
-import { Fieldset as FieldsetPrimitive } from '@vase-ui/vue/fieldset'
+import * as FieldPrimitive from '@ui-sdk/vue/field'
 import { cn } from '../../../lib/utils'
 
-interface Props extends /* @vue-ignore */ FieldsetLegendProps {
+type FieldLegendProps = InstanceType<typeof FieldPrimitive.FieldLegend>['$props']
+
+interface Props extends /* @vue-ignore */ FieldLegendProps {
   class?: HTMLAttributes['class']
 }
 
@@ -12,10 +13,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <FieldsetPrimitive.Legend
-    data-slot="fieldset-legend"
-    :class="cn('font-semibold text-foreground', props.class)"
-  >
+  <FieldPrimitive.FieldLegend :class="cn('font-semibold text-foreground', props.class)">
     <slot />
-  </FieldsetPrimitive.Legend>
+  </FieldPrimitive.FieldLegend>
 </template>

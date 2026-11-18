@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { FieldDescriptionProps } from '@vase-ui/vue/field'
 import type { HTMLAttributes } from 'vue'
-import { Field as FieldPrimitive } from '@vase-ui/vue/field'
+import * as FieldPrimitive from '@ui-sdk/vue/field'
 import { cn } from '../../../lib/utils'
+
+type FieldDescriptionProps = InstanceType<typeof FieldPrimitive.FieldDescription>['$props']
 
 interface Props extends /* @vue-ignore */ FieldDescriptionProps {
   class?: HTMLAttributes['class']
@@ -12,10 +13,10 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <FieldPrimitive.Description
-    data-slot="field-description"
+  <FieldPrimitive.FieldDescription
+    v-slot="{ state }"
     :class="cn('text-muted-foreground text-xs', props.class)"
   >
-    <slot />
-  </FieldPrimitive.Description>
+    <slot :state="state" />
+  </FieldPrimitive.FieldDescription>
 </template>

@@ -27,15 +27,15 @@ import { Radio, RadioGroup } from '@/components/ui/radio-group'
 
 ### RadioGroup
 
-Root component. Styled wrapper for `RadioGroup` from Vase UI with flex column layout. Supports `v-model:value`.
+Root component. Styled wrapper for [`RadioGroup`](https://ui-sdk.dev/docs/components/radio) from UI SDK with flex column layout. Supports `v-model:value`; `null` means nothing is checked.
 
 ### Radio
 
-Individual radio button. Styled wrapper for `Radio.Root` from Vase UI with built-in indicator. Also exported as `RadioGroupItem`.
+Individual radio button. Styled wrapper for `Radio` from UI SDK with built-in indicator. Also exported as `RadioGroupItem`.
 
-| Prop    | Type  | Default | Description                              |
-| ------- | ----- | ------- | ---------------------------------------- |
-| `value` | `any` |         | The unique value of the radio (required) |
+| Prop    | Type     | Default | Description                              |
+| ------- | -------- | ------- | ---------------------------------------- |
+| `value` | `string` |         | The unique value of the radio (required) |
 
 ## Examples
 

@@ -39,7 +39,7 @@ async function onSubmit(event: SubmitEvent) {
   <Form class="flex w-full max-w-64 flex-col gap-4" @submit="onSubmit">
     <Field>
       <FieldLabel>Framework</FieldLabel>
-      <Select aria-label="Select framework" :items="items" name="framework" required>
+      <Select :items="items" name="framework" required>
         <SelectTrigger>
           <SelectValue placeholder="Select a framework" />
         </SelectTrigger>

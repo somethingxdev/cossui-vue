@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { AccordionTriggerProps } from '@vase-ui/vue/accordion'
 import type { HTMLAttributes } from 'vue'
 import { ChevronDownIcon } from '@lucide/vue'
-import { Accordion as AccordionPrimitive } from '@vase-ui/vue/accordion'
+import * as AccordionPrimitive from '@ui-sdk/vue/accordion'
 import { cn } from '../../../lib/utils'
+
+type AccordionTriggerProps = InstanceType<typeof AccordionPrimitive.AccordionTrigger>['$props']
 
 interface Props extends /* @vue-ignore */ AccordionTriggerProps {
   class?: HTMLAttributes['class']
@@ -15,12 +16,11 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <AccordionPrimitive.Header class="flex">
-    <AccordionPrimitive.Trigger
+  <AccordionPrimitive.AccordionHeader class="flex">
+    <AccordionPrimitive.AccordionTrigger
       v-bind="$attrs"
-      data-slot="accordion-trigger"
       :class="cn(
-        'flex flex-1 cursor-pointer items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-64 data-panel-open:*:data-[slot=accordion-indicator]:rotate-180',
+        'flex flex-1 cursor-pointer items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all focus-visible:ring-[3px] focus-visible:ring-ring data-disabled:pointer-events-none data-disabled:opacity-64 data-open:*:data-[slot=accordion-indicator]:rotate-180',
         props.class,
       )"
     >
@@ -29,6 +29,6 @@ const props = defineProps<Props>()
         class="pointer-events-none size-4 shrink-0 translate-y-0.5 opacity-80 transition-transform duration-200 ease-in-out"
         data-slot="accordion-indicator"
       />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
+    </AccordionPrimitive.AccordionTrigger>
+  </AccordionPrimitive.AccordionHeader>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AlertCircleIcon, ArrowRightIcon, CalendarIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, EllipsisIcon, InfoIcon, MinusIcon, PlusIcon, TextCursorIcon, UserRoundIcon, XIcon } from '@lucide/vue'
+import { AlertCircleIcon, CalendarIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisIcon, InfoIcon, MinusIcon, PlusIcon, TextCursorIcon, UserRoundIcon, XIcon } from '@lucide/vue'
 import { cn } from '../../lib/utils'
 import ThumbButton from './ThumbButton.vue'
 import ThumbCard from './ThumbCard.vue'
@@ -202,20 +202,6 @@ const props = defineProps<{
       </ThumbCard>
     </div>
   </template>
-  <template v-else-if="props.slug === 'date-field'">
-    <ThumbCard class="max-w-50 [--radius-2xl:14px]" :with-gradient="false">
-      <ThumbCardPanel class="flex items-center gap-1.5 p-3">
-        <ThumbText class="w-4" />
-        <ThumbText class="w-1" variant="secondary" />
-        <div class="rounded-[4px] bg-muted-foreground/12 p-1">
-          <ThumbText class="w-4 bg-primary" />
-        </div>
-        <ThumbText class="w-1" variant="secondary" />
-        <ThumbText class="w-7" />
-        <CalendarIcon :class="cn('size-4 text-muted-foreground/88', 'ms-auto')" />
-      </ThumbCardPanel>
-    </ThumbCard>
-  </template>
   <template v-else-if="props.slug === 'date-picker'">
     <ThumbCard class="[--radius-2xl:14px]" :with-gradient="false">
       <ThumbCardPanel class="flex items-center gap-2 p-3">
@@ -223,36 +209,6 @@ const props = defineProps<{
         <ThumbText class="w-[60%]" />
       </ThumbCardPanel>
     </ThumbCard>
-  </template>
-  <template v-else-if="props.slug === 'date-range-picker'">
-    <div class="flex max-w-50 flex-1 flex-col gap-2">
-      <ThumbCard class="[--radius-2xl:12px]" :with-gradient="false">
-        <ThumbCardPanel class="flex items-center gap-2 px-3 py-2.5">
-          <ThumbText class="w-9" />
-          <ArrowRightIcon :class="cn('size-4 text-muted-foreground/88', 'size-3')" />
-          <ThumbText class="w-9" />
-          <CalendarIcon :class="cn('size-4 text-muted-foreground/88', 'ms-auto')" />
-        </ThumbCardPanel>
-      </ThumbCard>
-      <ThumbCard class="[--radius-2xl:10px]">
-        <ThumbCardPanel class="flex flex-col gap-3 p-4">
-          <div class="flex items-center gap-2">
-            <ThumbText class="flex-1" variant="secondary" />
-            <ThumbText class="flex-1 bg-primary" />
-            <ThumbText class="flex-1 bg-primary/32" />
-            <ThumbText class="flex-1 bg-primary/32" />
-            <ThumbText class="flex-1 bg-primary/32" />
-          </div>
-          <div class="flex items-center gap-2">
-            <ThumbText class="flex-1 bg-primary/32" />
-            <ThumbText class="flex-1 bg-primary" />
-            <ThumbText class="flex-1" variant="secondary" />
-            <ThumbText class="flex-1" variant="secondary" />
-            <ThumbText class="flex-1" variant="secondary" />
-          </div>
-        </ThumbCardPanel>
-      </ThumbCard>
-    </div>
   </template>
   <template v-else-if="props.slug === 'dialog'">
     <ThumbCard class="max-w-36 [--radius-2xl:14px]">
@@ -345,30 +301,6 @@ const props = defineProps<{
       </ThumbCard>
     </div>
   </template>
-  <template v-else-if="props.slug === 'menubar'">
-    <div class="flex max-w-50 flex-1 flex-col items-start gap-2">
-      <ThumbCard class="[--radius-2xl:12px]">
-        <ThumbCardPanel class="flex items-center gap-1 p-1.5">
-          <div class="rounded-md bg-muted-foreground/12 px-2.5 py-2">
-            <ThumbText class="w-6" />
-          </div>
-          <div class="px-2.5 py-2">
-            <ThumbText class="w-6" variant="secondary" />
-          </div>
-          <div class="px-2.5 py-2">
-            <ThumbText class="w-6" variant="secondary" />
-          </div>
-        </ThumbCardPanel>
-      </ThumbCard>
-      <ThumbCard class="max-w-32 [--radius-2xl:10px]">
-        <ThumbCardPanel class="flex flex-col gap-4 p-4">
-          <ThumbText variant="secondary" />
-          <ThumbText class="w-[70%]" variant="secondary" />
-          <ThumbText variant="secondary" />
-        </ThumbCardPanel>
-      </ThumbCard>
-    </div>
-  </template>
   <template v-else-if="props.slug === 'meter'">
     <div class="flex max-w-50 flex-1 flex-col gap-2">
       <div class="flex items-center justify-between">
@@ -378,41 +310,6 @@ const props = defineProps<{
       <div class="h-2 w-full rounded-full bg-muted-foreground/20">
         <div class="h-2 w-[65%] rounded-s-full bg-linear-to-b from-(--btn-from) to-(--btn-to)" />
       </div>
-    </div>
-  </template>
-  <template v-else-if="props.slug === 'navigation-menu'">
-    <div class="flex max-w-56 flex-1 flex-col items-center gap-2">
-      <div class="flex items-center gap-4 px-2 py-1">
-        <div class="flex items-center gap-1">
-          <ThumbText class="w-8" />
-          <ChevronDownIcon :class="cn('size-4 text-muted-foreground/88', 'size-3')" />
-        </div>
-        <div class="flex items-center gap-1">
-          <ThumbText class="w-8" variant="secondary" />
-          <ChevronDownIcon :class="cn('size-4 text-muted-foreground/88', 'size-3')" />
-        </div>
-        <ThumbText class="w-8" variant="secondary" />
-      </div>
-      <ThumbCard class="[--radius-2xl:12px]">
-        <ThumbCardPanel class="grid grid-cols-2 gap-4 p-4">
-          <div class="flex flex-col gap-2">
-            <ThumbText class="w-[70%]" />
-            <ThumbText variant="secondary" />
-          </div>
-          <div class="flex flex-col gap-2">
-            <ThumbText class="w-[60%]" />
-            <ThumbText variant="secondary" />
-          </div>
-          <div class="flex flex-col gap-2">
-            <ThumbText class="w-[80%]" />
-            <ThumbText variant="secondary" />
-          </div>
-          <div class="flex flex-col gap-2">
-            <ThumbText class="w-[50%]" />
-            <ThumbText variant="secondary" />
-          </div>
-        </ThumbCardPanel>
-      </ThumbCard>
     </div>
   </template>
   <template v-else-if="props.slug === 'number-field'">
@@ -492,63 +389,6 @@ const props = defineProps<{
       <ThumbCheckboxItem radio />
       <ThumbCheckboxItem radio checked />
     </div>
-  </template>
-  <template v-else-if="props.slug === 'range-calendar'">
-    <ThumbCard class="max-w-36 [--radius-2xl:14px]">
-      <ThumbCardPanel class="flex flex-col gap-4 p-4">
-        <div class="flex items-center gap-2">
-          <ChevronLeftIcon class="size-4 text-muted-foreground/88" />
-          <ThumbText class="w-[60%]" variant="secondary" />
-          <ChevronRightIcon class="size-4 text-muted-foreground/88" />
-        </div>
-        <div class="flex items-center gap-2">
-          <ThumbText class="flex-1" variant="secondary" />
-          <ThumbText class="flex-1" variant="secondary" />
-          <ThumbText class="flex-1" />
-          <ThumbText class="flex-1 bg-transparent" />
-          <ThumbText class="flex-1" />
-        </div>
-        <div class="flex items-center gap-2">
-          <ThumbText class="flex-1" />
-          <ThumbText class="flex-1 bg-primary" />
-          <ThumbText class="flex-1 bg-primary/32" />
-          <ThumbText class="flex-1 bg-primary/32" />
-          <ThumbText class="flex-1 bg-primary/32" />
-        </div>
-        <div class="flex items-center gap-2">
-          <ThumbText class="flex-1 bg-primary/32" />
-          <ThumbText class="flex-1 bg-primary/32" />
-          <ThumbText class="flex-1 bg-primary" />
-          <ThumbText class="flex-1" />
-          <ThumbText class="flex-1 bg-transparent" />
-        </div>
-        <div class="flex items-center gap-2">
-          <ThumbText class="flex-1" />
-          <ThumbText class="flex-1" />
-          <ThumbText class="flex-1 bg-transparent" />
-          <ThumbText class="flex-1" variant="secondary" />
-          <ThumbText class="flex-1" variant="secondary" />
-        </div>
-      </ThumbCardPanel>
-    </ThumbCard>
-  </template>
-  <template v-else-if="props.slug === 'resizable'">
-    <ThumbCard class="max-w-50 [--radius-2xl:14px]">
-      <ThumbCardPanel class="flex h-24 p-0">
-        <div class="flex w-[40%] flex-col gap-2 p-4">
-          <ThumbText class="w-[70%]" />
-          <ThumbText variant="secondary" />
-        </div>
-        <div class="relative w-px bg-border">
-          <div class="absolute top-1/2 left-1/2 h-5 w-2.5 -translate-1/2 rounded-sm border bg-muted" />
-        </div>
-        <div class="flex flex-1 flex-col gap-2 p-4">
-          <ThumbText class="w-[50%]" />
-          <ThumbText variant="secondary" />
-          <ThumbText class="w-[80%]" variant="secondary" />
-        </div>
-      </ThumbCardPanel>
-    </ThumbCard>
   </template>
   <template v-else-if="props.slug === 'scroll-area'">
     <ThumbCard class="max-w-36 [--radius-2xl:14px]">
@@ -648,61 +488,6 @@ const props = defineProps<{
         <ThumbText class="opacity-0" />
       </ThumbCardPanel>
     </ThumbCard>
-  </template>
-  <template v-else-if="props.slug === 'time-clock'">
-    <ThumbCard class="size-30 [--radius-2xl:9999px]">
-      <ThumbCardPanel class="relative p-0">
-        <div class="absolute top-3 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-muted-foreground/40" />
-        <div class="absolute top-1/2 right-3 size-1.5 -translate-y-1/2 rounded-full bg-muted-foreground/40" />
-        <div class="absolute bottom-3 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-muted-foreground/40" />
-        <div class="absolute top-1/2 left-3 size-1.5 -translate-y-1/2 rounded-full bg-muted-foreground/40" />
-        <div class="absolute top-1/2 left-1/2 h-0.5 w-10 origin-left -translate-y-1/2 -rotate-60 rounded-full bg-primary">
-          <div class="absolute -end-1 top-1/2 size-3 -translate-y-1/2 rounded-full bg-primary" />
-        </div>
-        <div class="absolute top-1/2 left-1/2 size-2 -translate-1/2 rounded-full bg-primary" />
-      </ThumbCardPanel>
-    </ThumbCard>
-  </template>
-  <template v-else-if="props.slug === 'time-field'">
-    <ThumbCard class="max-w-40 [--radius-2xl:14px]" :with-gradient="false">
-      <ThumbCardPanel class="flex items-center gap-1.5 p-3">
-        <div class="rounded-[4px] bg-muted-foreground/12 p-1">
-          <ThumbText class="w-4 bg-primary" />
-        </div>
-        <ThumbText class="w-1" variant="secondary" />
-        <ThumbText class="w-4" />
-        <ThumbText class="ms-1 w-4" variant="secondary" />
-        <ClockIcon :class="cn('size-4 text-muted-foreground/88', 'ms-auto')" />
-      </ThumbCardPanel>
-    </ThumbCard>
-  </template>
-  <template v-else-if="props.slug === 'time-picker'">
-    <div class="flex max-w-44 flex-1 flex-col gap-2">
-      <ThumbCard class="[--radius-2xl:12px]" :with-gradient="false">
-        <ThumbCardPanel class="flex items-center gap-2 px-4 py-2.5">
-          <ThumbText class="w-[45%]" />
-          <ClockIcon :class="cn('size-4 text-muted-foreground/88', 'ms-auto')" />
-        </ThumbCardPanel>
-      </ThumbCard>
-      <ThumbCard class="[--radius-2xl:10px]">
-        <ThumbCardPanel class="grid grid-cols-3 gap-3 p-4">
-          <div class="flex flex-col gap-3">
-            <ThumbText variant="secondary" />
-            <ThumbText class="bg-primary" />
-            <ThumbText variant="secondary" />
-          </div>
-          <div class="flex flex-col gap-3">
-            <ThumbText variant="secondary" />
-            <ThumbText variant="secondary" />
-            <ThumbText class="bg-primary" />
-          </div>
-          <div class="flex flex-col gap-3">
-            <ThumbText class="bg-primary" />
-            <ThumbText variant="secondary" />
-          </div>
-        </ThumbCardPanel>
-      </ThumbCard>
-    </div>
   </template>
   <template v-else-if="props.slug === 'toast'">
     <div class="relative flex flex-1 justify-center">

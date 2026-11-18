@@ -1,30 +1,26 @@
 <script setup lang="ts">
-import type { MenuPopupProps, MenuPositionerProps } from '@vase-ui/vue/menu'
-import { computed } from 'vue'
 import MenuPopup from './MenuPopup.vue'
 
+type MenuPopupProps = InstanceType<typeof MenuPopup>['$props']
+
 interface Props extends /* @vue-ignore */ MenuPopupProps {
-  align?: MenuPositionerProps['align']
-  sideOffset?: MenuPositionerProps['sideOffset']
-  alignOffset?: MenuPositionerProps['alignOffset']
+  align?: MenuPopupProps['align']
+  sideOffset?: MenuPopupProps['sideOffset']
+  alignOffset?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   sideOffset: 0,
   align: 'start',
 })
-
-const defaultAlignOffset = computed(() => props.align !== 'center'
-  ? -5
-  : undefined)
 </script>
 
 <template>
+  <!-- -5 is the popup's border and padding, so the first item lines up with the trigger. -->
   <MenuPopup
+    sub
     :align="props.align"
-    :align-offset="props.alignOffset ?? defaultAlignOffset"
-    data-slot="menu-sub-content"
-    side="inline-end"
+    :align-offset="props.alignOffset ?? (props.align === 'center' ? undefined : -5)"
     :side-offset="props.sideOffset"
   >
     <slot />

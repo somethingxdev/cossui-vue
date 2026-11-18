@@ -19,7 +19,7 @@ const source = computedAsync(() => loadExampleSource(props.name), '')
 <template>
   <div class="group relative mt-4 mb-4 flex flex-col gap-2">
     <Tabs v-model:value="tab">
-      <TabsList class="bg-transparent p-0 *:data-[slot=tab-indicator]:rounded-lg *:data-[slot=tab-indicator]:bg-accent *:data-[slot=tab-indicator]:shadow-none">
+      <TabsList class="bg-transparent p-0 *:data-[slot=tabs-indicator]:rounded-lg *:data-[slot=tabs-indicator]:bg-accent *:data-[slot=tabs-indicator]:shadow-none">
         <TabsTab class="rounded-lg" value="preview">
           Preview
         </TabsTab>

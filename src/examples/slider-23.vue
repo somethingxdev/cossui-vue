@@ -7,7 +7,7 @@ import { Form } from '../components/ui/form'
 import { Slider, SliderValue } from '../components/ui/slider'
 
 const loading = shallowRef(false)
-const value = shallowRef<number | readonly number[]>([25, 75])
+const value = shallowRef<number | number[]>([25, 75])
 
 async function onSubmit(event: SubmitEvent) {
   event.preventDefault()

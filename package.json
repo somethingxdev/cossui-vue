@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@10.30.3",
-  "description": "coss ui components for Vue, built on Vase UI",
+  "description": "coss ui components for Vue, built on UI SDK",
   "license": "MIT",
   "scripts": {
     "registry": "node scripts/build-registry.ts",
@@ -17,12 +17,12 @@
   },
   "dependencies": {
     "@lucide/vue": "^1.75.0",
-    "@vase-ui/vue": "^2026.11.1",
+    "@ui-sdk/core": "0.1.0-beta.10",
+    "@ui-sdk/vue": "0.1.0-beta.10",
     "@vueuse/core": "^15.0.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
     "shiki": "^4.6.0",
-    "temporal-polyfill": "^1.0.8",
     "vue": "^3.5.45",
     "vue-router": "^5.5.1"
   },

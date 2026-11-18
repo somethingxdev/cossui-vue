@@ -4,9 +4,9 @@ import { toastManager } from '../components/ui/toast'
 
 function performAction() {
   const id = toastManager.add({
-    actionProps: {
-      children: 'Undo',
-      onClick: () => {
+    action: {
+      label: 'Undo',
+      onAction: () => {
         toastManager.close(id)
         toastManager.add({
           description: 'The action has been reverted.',
@@ -16,7 +16,7 @@ function performAction() {
       },
     },
     description: 'You can undo this action.',
-    timeout: 1000000,
+    duration: 1000000,
     title: 'Action performed',
     type: 'success',
   })

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { MeterRootProps } from '@vase-ui/vue/meter'
 import type { HTMLAttributes } from 'vue'
-import { Meter as MeterPrimitive } from '@vase-ui/vue/meter'
+import * as MeterPrimitive from '@ui-sdk/vue/meter'
 import { cn } from '../../../lib/utils'
 import MeterIndicator from './MeterIndicator.vue'
 import MeterTrack from './MeterTrack.vue'
+
+type MeterRootProps = InstanceType<typeof MeterPrimitive.Meter>['$props']
 
 interface Props extends /* @vue-ignore */ MeterRootProps {
   value: MeterRootProps['value']
@@ -15,7 +16,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <MeterPrimitive.Root
+  <MeterPrimitive.Meter
     :value="props.value"
     :class="cn('flex w-full flex-col gap-2', props.class)"
   >
@@ -24,5 +25,5 @@ const props = defineProps<Props>()
         <MeterIndicator />
       </MeterTrack>
     </slot>
-  </MeterPrimitive.Root>
+  </MeterPrimitive.Meter>
 </template>

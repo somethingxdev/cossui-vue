@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { FieldControlProps } from '@vase-ui/vue/field'
 import type { HTMLAttributes } from 'vue'
-import { Field as FieldPrimitive } from '@vase-ui/vue/field'
+import * as TextareaPrimitive from '@ui-sdk/vue/textarea'
 import { cn } from '../../../lib/utils'
 
-export interface TextareaProps extends /* @vue-ignore */ Omit<FieldControlProps, 'size'> {
+type TextareaPrimitiveProps = InstanceType<typeof TextareaPrimitive.Textarea>['$props']
+
+export interface TextareaProps extends /* @vue-ignore */ Omit<TextareaPrimitiveProps, 'size'> {
   size?: 'sm' | 'default' | 'lg' | number
   unstyled?: boolean
   class?: HTMLAttributes['class']
@@ -26,18 +27,13 @@ const props = withDefaults(defineProps<TextareaProps>(), {
       props.class,
     ) || undefined"
   >
-    <FieldPrimitive.Control v-bind="$attrs">
-      <template #render="{ props: controlProps }">
-        <textarea
-          v-bind="controlProps"
-          data-slot="textarea"
-          :class="cn(
-            'field-sizing-content min-h-17.5 w-full rounded-[inherit] px-[calc(--spacing(3)-1px)] py-[calc(--spacing(1.5)-1px)] text-foreground outline-none placeholder:text-muted-foreground/72 max-sm:min-h-20.5',
-            props.size === 'sm' && 'min-h-16.5 px-[calc(--spacing(2.5)-1px)] py-[calc(--spacing(1)-1px)] max-sm:min-h-19.5',
-            props.size === 'lg' && 'min-h-18.5 py-[calc(--spacing(2)-1px)] max-sm:min-h-21.5',
-          )"
-        />
-      </template>
-    </FieldPrimitive.Control>
+    <TextareaPrimitive.Textarea
+      v-bind="$attrs"
+      :class="cn(
+        'field-sizing-content min-h-17.5 w-full rounded-[inherit] px-[calc(--spacing(3)-1px)] py-[calc(--spacing(1.5)-1px)] text-foreground outline-none placeholder:text-muted-foreground/72 max-sm:min-h-20.5',
+        props.size === 'sm' && 'min-h-16.5 px-[calc(--spacing(2.5)-1px)] py-[calc(--spacing(1)-1px)] max-sm:min-h-19.5',
+        props.size === 'lg' && 'min-h-18.5 py-[calc(--spacing(2)-1px)] max-sm:min-h-21.5',
+      )"
+    />
   </span>
 </template>

@@ -12,7 +12,7 @@ const OTP_LENGTH = 4
       <OTPFieldInput
         v-for="n in OTP_LENGTH"
         :key="n"
-        :aria-label="`Character ${n} of ${OTP_LENGTH}`"
+        :index="n - 1"
       />
     </OTPField>
     <FieldDescription>

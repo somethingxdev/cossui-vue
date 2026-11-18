@@ -47,14 +47,12 @@ const componentsJson = `{
 }`
 const addStyle = 'npx shadcn-vue@latest add @cossui-vue/style'
 const addComponents = 'npx shadcn-vue@latest add @cossui-vue/button @cossui-vue/dialog'
-const install = 'pnpm add @vase-ui/vue cn class-variance-authority @lucide/vue'
+const install = 'pnpm add @ui-sdk/vue @ui-sdk/core cn class-variance-authority @lucide/vue'
 const utils = `// src/lib/utils.ts
 export { cn } from 'cn'`
-const temporal = `// src/main.ts, before anything else
-import 'temporal-polyfill/global'`
-const isolation = `#app {
-  isolation: isolate;
-}`
+const layer = `@layer ui-sdk;
+
+@import 'tailwindcss';`
 const codeClass = 'rounded-md bg-muted px-1.5 py-0.5 font-mono text-sm'
 </script>
 
@@ -113,13 +111,9 @@ const codeClass = 'rounded-md bg-muted px-1.5 py-0.5 font-mono text-sm'
         Notes
       </h2>
       <p>
-        Popups render in a portal in <code :class="codeClass">&lt;body&gt;</code>. Give the root element of the app its own stacking context, so that they always show above it:
+        UI SDK adds a few rules of its own in a cascade layer named <code :class="codeClass">ui-sdk</code>. Declare that layer on the first line of your global stylesheet, above Tailwind CSS, so that your classes win over it:
       </p>
-      <CodeBlock :code="isolation" lang="css" />
-      <p>
-        The date and time components use the global <code :class="codeClass">Temporal</code>. Safari and older browsers need the polyfill, which the CLI installs with them:
-      </p>
-      <CodeBlock :code="temporal" lang="ts" />
+      <CodeBlock :code="layer" lang="css" />
     </div>
   </DocsPage>
 </template>

@@ -19,7 +19,7 @@ type Item = (typeof items)[number]
 </script>
 
 <template>
-  <Select :default-value="items[0]" :item-to-string-value="(item: Item) => item.value">
+  <Select :default-value="items[0]" :item-to-value="(item: Item) => item.value">
     <SelectTrigger aria-label="Select category">
       <SelectValue v-slot="{ value: item }">
         <span class="flex items-center gap-2">

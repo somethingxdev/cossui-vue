@@ -11,7 +11,7 @@ const props = defineProps<{
   <div
     data-slot="sheet-header"
     :class="cn(
-      'flex flex-col gap-2 p-6 in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pb-3 max-sm:pb-4',
+      'flex flex-col gap-2 p-6 in-[[data-slot=dialog-content]:has([data-slot=sheet-panel])]:pb-3 max-sm:pb-4',
       props.class,
     )"
   >

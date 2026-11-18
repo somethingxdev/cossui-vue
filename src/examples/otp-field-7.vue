@@ -13,12 +13,11 @@ const valid = computed(() => value.value === '123456')
 <template>
   <Field class="items-center">
     <FieldLabel>Verification code</FieldLabel>
-    <OTPField v-model:value="value" :length="OTP_LENGTH">
+    <OTPField v-model:value="value" :aria-invalid="invalid || undefined" :length="OTP_LENGTH">
       <OTPFieldInput
         v-for="n in OTP_LENGTH"
         :key="n"
-        :aria-invalid="invalid || undefined"
-        :aria-label="`Character ${n} of ${OTP_LENGTH}`"
+        :index="n - 1"
       />
     </OTPField>
     <FieldDescription v-if="!valid && !invalid">

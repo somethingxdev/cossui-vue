@@ -14,36 +14,37 @@ import { Calendar } from '@/components/ui/calendar'
 
 ## API Reference
 
-This component wraps Vase UI's Calendar with custom styling. Dates are [Temporal](https://tc39.es/proposal-temporal/docs/) values.
+This component wraps UI SDK's [Calendar](https://ui-sdk.dev/docs/components/calendar) with custom styling. Dates are ISO strings like `"2026-10-16"`, and months are strings like `"2026-10"`. The helpers of `@ui-sdk/vue/date` (`todayDate`, `addDays`, `formatDate`) do the arithmetic and the formatting.
 
 ### Calendar
 
 A calendar component for date selection.
 
-| Prop                      | Type                                                 | Default   | Description                                                       |
-| ------------------------- | ---------------------------------------------------- | --------- | ----------------------------------------------------------------- |
-| `value` / `v-model:value` | `Temporal.PlainDate \| Temporal.PlainDate[] \| null` | -         | The selected date(s)                                              |
-| `defaultValue`            | `Temporal.PlainDate \| Temporal.PlainDate[] \| null` | -         | The selected date(s) when uncontrolled                            |
-| `multiple`                | `boolean`                                            | `false`   | Allow selecting more than one date                                |
-| `captionLayout`           | `"label" \| "dropdown"`                              | `"label"` | Caption layout - use `"dropdown"` for month/year dropdowns        |
-| `showOutsideDays`         | `boolean`                                            | `true`    | Show days from adjacent months                                    |
-| `showWeekNumber`          | `boolean`                                            | `false`   | Show the week number column                                       |
-| `minDate`                 | `Temporal.PlainDate`                                 | -         | First selectable day, also the first month in dropdown navigation |
-| `maxDate`                 | `Temporal.PlainDate`                                 | -         | Last selectable day, also the last month in dropdown navigation   |
-| `month` / `v-model:month` | `Temporal.PlainYearMonth`                            | -         | The month the grid shows                                          |
-| `numberOfMonths`          | `number`                                             | `1`       | Number of months shown side by side                               |
-| `disabledDates`           | `DateMatcher`                                        | -         | Days that can neither be focused nor selected                     |
-| `classNames`              | `CalendarClassNames`                                 | -         | Custom classes for calendar parts                                 |
+| Prop                      | Type                                | Default    | Description                                                                              |
+| ------------------------- | ----------------------------------- | ---------- | ---------------------------------------------------------------------------------------- |
+| `value` / `v-model:value` | `string \| string[] \| null`        | -          | The selected date, or the selected dates with `mode="multiple"`                          |
+| `defaultValue`            | `string \| string[] \| null`        | -          | The selected date(s) when uncontrolled                                                   |
+| `mode`                    | `"single" \| "multiple" \| "range"` | `"single"` | How many dates the calendar selects                                                      |
+| `captionLayout`           | `"label" \| "dropdown"`             | `"label"`  | Caption layout - use `"dropdown"` for month/year dropdowns                               |
+| `showOutsideDays`         | `boolean`                           | `true`     | Show days from adjacent months                                                           |
+| `showWeekNumber`          | `boolean`                           | `false`    | Show the week number column                                                              |
+| `min`                     | `string`                            | -          | First selectable day, also the first year in dropdown navigation                         |
+| `max`                     | `string`                            | -          | Last selectable day, also the last year in dropdown navigation                           |
+| `month` / `v-model:month` | `string`                            | -          | The first month the calendar shows, like `"2026-10"`                                     |
+| `months`                  | `number`                            | `1`        | Number of months shown side by side                                                      |
+| `pageBy`                  | `"month" \| "page"`                 | `"month"`  | Whether the navigation buttons move by one month or by `months` months                   |
+| `unavailable`             | `DateMatchers`                      | -          | Days that cannot be selected: dates, `{ from, to }`, `{ weekday: [0, 6] }` or a function |
+| `classNames`              | `CalendarClassNames`                | -          | Custom classes for calendar parts                                                        |
 
-| Slot  | Props                  | Description                    |
-| ----- | ---------------------- | ------------------------------ |
-| `day` | `{ day, state, text }` | Custom content of a day button |
+| Slot  | Props                  | Description                                               |
+| ----- | ---------------------- | --------------------------------------------------------- |
+| `day` | `{ day, state, text }` | Custom content of a day. `day` is the ISO date of the day |
 
-For the full list of props, see the Vase UI Calendar documentation.
+For the full list of props, see the [UI SDK Calendar documentation](https://ui-sdk.dev/docs/components/calendar).
 
 ### Range selection
 
-For selecting a range of dates, use `RangeCalendar` from `@/components/ui/range-calendar`. It has the same look and props, and its `v-model:value` is a `[start, end]` tuple.
+For selecting a range of dates, pass `mode="range"`. Its `v-model:value` is then a `[start, end]` tuple of ISO dates, or `null`.
 
 ### Customizing Cell Size
 
@@ -73,6 +74,6 @@ Or use responsive values:
 
 ### Dropdown Navigation
 
-Use `caption-layout="dropdown"` with `min-date` and `max-date` to enable month/year dropdown navigation:
+Use `caption-layout="dropdown"` with `min` and `max` to enable month/year dropdown navigation:
 
 <ComponentPreview name="calendar-4" />

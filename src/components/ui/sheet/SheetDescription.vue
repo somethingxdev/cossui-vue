@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { DialogDescriptionProps } from '@vase-ui/vue/dialog'
 import type { HTMLAttributes } from 'vue'
-import { Dialog as SheetPrimitive } from '@vase-ui/vue/dialog'
+import * as SheetPrimitive from '@ui-sdk/vue/dialog'
 import { cn } from '../../../lib/utils'
+
+type DialogDescriptionProps = InstanceType<typeof SheetPrimitive.DialogDescription>['$props']
 
 interface Props extends /* @vue-ignore */ DialogDescriptionProps {
   class?: HTMLAttributes['class']
@@ -12,10 +13,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <SheetPrimitive.Description
-    data-slot="sheet-description"
-    :class="cn('text-muted-foreground text-sm', props.class)"
-  >
+  <SheetPrimitive.DialogDescription :class="cn('text-muted-foreground text-sm', props.class)">
     <slot />
-  </SheetPrimitive.Description>
+  </SheetPrimitive.DialogDescription>
 </template>

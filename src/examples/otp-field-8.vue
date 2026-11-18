@@ -8,11 +8,11 @@ const OTP_LENGTH = 6
 <template>
   <Field class="items-center">
     <FieldLabel>Recovery code</FieldLabel>
-    <OTPField :length="OTP_LENGTH" validation-type="alphanumeric">
+    <OTPField :length="OTP_LENGTH" pattern="alphanumeric">
       <OTPFieldInput
         v-for="n in OTP_LENGTH"
         :key="n"
-        :aria-label="`Character ${n} of ${OTP_LENGTH}`"
+        :index="n - 1"
       />
     </OTPField>
     <FieldDescription>

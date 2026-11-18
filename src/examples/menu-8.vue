@@ -9,13 +9,13 @@ import { Menu, MenuItem, MenuPopup, MenuTrigger } from '../components/ui/menu'
       Open menu
     </MenuTrigger>
     <MenuPopup>
-      <MenuItem close-on-click>
+      <MenuItem close-on-select>
         Profile
       </MenuItem>
-      <MenuItem close-on-click>
+      <MenuItem close-on-select>
         Settings
       </MenuItem>
-      <MenuItem close-on-click>
+      <MenuItem close-on-select>
         Log out
       </MenuItem>
     </MenuPopup>

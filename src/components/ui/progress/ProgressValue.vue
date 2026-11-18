@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { ProgressValueProps } from '@vase-ui/vue/progress'
 import type { HTMLAttributes } from 'vue'
-import { Progress as ProgressPrimitive } from '@vase-ui/vue/progress'
+import * as ProgressPrimitive from '@ui-sdk/vue/progress'
 import { cn } from '../../../lib/utils'
+
+type ProgressValueProps = InstanceType<typeof ProgressPrimitive.ProgressValue>['$props']
 
 interface Props extends /* @vue-ignore */ ProgressValueProps {
   class?: HTMLAttributes['class']
@@ -16,12 +17,11 @@ defineSlots<{
 </script>
 
 <template>
-  <ProgressPrimitive.Value
-    data-slot="progress-value"
+  <ProgressPrimitive.ProgressValue
     :class="cn('text-sm tabular-nums', props.class)"
   >
-    <template v-if="$slots.default" #default="{ formattedValue, value }">
-      <slot :formatted-value="formattedValue" :value="value" />
+    <template v-if="$slots.default" #default="{ state }">
+      <slot :formatted-value="state.text" :value="state.value" />
     </template>
-  </ProgressPrimitive.Value>
+  </ProgressPrimitive.ProgressValue>
 </template>

@@ -1,2 +1,2 @@
 export { default as Checkbox } from './Checkbox.vue'
-export { Checkbox as CheckboxPrimitive } from '@vase-ui/vue/checkbox'
+export * as CheckboxPrimitive from '@ui-sdk/vue/checkbox'

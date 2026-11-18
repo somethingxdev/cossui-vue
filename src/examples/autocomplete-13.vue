@@ -31,7 +31,7 @@ async function onSubmit(event: SubmitEvent) {
   event.preventDefault()
   const formData = new FormData(event.currentTarget as HTMLFormElement)
   const selectedItem = formData.get('item')
-  // Vase UI extracts the 'label' property from objects, so we need to find the corresponding value
+  // The value of an autocomplete is its text (the label), so we need to find the corresponding value
   const itemValue = items.find(item => item.label === selectedItem)?.value || selectedItem
   loading.value = true
   await new Promise(resolve => setTimeout(resolve, 800))
@@ -51,7 +51,7 @@ async function onSubmit(event: SubmitEvent) {
           <AutocompleteEmpty>No items found.</AutocompleteEmpty>
           <AutocompleteList>
             <template #item="{ item }">
-              <AutocompleteItem :key="item.value" :value="item">
+              <AutocompleteItem :key="item.value" :value="item.value">
                 {{ item.label }}
               </AutocompleteItem>
             </template>

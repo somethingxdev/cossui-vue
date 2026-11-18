@@ -16,7 +16,7 @@ Email
 
 ## API Reference
 
-This is a plain styled native `<label>` element, not a Vase UI wrapper.
+This is a plain styled native `<label>` element, not a UI SDK wrapper.
 
 ### Label
 

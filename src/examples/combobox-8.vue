@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   Combobox,
-  ComboboxCollection,
   ComboboxEmpty,
   ComboboxGroup,
   ComboboxGroupLabel,
@@ -13,55 +12,55 @@ import {
 } from '../components/ui/combobox'
 
 // Grouped items demo
-interface Tag { id: string, label: string, group: 'Status' | 'Priority' | 'Team' }
-interface TagGroup { value: string, items: Tag[] }
+interface Tag { value: string, label: string, group: 'Status' | 'Priority' | 'Team' }
+interface TagGroup { type: 'group', label: string, items: Tag[] }
 
 const tagsData: Tag[] = [
   // Status
-  { group: 'Status', id: 's-open', label: 'Open' },
-  { group: 'Status', id: 's-in-progress', label: 'In progress' },
-  { group: 'Status', id: 's-blocked', label: 'Blocked' },
-  { group: 'Status', id: 's-resolved', label: 'Resolved' },
-  { group: 'Status', id: 's-closed', label: 'Closed' },
+  { group: 'Status', value: 's-open', label: 'Open' },
+  { group: 'Status', value: 's-in-progress', label: 'In progress' },
+  { group: 'Status', value: 's-blocked', label: 'Blocked' },
+  { group: 'Status', value: 's-resolved', label: 'Resolved' },
+  { group: 'Status', value: 's-closed', label: 'Closed' },
   // Priority
-  { group: 'Priority', id: 'p-low', label: 'Low' },
-  { group: 'Priority', id: 'p-medium', label: 'Medium' },
-  { group: 'Priority', id: 'p-high', label: 'High' },
-  { group: 'Priority', id: 'p-urgent', label: 'Urgent' },
+  { group: 'Priority', value: 'p-low', label: 'Low' },
+  { group: 'Priority', value: 'p-medium', label: 'Medium' },
+  { group: 'Priority', value: 'p-high', label: 'High' },
+  { group: 'Priority', value: 'p-urgent', label: 'Urgent' },
   // Team
-  { group: 'Team', id: 't-design', label: 'Design' },
-  { group: 'Team', id: 't-frontend', label: 'Frontend' },
-  { group: 'Team', id: 't-backend', label: 'Backend' },
-  { group: 'Team', id: 't-devops', label: 'DevOps' },
-  { group: 'Team', id: 't-qa', label: 'QA' },
-  { group: 'Team', id: 't-mobile', label: 'Mobile' },
-  { group: 'Team', id: 't-data', label: 'Data' },
-  { group: 'Team', id: 't-security', label: 'Security' },
-  { group: 'Team', id: 't-platform', label: 'Platform' },
-  { group: 'Team', id: 't-infra', label: 'Infrastructure' },
-  { group: 'Team', id: 't-product', label: 'Product' },
-  { group: 'Team', id: 't-marketing', label: 'Marketing' },
-  { group: 'Team', id: 't-sales', label: 'Sales' },
-  { group: 'Team', id: 't-support', label: 'Support' },
-  { group: 'Team', id: 't-research', label: 'Research' },
-  { group: 'Team', id: 't-content', label: 'Content' },
-  { group: 'Team', id: 't-analytics', label: 'Analytics' },
-  { group: 'Team', id: 't-operations', label: 'Operations' },
-  { group: 'Team', id: 't-finance', label: 'Finance' },
-  { group: 'Team', id: 't-hr', label: 'HR' },
-  { group: 'Team', id: 't-legal', label: 'Legal' },
-  { group: 'Team', id: 't-growth', label: 'Growth' },
-  { group: 'Team', id: 't-partner', label: 'Partner' },
-  { group: 'Team', id: 't-community', label: 'Community' },
-  { group: 'Team', id: 't-docs', label: 'Docs' },
-  { group: 'Team', id: 't-l10n', label: 'Localization' },
-  { group: 'Team', id: 't-a11y', label: 'Accessibility' },
-  { group: 'Team', id: 't-sre', label: 'SRE' },
-  { group: 'Team', id: 't-release', label: 'Release' },
-  { group: 'Team', id: 't-architecture', label: 'Architecture' },
-  { group: 'Team', id: 't-ux', label: 'UX' },
-  { group: 'Team', id: 't-ui', label: 'UI' },
-  { group: 'Team', id: 't-management', label: 'Management' },
+  { group: 'Team', value: 't-design', label: 'Design' },
+  { group: 'Team', value: 't-frontend', label: 'Frontend' },
+  { group: 'Team', value: 't-backend', label: 'Backend' },
+  { group: 'Team', value: 't-devops', label: 'DevOps' },
+  { group: 'Team', value: 't-qa', label: 'QA' },
+  { group: 'Team', value: 't-mobile', label: 'Mobile' },
+  { group: 'Team', value: 't-data', label: 'Data' },
+  { group: 'Team', value: 't-security', label: 'Security' },
+  { group: 'Team', value: 't-platform', label: 'Platform' },
+  { group: 'Team', value: 't-infra', label: 'Infrastructure' },
+  { group: 'Team', value: 't-product', label: 'Product' },
+  { group: 'Team', value: 't-marketing', label: 'Marketing' },
+  { group: 'Team', value: 't-sales', label: 'Sales' },
+  { group: 'Team', value: 't-support', label: 'Support' },
+  { group: 'Team', value: 't-research', label: 'Research' },
+  { group: 'Team', value: 't-content', label: 'Content' },
+  { group: 'Team', value: 't-analytics', label: 'Analytics' },
+  { group: 'Team', value: 't-operations', label: 'Operations' },
+  { group: 'Team', value: 't-finance', label: 'Finance' },
+  { group: 'Team', value: 't-hr', label: 'HR' },
+  { group: 'Team', value: 't-legal', label: 'Legal' },
+  { group: 'Team', value: 't-growth', label: 'Growth' },
+  { group: 'Team', value: 't-partner', label: 'Partner' },
+  { group: 'Team', value: 't-community', label: 'Community' },
+  { group: 'Team', value: 't-docs', label: 'Docs' },
+  { group: 'Team', value: 't-l10n', label: 'Localization' },
+  { group: 'Team', value: 't-a11y', label: 'Accessibility' },
+  { group: 'Team', value: 't-sre', label: 'SRE' },
+  { group: 'Team', value: 't-release', label: 'Release' },
+  { group: 'Team', value: 't-architecture', label: 'Architecture' },
+  { group: 'Team', value: 't-ux', label: 'UX' },
+  { group: 'Team', value: 't-ui', label: 'UI' },
+  { group: 'Team', value: 't-management', label: 'Management' },
 ]
 
 function groupTags(tags: Tag[]): TagGroup[] {
@@ -72,8 +71,8 @@ function groupTags(tags: Tag[]): TagGroup[] {
     groups[tag.group]?.push(tag)
   }
 
-  const order: Array<TagGroup['value']> = ['Status', 'Priority', 'Team']
-  return order.map(value => ({ items: groups[value] ?? [], value }))
+  const order: Array<TagGroup['label']> = ['Status', 'Priority', 'Team']
+  return order.map(label => ({ items: groups[label] ?? [], label, type: 'group' }))
 }
 
 const groupedTags: TagGroup[] = groupTags(tagsData)
@@ -88,15 +87,13 @@ const groupedTags: TagGroup[] = groupTags(tagsData)
       <ComboboxEmpty>No tags found.</ComboboxEmpty>
       <ComboboxList>
         <template #item="{ item: group }: { item: TagGroup }">
-          <ComboboxGroup :key="group.value" :items="group.items">
-            <ComboboxGroupLabel>{{ group.value }}</ComboboxGroupLabel>
-            <ComboboxCollection v-slot="{ item: tag }: { item: Tag }">
-              <ComboboxItem :key="tag.id" :value="tag">
-                {{ tag.label }}
-              </ComboboxItem>
-            </ComboboxCollection>
+          <ComboboxGroup :key="group.label">
+            <ComboboxGroupLabel>{{ group.label }}</ComboboxGroupLabel>
+            <ComboboxItem v-for="tag in group.items" :key="tag.value" :value="tag.value">
+              {{ tag.label }}
+            </ComboboxItem>
           </ComboboxGroup>
-          <ComboboxSeparator v-if="group.value !== 'Team'" />
+          <ComboboxSeparator v-if="group.label !== 'Team'" />
         </template>
       </ComboboxList>
     </ComboboxPopup>

@@ -30,7 +30,7 @@ import {
 
 ### NumberField
 
-Root component. Styled wrapper for `NumberField.Root` from Vase UI. Supports `v-model:value`.
+Root component. Styled wrapper for `NumberInput` from [UI SDK](https://ui-sdk.dev/docs/components/number-input). Supports `v-model:value` (`number`, or `null` when empty) and the `@value-change` and `@value-commit` events. `id` goes to the input, so an external label can point at it.
 
 | Prop   | Type                        | Default     | Description                                           |
 | ------ | --------------------------- | ----------- | ----------------------------------------------------- |
@@ -38,23 +38,23 @@ Root component. Styled wrapper for `NumberField.Root` from Vase UI. Supports `v-
 
 ### NumberFieldGroup
 
-Container for the input and buttons. Styled wrapper for `NumberField.Group` from Vase UI.
+Container for the input and buttons. Styled wrapper for `NumberInputGroup` from UI SDK.
 
 ### NumberFieldInput
 
-Input element for the number value. Styled wrapper for `NumberField.Input` from Vase UI.
+Input element for the number value. Styled wrapper for `NumberInputControl` from UI SDK.
 
 ### NumberFieldIncrement
 
-Button to increment the value. Styled wrapper for `NumberField.Increment` from Vase UI with plus icon.
+Button to increment the value. Styled wrapper for `NumberInputIncrement` from UI SDK with plus icon.
 
 ### NumberFieldDecrement
 
-Button to decrement the value. Styled wrapper for `NumberField.Decrement` from Vase UI with minus icon.
+Button to decrement the value. Styled wrapper for `NumberInputDecrement` from UI SDK with minus icon.
 
 ### NumberFieldScrubArea
 
-Draggable area for scrubbing the value. Styled wrapper for `NumberField.ScrubArea` from Vase UI.
+Draggable area for scrubbing the value. Styled wrapper for `NumberInputScrubArea` and `NumberInputScrubAreaCursor` from UI SDK.
 
 | Prop    | Type     | Default | Description                            |
 | ------- | -------- | ------- | -------------------------------------- |

@@ -1,0 +1,17 @@
+<script setup lang="ts">
+import type { HTMLAttributes } from 'vue'
+import { cn } from '../../../lib/utils'
+
+const props = defineProps<{
+  class?: HTMLAttributes['class']
+}>()
+</script>
+
+<template>
+  <footer
+    data-slot="frame-panel-footer"
+    :class="cn('px-5 py-4', props.class)"
+  >
+    <slot />
+  </footer>
+</template>

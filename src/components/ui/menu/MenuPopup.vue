@@ -1,52 +1,38 @@
 <script setup lang="ts">
-import type { MenuPopupProps, MenuPortalProps, MenuPositionerProps } from '@vase-ui/vue/menu'
 import type { HTMLAttributes } from 'vue'
-import { Menu as MenuPrimitive } from '@vase-ui/vue/menu'
+import * as MenuPrimitive from '@ui-sdk/vue/menu'
 import { cn } from '../../../lib/utils'
 
-interface Props extends /* @vue-ignore */ MenuPopupProps {
-  align?: MenuPositionerProps['align']
-  sideOffset?: MenuPositionerProps['sideOffset']
-  alignOffset?: MenuPositionerProps['alignOffset']
-  side?: MenuPositionerProps['side']
-  anchor?: MenuPositionerProps['anchor']
-  portalProps?: MenuPortalProps
+type MenuContentProps = InstanceType<typeof MenuPrimitive.MenuContent>['$props']
+
+interface Props extends /* @vue-ignore */ MenuContentProps {
+  align?: MenuContentProps['align']
+  sideOffset?: MenuContentProps['sideOffset']
+  // Set by MenuSubPopup: a submenu renders UI SDK's MenuSubContent.
+  sub?: boolean
   class?: HTMLAttributes['class']
 }
-
-defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<Props>(), {
   sideOffset: 4,
   align: 'center',
-  side: 'bottom',
 })
 </script>
 
 <template>
-  <MenuPrimitive.Portal v-bind="props.portalProps">
-    <MenuPrimitive.Positioner
-      :align="props.align"
-      :align-offset="props.alignOffset"
-      :anchor="props.anchor"
-      class="z-50"
-      data-slot="menu-positioner"
-      :side="props.side"
-      :side-offset="props.sideOffset"
-    >
-      <!-- data-slot comes before $attrs so MenuSubPopup can replace it. -->
-      <MenuPrimitive.Popup
-        data-slot="menu-popup"
-        v-bind="$attrs"
-        :class="cn(
-          `relative flex not-[class*='w-']:min-w-32 origin-(--transform-origin) rounded-lg border bg-popover not-dark:bg-clip-padding shadow-lg/5 outline-none before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] focus:outline-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]`,
-          props.class,
-        )"
-      >
-        <div class="max-h-(--available-height) w-full overflow-y-auto p-1">
-          <slot />
-        </div>
-      </MenuPrimitive.Popup>
-    </MenuPrimitive.Positioner>
-  </MenuPrimitive.Portal>
+  <!-- The content is a native popover: padding, overflow and color reset what the browser gives it. -->
+  <component
+    :is="props.sub ? MenuPrimitive.MenuSubContent : MenuPrimitive.MenuContent"
+    :align="props.align"
+    :class="cn(
+      `flex not-[class*='w-']:min-w-32 origin-(--transform-origin) overflow-visible rounded-lg border bg-popover not-dark:bg-clip-padding p-0 text-foreground shadow-lg/5 outline-none [--menu-height:var(--available-height)] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] focus:outline-none dark:before:shadow-[0_-1px_--theme(--color-white/6%)]`,
+      props.class,
+    )"
+    :side-offset="props.sideOffset"
+  >
+    <!-- --available-height does not inherit, so the content copies it for this scroller. -->
+    <div class="max-h-(--menu-height) w-full overflow-y-auto p-1">
+      <slot />
+    </div>
+  </component>
 </template>

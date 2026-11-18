@@ -32,7 +32,7 @@ const items = [
         <ComboboxEmpty>No results found.</ComboboxEmpty>
         <ComboboxList>
           <template #item="{ item }">
-            <ComboboxItem :key="item.value" :value="item">
+            <ComboboxItem :key="item.value" :value="item.value">
               {{ item.label }}
             </ComboboxItem>
           </template>

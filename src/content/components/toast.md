@@ -29,7 +29,7 @@ Allowed values: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-ce
 
 ### Deduplicated toasts (upsert)
 
-Pass a stable `id` when calling `toastManager.add`. If a toast with that `id` already exists, Vase UI updates it in place, refreshes the auto-dismiss timer, and increments `updateKey`. The styled toast replays a short re-notify animation on each update.
+Pass a stable `id` when calling `toastManager.add`. If a toast with that `id` is still showing, UI SDK updates it in place, restarts the auto-dismiss timer, and increments its `version`. The styled toast replays a short re-notify animation on each update.
 
 ```ts
 toastManager.add({
@@ -74,30 +74,34 @@ anchoredToastManager.add({
 
 ### ToastProvider
 
-Provider component for stacked toasts. Wraps `Toast.Provider` from Vase UI and renders the styled toast viewport for `toastManager`.
+Renders its slot and the styled `ToastRegion` from UI SDK for `toastManager`. The region shows in the browser's top layer, so there is no portal. Other attributes, such as `max-visible`, `expanded` and `shortcut`, are forwarded to the region.
 
-| Prop          | Type                                                                                              | Default          | Description                                                                              |
-| ------------- | ------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------- |
-| `position`    | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-right"` | Position of the toast viewport                                                           |
-| `portalProps` | `ToastPortalProps`                                                                                | -                | Props forwarded to the internal portal (`container`, etc.); see Vase UI Toast portal API |
+| Prop       | Type                                                                                              | Default          | Description                  |
+| ---------- | ------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------- |
+| `position` | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right"` | `"bottom-right"` | Position of the toast region |
 
 ### AnchoredToastProvider
 
-Provider component for toasts anchored to specific elements. Use with `anchoredToastManager`.
-
-| Prop          | Type               | Default | Description                                                                              |
-| ------------- | ------------------ | ------- | ---------------------------------------------------------------------------------------- |
-| `portalProps` | `ToastPortalProps` | -       | Props forwarded to the internal portal (`container`, etc.); see Vase UI Toast portal API |
+Renders its slot and the region for toasts anchored to specific elements. Use with `anchoredToastManager`. It takes no props of its own; attributes are forwarded to the `ToastRegion`.
 
 ### toastManager
 
-Manager object for creating stacked toasts. Use `toastManager.add()` to show a toast. Pass the same `id` on a later `add` to update that toast in place (dedupe) instead of stacking a duplicate.
+Manager object for creating stacked toasts, built on a UI SDK toaster.
+
+| Method                       | Description                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `add(options)`               | Shows a toast and returns its id. Pass the same `id` later to update that toast in place instead of stacking it |
+| `update(id, options)`        | Updates a toast; returns whether it was still showing                                                           |
+| `close(id?)`                 | Closes one toast, or every toast without an id                                                                  |
+| `promise(promise, messages)` | Shows `loading`, then `success` or `error` in the same toast. Returns the toast's id                            |
+
+`options` are the [UI SDK toast options](https://ui-sdk.dev/docs/components/toast#api-reference): `title`, `description`, `type`, `duration` (milliseconds, `Infinity` to keep it; a `loading` toast stays until updated), `action: { label, onAction }`, `cancel`, `dismissible`, `data` and `onDismiss`.
 
 ### anchoredToastManager
 
-Manager object for creating anchored toasts. Use `anchoredToastManager.add()` with `positionerProps.anchor` to show a toast anchored to an element. Repeated `add` calls with the same `id` update in place, same as stacked toasts.
+Manager object for creating anchored toasts, with `add(options)` and `close(id?)`. Use `anchoredToastManager.add()` with `positionerProps.anchor` to show a toast anchored to an element; `positionerProps` also takes `side` (`"top"` by default), `align`, `sideOffset`, `alignOffset` and `collisionPadding`. Repeated `add` calls with the same `id` update in place, same as stacked toasts.
 
-The viewport, toast, title, description, action and close parts are rendered by the providers; the raw Vase UI parts are exported as `ToastPrimitive` if you need a custom layout.
+The region, toast, title, description and action parts are rendered by the providers; the raw UI SDK parts are exported as `ToastPrimitive` if you need a custom layout.
 
 ## Examples
 

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { PopoverDescriptionProps } from '@vase-ui/vue/popover'
 import type { HTMLAttributes } from 'vue'
-import { Popover as PopoverPrimitive } from '@vase-ui/vue/popover'
+import * as PopoverPrimitive from '@ui-sdk/vue/popover'
 import { cn } from '../../../lib/utils'
+
+type PopoverDescriptionProps = InstanceType<typeof PopoverPrimitive.PopoverDescription>['$props']
 
 interface Props extends /* @vue-ignore */ PopoverDescriptionProps {
   class?: HTMLAttributes['class']
@@ -12,10 +13,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <PopoverPrimitive.Description
-    data-slot="popover-description"
-    :class="cn('text-muted-foreground text-sm', props.class)"
-  >
+  <PopoverPrimitive.PopoverDescription :class="cn('text-muted-foreground text-sm', props.class)">
     <slot />
-  </PopoverPrimitive.Description>
+  </PopoverPrimitive.PopoverDescription>
 </template>

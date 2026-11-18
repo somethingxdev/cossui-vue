@@ -8,9 +8,9 @@ import {
 
 const items = [
   {
-    content: 'Vase UI is a library of high-quality unstyled Vue components for design systems and web apps.',
+    content: 'UI SDK is a library of high-quality unstyled Vue components for design systems and web apps.',
     id: '1',
-    title: 'What is Vase UI?',
+    title: 'What is UI SDK?',
   },
   {
     content: 'Head to the "Quick start" guide in the docs. If you\'ve used unstyled libraries before, you\'ll feel at home.',
@@ -18,7 +18,7 @@ const items = [
     title: 'How do I get started?',
   },
   {
-    content: 'Of course! Vase UI is free and open source.',
+    content: 'Of course! UI SDK is free and open source.',
     id: '3',
     title: 'Can I use it for my project?',
   },

@@ -19,23 +19,23 @@ import { Meter, MeterLabel, MeterValue } from '@/components/ui/meter'
 
 ### Meter
 
-Root component. Styled wrapper for `Meter.Root` from Vase UI with flex column layout. When no slot content is provided, automatically renders a track and indicator.
+Root component. Styled wrapper for `Meter` from UI SDK with flex column layout. When no slot content is provided, automatically renders a track and indicator.
 
 ### MeterTrack
 
-Track container for the meter indicator. Styled wrapper for `Meter.Track` from Vase UI.
+Track container for the meter indicator. Styled wrapper for `MeterTrack` from UI SDK.
 
 ### MeterIndicator
 
-Visual indicator showing the current value. Styled wrapper for `Meter.Indicator` from Vase UI.
+Visual indicator showing the current value. Styled wrapper for `MeterIndicator` from UI SDK.
 
 ### MeterLabel
 
-Label text for the meter. Styled wrapper for `Meter.Label` from Vase UI.
+Label text for the meter. Styled wrapper for `MeterLabel` from UI SDK.
 
 ### MeterValue
 
-Displays the current value. Styled wrapper for `Meter.Value` from Vase UI. Use the default slot (`v-slot="{ formattedValue, value }"`) to customize the rendered text.
+Displays the current value. Styled wrapper for `MeterValue` from UI SDK. Use the default slot (`v-slot="{ formattedValue, value }"`) to customize the rendered text.
 
 ## Examples
 

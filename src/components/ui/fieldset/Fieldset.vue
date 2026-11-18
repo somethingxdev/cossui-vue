@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { FieldsetRootProps } from '@vase-ui/vue/fieldset'
-import { Fieldset as FieldsetPrimitive } from '@vase-ui/vue/fieldset'
+import * as FieldPrimitive from '@ui-sdk/vue/field'
 
-interface Props extends /* @vue-ignore */ FieldsetRootProps {}
+type FieldSetProps = InstanceType<typeof FieldPrimitive.FieldSet>['$props']
+
+interface Props extends /* @vue-ignore */ FieldSetProps {}
 
 defineProps<Props>()
 </script>
 
 <template>
-  <FieldsetPrimitive.Root data-slot="fieldset">
+  <FieldPrimitive.FieldSet>
     <slot />
-  </FieldsetPrimitive.Root>
+  </FieldPrimitive.FieldSet>
 </template>

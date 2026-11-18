@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { ProgressRootProps } from '@vase-ui/vue/progress'
 import type { HTMLAttributes } from 'vue'
-import { Progress as ProgressPrimitive } from '@vase-ui/vue/progress'
+import * as ProgressPrimitive from '@ui-sdk/vue/progress'
 import { cn } from '../../../lib/utils'
 import ProgressIndicator from './ProgressIndicator.vue'
 import ProgressTrack from './ProgressTrack.vue'
+
+type ProgressRootProps = InstanceType<typeof ProgressPrimitive.Progress>['$props']
 
 interface Props extends /* @vue-ignore */ ProgressRootProps {
   value: ProgressRootProps['value']
@@ -15,8 +16,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <ProgressPrimitive.Root
-    data-slot="progress"
+  <ProgressPrimitive.Progress
     :value="props.value"
     :class="cn('flex w-full flex-col gap-2', props.class)"
   >
@@ -25,5 +25,5 @@ const props = defineProps<Props>()
         <ProgressIndicator />
       </ProgressTrack>
     </slot>
-  </ProgressPrimitive.Root>
+  </ProgressPrimitive.Progress>
 </template>

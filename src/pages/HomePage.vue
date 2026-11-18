@@ -20,7 +20,7 @@ const cornerMarks = 'before:absolute before:top-[-3.5px] before:-left-[11.5px] b
           The accessible components of
           <a class="underline underline-offset-4 hover:text-foreground" href="https://coss.com/ui" target="_blank" rel="noreferrer">coss ui</a>,
           ported to Vue, powered by
-          <a class="underline underline-offset-4 hover:text-foreground" href="https://vase-ui.com" target="_blank" rel="noreferrer">Vase UI</a>
+          <a class="underline underline-offset-4 hover:text-foreground" href="https://ui-sdk.dev" target="_blank" rel="noreferrer">UI SDK</a>
           and styled with Tailwind CSS. Source code you can make your own.
         </p>
         <div class="mt-1 flex flex-wrap gap-2">

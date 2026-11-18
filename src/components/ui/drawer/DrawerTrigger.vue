@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { DrawerTriggerProps } from '@vase-ui/vue/drawer'
-import { Drawer as DrawerPrimitive } from '@vase-ui/vue/drawer'
+import type { Component } from 'vue'
+import * as DrawerPrimitive from '@ui-sdk/vue/drawer'
 
-interface Props extends /* @vue-ignore */ DrawerTriggerProps {}
+type DrawerTriggerProps = InstanceType<typeof DrawerPrimitive.DrawerTrigger>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ DrawerTriggerProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <DrawerPrimitive.Trigger data-slot="drawer-trigger">
-    <slot />
-  </DrawerPrimitive.Trigger>
+  <DrawerPrimitive.DrawerTrigger>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </DrawerPrimitive.DrawerTrigger>
 </template>

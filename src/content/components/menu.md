@@ -70,32 +70,37 @@ import {
 
 ### Menu
 
-Root component. Alias for `Menu.Root` from Vase UI. Also exported as `DropdownMenu`.
+Root component. Alias for `Menu` from UI SDK. Supports `v-model:open`. Also exported as `DropdownMenu`.
+
+### createMenuController
+
+Creates a controller for detached triggers, from UI SDK. Pass it as `controller` to the `Menu` and to triggers elsewhere in the tree, or call `open()` and `close()` on it. Also exported as `MenuCreateHandle` and `DropdownMenuCreateHandle`.
 
 ### MenuTrigger
 
-Trigger button that opens the menu. Styled wrapper for `Menu.Trigger` from Vase UI. Use the `as` prop to render it as another component (e.g. `:as="Button"`). Also exported as `DropdownMenuTrigger`.
+Trigger button that opens the menu. Wrapper for `MenuTrigger` from UI SDK. Use the `as` prop to render it as another component (e.g. `:as="Button"`). Also exported as `DropdownMenuTrigger`.
 
 ### MenuPopup
 
-Popup container that displays the menu content. Also exported as `DropdownMenuContent`.
+Popup container that displays the menu content. Styled wrapper for `MenuContent` from UI SDK. Also exported as `DropdownMenuContent`.
 
-| Prop          | Type                                                                       | Default    | Description                                                                                            |
-| ------------- | -------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------ |
-| `side`        | `"top" \| "bottom" \| "left" \| "right" \| "inline-start" \| "inline-end"` | `"bottom"` | Side of the trigger to position the popup                                                              |
-| `align`       | `"start" \| "center" \| "end"`                                             | `"center"` | Alignment relative to the trigger                                                                      |
-| `sideOffset`  | `number`                                                                   | `4`        | Distance from the trigger in pixels                                                                    |
-| `alignOffset` | `number`                                                                   | -          | Offset along the alignment axis                                                                        |
-| `anchor`      | `Element \| VirtualElement \| null`                                        | -          | Element to position the popup against (defaults to the trigger)                                        |
-| `portalProps` | `MenuPortalProps`                                                          | -          | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Menu portal API |
+| Prop          | Type                                                         | Default    | Description                                                  |
+| ------------- | ------------------------------------------------------------ | ---------- | ------------------------------------------------------------ |
+| `side`        | `"top" \| "bottom" \| "left" \| "right" \| "start" \| "end"` | `"bottom"` | Side of the trigger to position the popup                    |
+| `align`       | `"start" \| "center" \| "end"`                               | `"center"` | Alignment relative to the trigger                            |
+| `sideOffset`  | `number`                                                     | `4`        | Distance from the trigger in pixels                          |
+| `alignOffset` | `number`                                                     | -          | Offset along the alignment axis                              |
+| `anchor`      | `Element \| string \| { x, y } \| null`                      | -          | What to position the popup against (defaults to the trigger) |
+
+Other `MenuContent` props from UI SDK, such as `collisionPadding`, `keepMounted` and `container`, pass through. There is no portal: the popup renders in the browser's top layer.
 
 ### MenuGroup
 
-Groups related menu items. Styled wrapper for `Menu.Group` from Vase UI. Also exported as `DropdownMenuGroup`.
+Groups related menu items. Alias for `MenuGroup` from UI SDK. Also exported as `DropdownMenuGroup`.
 
 ### MenuItem
 
-Individual menu item. Also exported as `DropdownMenuItem`.
+Individual menu item. Styled wrapper for `MenuItem` from UI SDK: it closes the menu when chosen unless `:close-on-select="false"`, and `@select` runs when it is chosen. Also exported as `DropdownMenuItem`.
 
 | Prop      | Type                         | Default     | Description                                           |
 | --------- | ---------------------------- | ----------- | ----------------------------------------------------- |
@@ -121,7 +126,7 @@ Profile
 
 ### MenuLinkItem
 
-Link menu item for navigation. **`LinkItem`** renders a native **`<a>`** when you pass **`href`**. Styled like **`MenuItem`**.
+Link menu item for navigation. A `MenuItem` rendered as a native **`<a>`**, or as the component you pass to **`as`**.
 
 | Prop           | Type                         | Default     | Description                                                    |
 | -------------- | ---------------------------- | ----------- | -------------------------------------------------------------- |
@@ -148,7 +153,7 @@ Docs
 
 ### MenuCheckboxItem
 
-Checkbox menu item. Supports `v-model:checked`. Also exported as `DropdownMenuCheckboxItem`.
+Checkbox menu item. Styled wrapper for `MenuCheckboxItem` from UI SDK. Supports `v-model:checked` and `default-checked`. `value` is optional here; pass one to tell items apart in the `@checked-change` of `Menu`. Also exported as `DropdownMenuCheckboxItem`.
 
 | Prop      | Type                    | Default     | Description                                              |
 | --------- | ----------------------- | ----------- | -------------------------------------------------------- |
@@ -156,11 +161,11 @@ Checkbox menu item. Supports `v-model:checked`. Also exported as `DropdownMenuCh
 
 ### MenuRadioGroup
 
-Groups radio menu items. Styled wrapper for `Menu.RadioGroup` from Vase UI. Supports `v-model:value`. Also exported as `DropdownMenuRadioGroup`.
+Groups radio menu items. Alias for `MenuRadioGroup` from UI SDK. Supports `v-model:value`. Also exported as `DropdownMenuRadioGroup`.
 
 ### MenuRadioItem
 
-Radio menu item. Styled wrapper for `Menu.RadioItem` from Vase UI. Requires a `value`. Also exported as `DropdownMenuRadioItem`.
+Radio menu item. Styled wrapper for `MenuRadioItem` from UI SDK. Requires a `value`. Also exported as `DropdownMenuRadioItem`.
 
 ### MenuGroupLabel
 
@@ -172,19 +177,19 @@ Label for a menu group. Also exported as `DropdownMenuLabel`.
 
 ### MenuSeparator
 
-Visual separator between menu items. Styled wrapper for `Menu.Separator` from Vase UI. Also exported as `DropdownMenuSeparator`.
+Visual separator between menu items. Styled wrapper for `MenuSeparator` from UI SDK. Also exported as `DropdownMenuSeparator`.
 
 ### MenuShortcut
 
-Displays keyboard shortcut text. Custom component (not a Vase UI wrapper). Also exported as `DropdownMenuShortcut`.
+Displays keyboard shortcut text. Custom component (not a UI SDK wrapper). Also exported as `DropdownMenuShortcut`.
 
 ### MenuSub
 
-Submenu container. Alias for `Menu.SubmenuRoot` from Vase UI. Also exported as `DropdownMenuSub`.
+Submenu container. Alias for `MenuSub` from UI SDK. Also exported as `DropdownMenuSub`.
 
 ### MenuSubTrigger
 
-Trigger for opening a submenu. Also exported as `DropdownMenuSubTrigger`.
+Trigger for opening a submenu. Styled wrapper for `MenuSubTrigger` from UI SDK. Also exported as `DropdownMenuSubTrigger`.
 
 | Prop    | Type      | Default | Description                                           |
 | ------- | --------- | ------- | ----------------------------------------------------- |
@@ -192,7 +197,7 @@ Trigger for opening a submenu. Also exported as `DropdownMenuSubTrigger`.
 
 ### MenuSubPopup
 
-Popup for submenu content. Also exported as `DropdownMenuSubContent`.
+Popup for submenu content. Styled wrapper for `MenuSubContent` from UI SDK. Also exported as `DropdownMenuSubContent`.
 
 | Prop          | Type                           | Default   | Description                                                                      |
 | ------------- | ------------------------------ | --------- | -------------------------------------------------------------------------------- |
@@ -203,6 +208,8 @@ Popup for submenu content. Also exported as `DropdownMenuSubContent`.
 ## Examples
 
 ### Open on Hover
+
+UI SDK menus open on press. To open one on hover, control it with `v-model:open` and set it from pointer events on the trigger and the popup.
 
 <ComponentPreview name="menu-2" />
 
@@ -232,7 +239,9 @@ Popup for submenu content. Also exported as `DropdownMenuSubContent`.
 
 <ComponentPreview name="menu-7" />
 
-### Close on Click
+### Close on Select
+
+Items close the menu when chosen; checkbox and radio items keep it open. `close-on-select` changes either default.
 
 <ComponentPreview name="menu-8" />
 

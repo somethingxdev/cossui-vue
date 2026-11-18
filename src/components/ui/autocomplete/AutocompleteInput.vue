@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { AutocompleteClearProps, AutocompleteInputProps, AutocompleteTriggerProps } from '@vase-ui/vue/autocomplete'
 import type { HTMLAttributes } from 'vue'
 import { ChevronsUpDownIcon } from '@lucide/vue'
-import { Autocomplete as AutocompletePrimitive } from '@vase-ui/vue/autocomplete'
+import * as AutocompletePrimitive from '@ui-sdk/vue/autocomplete'
 import { computed, useTemplateRef } from 'vue'
 import { cn } from '../../../lib/utils'
 import AutocompleteClear from './AutocompleteClear.vue'
 import AutocompleteTrigger from './AutocompleteTrigger.vue'
 
-interface Props extends /* @vue-ignore */ Omit<AutocompleteInputProps, 'size'> {
+// Input attributes fall through untyped: extending `InputHTMLAttributes` with `size` redeclared fails vue-tsc (TS2590).
+interface Props {
   showTrigger?: boolean
   showClear?: boolean
   size?: 'sm' | 'default' | 'lg' | number
-  triggerProps?: AutocompleteTriggerProps
-  clearProps?: AutocompleteClearProps
+  triggerProps?: Record<string, unknown>
+  clearProps?: Record<string, unknown>
   class?: HTMLAttributes['class']
 }
 
@@ -30,11 +30,11 @@ const buttonClass = computed(() => cn(
     : 'end-0.5',
 ))
 
-const input = useTemplateRef<{ element: HTMLElement | null }>('input')
+const input = useTemplateRef<{ $el: HTMLElement | null }>('input')
 
 // The ref of coss ui goes to the `<input>`.
 defineExpose({
-  element: computed(() => input.value?.element ?? null),
+  element: computed(() => input.value?.$el ?? null),
 })
 
 // The markup of `Input` is inlined: the part needs its ref on the `<input>` and its `data-slot`
@@ -42,7 +42,7 @@ defineExpose({
 </script>
 
 <template>
-  <AutocompletePrimitive.InputGroup
+  <div
     data-slot="autocomplete-input-group"
     class="relative not-has-[>*.w-full]:w-fit w-full text-foreground has-disabled:opacity-64"
   >
@@ -66,10 +66,9 @@ defineExpose({
         props.class,
       )"
     >
-      <AutocompletePrimitive.Input
+      <AutocompletePrimitive.AutocompleteInput
         ref="input"
         v-bind="$attrs"
-        data-slot="autocomplete-input"
         :size="typeof props.size === 'number' ? props.size : undefined"
         :class="cn(
           'h-8.5 w-full min-w-0 rounded-[inherit] px-[calc(--spacing(3)-1px)] text-foreground leading-8.5 outline-none [transition:background-color_5000000s_ease-in-out_0s] placeholder:text-muted-foreground/72 sm:h-7.5 sm:leading-7.5 autofill:[-webkit-text-fill-color:var(--foreground)]',
@@ -78,11 +77,9 @@ defineExpose({
         )"
       />
     </span>
-    <AutocompleteTrigger v-if="props.showTrigger" :class="buttonClass" v-bind="props.triggerProps">
-      <AutocompletePrimitive.Icon data-slot="autocomplete-icon">
-        <ChevronsUpDownIcon />
-      </AutocompletePrimitive.Icon>
+    <AutocompleteTrigger v-if="props.showTrigger" aria-label="Show suggestions" :class="buttonClass" v-bind="props.triggerProps">
+      <ChevronsUpDownIcon data-slot="autocomplete-icon" />
     </AutocompleteTrigger>
     <AutocompleteClear v-if="props.showClear" :class="buttonClass" v-bind="props.clearProps" />
-  </AutocompletePrimitive.InputGroup>
+  </div>
 </template>

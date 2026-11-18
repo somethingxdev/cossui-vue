@@ -16,13 +16,13 @@ const items = [
 </script>
 
 <template>
-  <Select aria-label="Select fruit" :default-value="items[0]" :items="items">
+  <Select default-value="apple" :items="items">
     <SelectLabel>Fruits</SelectLabel>
     <SelectTrigger>
       <SelectValue />
     </SelectTrigger>
     <SelectPopup>
-      <SelectItem v-for="item in items" :key="item.value" :value="item">
+      <SelectItem v-for="item in items" :key="item.value" :value="item.value">
         {{ item.label }}
       </SelectItem>
     </SelectPopup>

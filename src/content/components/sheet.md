@@ -41,23 +41,24 @@ import {
 
 ### Sheet
 
-Root component. Alias for `Dialog.Root` from Vase UI. Supports `v-model:open`.
+Root component. Alias for `Dialog` from [UI SDK](https://ui-sdk.dev/docs/components/dialog). Supports `v-model:open`.
 
 ### SheetTrigger
 
-Trigger button that opens the sheet. Styled wrapper for `Dialog.Trigger` from Vase UI.
+Trigger button that opens the sheet. Wrapper for `DialogTrigger` from UI SDK. Pass `as` to render another component, such as `Button`.
 
 ### SheetPopup
 
-Popup container that displays the sheet content. Also exported as `SheetContent`.
+Popup container that displays the sheet content. Styled wrapper for `DialogContent` from UI SDK, which renders in the browser's top layer and pins itself to the chosen side, so there is no portal. Also exported as `SheetContent`.
 
-| Prop              | Type                                     | Default     | Description                                                                                              |
-| ----------------- | ---------------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------- |
-| `side`            | `"right" \| "left" \| "top" \| "bottom"` | `"right"`   | Controls which side of the screen the sheet opens from                                                   |
-| `variant`         | `"default" \| "inset"`                   | `"default"` | Controls the sheet style. `inset` adds spacing around the sheet on desktop screens                       |
-| `showCloseButton` | `boolean`                                | `true`      | When true, displays a close button in the top-right corner                                               |
-| `closeProps`      | `DialogCloseProps`                       | -           | Props forwarded to the internal close button                                                             |
-| `portalProps`     | `DialogPortalProps`                      | -           | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Dialog portal API |
+| Prop              | Type                                     | Default     | Description                                                                        |
+| ----------------- | ---------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
+| `side`            | `"right" \| "left" \| "top" \| "bottom"` | `"right"`   | Controls which side of the screen the sheet opens from                             |
+| `variant`         | `"default" \| "inset"`                   | `"default"` | Controls the sheet style. `inset` adds spacing around the sheet on desktop screens |
+| `showCloseButton` | `boolean`                                | `true`      | When true, displays a close button in the top-right corner                         |
+| `closeProps`      | `DialogCloseProps`                       | -           | Props forwarded to the internal close button                                       |
+
+Other props, such as `keepMounted`, `container`, `initialFocus` and `finalFocus`, are forwarded to `DialogContent`.
 
 **Example:**
 
@@ -102,11 +103,11 @@ Footer section for action buttons.
 
 ### SheetTitle
 
-Title component. Styled wrapper for `Dialog.Title` from Vase UI.
+Title component. Styled wrapper for `DialogTitle` from UI SDK.
 
 ### SheetDescription
 
-Description component. Styled wrapper for `Dialog.Description` from Vase UI.
+Description component. Styled wrapper for `DialogDescription` from UI SDK.
 
 ### SheetPanel
 
@@ -127,15 +128,11 @@ Scrollable content container. Automatically wraps content in a `ScrollArea` comp
 
 ### SheetClose
 
-Close button component. Styled wrapper for `Dialog.Close` from Vase UI.
-
-### SheetPortal
-
-Portal component for rendering outside the DOM hierarchy. Alias for `Dialog.Portal` from Vase UI.
+Close button component. Wrapper for `DialogClose` from UI SDK. Pass `as` to render another component.
 
 ### SheetBackdrop
 
-Backdrop/overlay component. Also exported as `SheetOverlay`. Styled wrapper for `Dialog.Backdrop` from Vase UI.
+Backdrop/overlay component. Also exported as `SheetOverlay`. Styled wrapper for `DialogBackdrop` from UI SDK. `SheetPopup` renders it internally.
 
 ## Examples
 

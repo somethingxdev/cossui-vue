@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { ComboboxGroupProps } from '@vase-ui/vue/combobox'
 import type { HTMLAttributes } from 'vue'
-import { Combobox as ComboboxPrimitive } from '@vase-ui/vue/combobox'
+import * as ComboboxPrimitive from '@ui-sdk/vue/combobox'
 import { cn } from '../../../lib/utils'
+
+type ComboboxGroupProps = InstanceType<typeof ComboboxPrimitive.ComboboxGroup>['$props']
 
 interface Props extends /* @vue-ignore */ ComboboxGroupProps {
   class?: HTMLAttributes['class']
@@ -12,10 +13,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <ComboboxPrimitive.Group
-    data-slot="combobox-group"
-    :class="cn('[[role=group]+&]:mt-1.5', props.class)"
-  >
+  <ComboboxPrimitive.ComboboxGroup :class="cn('[[role=group]+&]:mt-1.5', props.class)">
     <slot />
-  </ComboboxPrimitive.Group>
+  </ComboboxPrimitive.ComboboxGroup>
 </template>

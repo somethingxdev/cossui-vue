@@ -16,7 +16,11 @@ import { Checkbox } from '@/components/ui/checkbox'
 
 ### Checkbox
 
-Styled wrapper for `Checkbox.Root` from Vase UI. Includes a built-in indicator with checkmark and indeterminate icons. Supports `v-model:checked`.
+Styled wrapper for [`Checkbox`](https://ui-sdk.dev/docs/components/checkbox) from UI SDK. Includes a built-in indicator with checkmark and indeterminate icons. Supports `v-model:checked`; the checked state is `true`, `false` or `"indeterminate"`.
+
+| Prop     | Type      | Description                                                           |
+| -------- | --------- | --------------------------------------------------------------------- |
+| `parent` | `boolean` | Makes it the parent of its `CheckboxGroup`: it checks or unchecks all |
 
 ## Examples
 

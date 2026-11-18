@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { PopoverTriggerProps } from '@vase-ui/vue/popover'
-import { Popover as PopoverPrimitive } from '@vase-ui/vue/popover'
+import type { Component } from 'vue'
+import * as PopoverPrimitive from '@ui-sdk/vue/popover'
 
-interface Props extends /* @vue-ignore */ PopoverTriggerProps {}
+type PopoverTriggerProps = InstanceType<typeof PopoverPrimitive.PopoverTrigger>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ PopoverTriggerProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <PopoverPrimitive.Trigger data-slot="popover-trigger">
-    <slot />
-  </PopoverPrimitive.Trigger>
+  <PopoverPrimitive.PopoverTrigger>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </PopoverPrimitive.PopoverTrigger>
 </template>

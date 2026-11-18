@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { MeterValueProps } from '@vase-ui/vue/meter'
 import type { HTMLAttributes } from 'vue'
-import { Meter as MeterPrimitive } from '@vase-ui/vue/meter'
+import * as MeterPrimitive from '@ui-sdk/vue/meter'
 import { cn } from '../../../lib/utils'
+
+type MeterValueProps = InstanceType<typeof MeterPrimitive.MeterValue>['$props']
 
 interface Props extends /* @vue-ignore */ MeterValueProps {
   class?: HTMLAttributes['class']
@@ -16,12 +17,11 @@ defineSlots<{
 </script>
 
 <template>
-  <MeterPrimitive.Value
-    data-slot="meter-value"
+  <MeterPrimitive.MeterValue
     :class="cn('text-foreground text-sm tabular-nums', props.class)"
   >
-    <template v-if="$slots.default" #default="{ formattedValue, value }">
-      <slot :formatted-value="formattedValue" :value="value" />
+    <template v-if="$slots.default" #default="{ state }">
+      <slot :formatted-value="state.text" :value="state.value" />
     </template>
-  </MeterPrimitive.Value>
+  </MeterPrimitive.MeterValue>
 </template>

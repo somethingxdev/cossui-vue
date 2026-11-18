@@ -14,7 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 ## Field Integration
 
-Unlike Vase UI's built-in form controls, Vase UI does not provide a native Textarea primitive. This component wraps the native `<textarea>` element in `Field.Control` internally, so it integrates with `Field` out of the box, with no need to wrap it in a `FieldControl` manually.
+This component wraps `Textarea` from UI SDK, which integrates with `Field` out of the box, with no need to wrap it in a `FieldControl`.
 
 ```vue
 <Field>
@@ -29,7 +29,7 @@ Unlike Vase UI's built-in form controls, Vase UI does not provide a native Texta
 
 ### Textarea
 
-Styled native textarea element with custom size options.
+Styled wrapper for [`Textarea`](https://ui-sdk.dev/docs/components/textarea) from UI SDK with custom size options.
 
 | Prop       | Type                                  | Default     | Description                                                 |
 | ---------- | ------------------------------------- | ----------- | ----------------------------------------------------------- |

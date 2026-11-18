@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
 import {
   Autocomplete,
   AutocompleteEmpty,
@@ -8,7 +7,6 @@ import {
   AutocompleteList,
   AutocompletePopup,
   AutocompleteStatus,
-  useAutocompleteFilter,
 } from '../components/ui/autocomplete'
 
 // Limit results demo
@@ -41,33 +39,23 @@ const manyTags: SimpleTag[] = [
   { id: 'lang-fsharp', value: 'F#' },
 ]
 
-const value = shallowRef('')
-const { contains } = useAutocompleteFilter({ sensitivity: 'base' })
-
-const totalMatches = computed(() => {
-  const trimmed = value.value.trim()
-  if (!trimmed)
-    return manyTags.length
-  return manyTags.filter(t => contains(t.value, trimmed)).length
-})
-
-const moreCount = computed(() => Math.max(0, totalMatches.value - limit))
+const tags = manyTags.map(tag => tag.value)
 </script>
 
 <template>
-  <Autocomplete v-model:value="value" :items="manyTags" :limit="limit">
-    <AutocompleteInput placeholder="e.g. feature" />
+  <Autocomplete :items="tags">
+    <AutocompleteInput aria-label="Search tags" placeholder="e.g. feature" />
     <AutocompletePopup>
       <AutocompleteEmpty>No tags found.</AutocompleteEmpty>
-      <AutocompleteList>
-        <template #item="{ item: tag }: { item: SimpleTag }">
-          <AutocompleteItem :key="tag.id" :value="tag">
-            {{ tag.value }}
-          </AutocompleteItem>
-        </template>
+      <AutocompleteList v-slot="{ state }">
+        <AutocompleteItem v-for="tag in state.items.slice(0, limit)" :key="tag" :value="tag">
+          {{ tag }}
+        </AutocompleteItem>
       </AutocompleteList>
-      <AutocompleteStatus v-if="moreCount > 0">
-        +{{ moreCount }} more (keep typing to narrow down)
+      <AutocompleteStatus v-slot="{ state }">
+        <template v-if="state.count > limit">
+          +{{ state.count - limit }} more (keep typing to narrow down)
+        </template>
       </AutocompleteStatus>
     </AutocompletePopup>
   </Autocomplete>

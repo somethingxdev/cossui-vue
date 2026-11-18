@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
     :class="cn(
       'flex flex-col-reverse gap-2 px-6 sm:flex-row sm:justify-end',
       props.variant === 'default' && 'border-t bg-muted/72 py-4',
-      props.variant === 'bare' && 'in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pt-3 pt-4 pb-6',
+      props.variant === 'bare' && 'in-[[data-slot=dialog-content]:has([data-slot=sheet-panel])]:pt-3 pt-4 pb-6',
       props.class,
     )"
   >

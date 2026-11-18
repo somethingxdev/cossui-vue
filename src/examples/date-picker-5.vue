@@ -7,7 +7,7 @@ import {
   DatePickerPopup,
 } from '../components/ui/date-picker'
 
-const date = shallowRef<Temporal.PlainDate | null>(null)
+const date = shallowRef<string | null>(null)
 </script>
 
 <template>

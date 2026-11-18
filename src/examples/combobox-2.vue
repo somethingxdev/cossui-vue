@@ -23,13 +23,13 @@ const items = [
 </script>
 
 <template>
-  <Combobox :default-value="items[2]" disabled :items="items">
+  <Combobox default-value="orange" disabled :items="items">
     <ComboboxInput aria-label="Select an item" placeholder="Select an item…" />
     <ComboboxPopup>
       <ComboboxEmpty>No items found.</ComboboxEmpty>
       <ComboboxList>
         <template #item="{ item }">
-          <ComboboxItem :key="item.value" :value="item">
+          <ComboboxItem :key="item.value" :value="item.value">
             {{ item.label }}
           </ComboboxItem>
         </template>

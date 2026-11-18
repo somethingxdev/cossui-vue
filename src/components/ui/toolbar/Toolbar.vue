@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { ToolbarRootProps } from '@vase-ui/vue/toolbar'
 import type { HTMLAttributes } from 'vue'
-import { Toolbar as ToolbarPrimitive } from '@vase-ui/vue/toolbar'
+import * as ToolbarPrimitive from '@ui-sdk/vue/toolbar'
 import { cn } from '../../../lib/utils'
 
-interface Props extends /* @vue-ignore */ ToolbarRootProps {
+type ToolbarProps = InstanceType<typeof ToolbarPrimitive.Toolbar>['$props']
+
+interface Props extends /* @vue-ignore */ ToolbarProps {
   class?: HTMLAttributes['class']
 }
 
@@ -12,10 +13,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <ToolbarPrimitive.Root
-    :class="cn('relative flex gap-2 rounded-xl border bg-card not-dark:bg-clip-padding p-1 text-card-foreground', props.class)"
-    data-slot="toolbar"
-  >
+  <ToolbarPrimitive.Toolbar :class="cn('relative flex gap-2 rounded-xl border bg-card not-dark:bg-clip-padding p-1 text-card-foreground', props.class)">
     <slot />
-  </ToolbarPrimitive.Root>
+  </ToolbarPrimitive.Toolbar>
 </template>

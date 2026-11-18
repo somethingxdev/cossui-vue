@@ -1,6 +1,0 @@
-export { default as DateRangePickerCalendar } from './DateRangePickerCalendar.vue'
-export { default as DateRangePickerField } from './DateRangePickerField.vue'
-export { default as DateRangePickerPopup } from './DateRangePickerPopup.vue'
-export { default as DateRangePickerTrigger } from './DateRangePickerTrigger.vue'
-export { DateRangePickerRoot as DateRangePicker } from '@vase-ui/vue/date-range-picker'
-export { DateRangePicker as DateRangePickerPrimitive } from '@vase-ui/vue/date-range-picker'

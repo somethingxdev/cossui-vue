@@ -14,46 +14,47 @@ import {
 
 ```vue
 <OTPField aria-label="Verification code" :length="6">
-  <OTPFieldInput />
-  <OTPFieldInput aria-label="Character 2 of 6" />
-  <OTPFieldInput aria-label="Character 3 of 6" />
+  <OTPFieldInput :index="0" />
+  <OTPFieldInput :index="1" />
+  <OTPFieldInput :index="2" />
   <OTPFieldSeparator />
-  <OTPFieldInput aria-label="Character 4 of 6" />
-  <OTPFieldInput aria-label="Character 5 of 6" />
-  <OTPFieldInput aria-label="Character 6 of 6" />
+  <OTPFieldInput :index="3" />
+  <OTPFieldInput :index="4" />
+  <OTPFieldInput :index="5" />
 </OTPField>
 ```
 
 ## API Reference
 
-This component is built on Vase UI OTP Field. Each slot is a real `<input>`; order in the tree must match `length` on the root.
+This component is built on [UI SDK OTP Input](https://ui-sdk.dev/docs/components/otp-input). The root holds one native `<input>` that handles typing, paste, autofill and form submission; each slot displays one character of its value.
 
 ### OTPField
 
-Root component. Accepts the same props as `OTPField.Root`; `class` is merged with the default layout styles. Supports `v-model:value` and the `@value-change`, `@value-invalid` and `@value-complete` events.
+Root component. Accepts the same props as `OTPInput` from UI SDK; `class` is merged with the default layout styles. Supports `v-model:value` and the `@value-change` and `@value-commit` events (`@value-commit` runs when every slot is filled). `id`, `aria-label`, `aria-describedby` and `aria-invalid` go to the input.
 
-Use **`length`** (required) for the number of characters.
+Use **`length`** (required) for the number of characters; it is passed to UI SDK as `max-length`.
 
-| Prop             | Type                                               | Default     | Description                                        |
-| ---------------- | -------------------------------------------------- | ----------- | -------------------------------------------------- |
-| `size`           | `"default" \| "lg"`                                | `"default"` | Size applied to all slots in the field             |
-| `validationType` | `"numeric" \| "alpha" \| "alphanumeric" \| "none"` | `numeric`   | Which characters are accepted                      |
-| `mask`           | `boolean`                                          | `false`     | When `true`, masks entered characters in each slot |
+| Prop      | Type                                                | Default     | Description                                                    |
+| --------- | --------------------------------------------------- | ----------- | -------------------------------------------------------------- |
+| `size`    | `"default" \| "lg"`                                 | `"default"` | Size applied to all slots in the field                         |
+| `pattern` | `"digits" \| "letters" \| "alphanumeric" \| RegExp` | `"digits"`  | Which characters are accepted; anything else is ignored        |
+| `mask`    | `boolean`                                           | `false`     | When `true`, each slot shows a bullet instead of its character |
 
 ### OTPFieldInput
 
-Renders one OTP character input (Vase UI `OTPField.Input`). Slots are ordered by **DOM order** in the tree (no `index` prop).
+Renders one character of the code. Styled wrapper for `OTPInputSlot` from UI SDK, with the active ring and a blinking caret.
 
-| Prop          | Type     | Description                                                                                                 |
-| ------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| `class`       | `string` | Merged with the default slot styles                                                                         |
-| `placeholder` | `string` | Native placeholder; pair with `focus-visible:placeholder:text-transparent` if hints should hide when typing |
+| Prop          | Type     | Description                                                          |
+| ------------- | -------- | -------------------------------------------------------------------- |
+| `index`       | `number` | Required. Which character of the code the slot shows, from 0         |
+| `class`       | `string` | Merged with the default slot styles                                  |
+| `placeholder` | `string` | Hint shown while the slot is empty and is not the one typing goes to |
 
-Label the OTP control on the root (`OTPField`) with `aria-label` or a visible `<label>`/`FieldLabel`. The first `OTPFieldInput` should inherit that field label, while subsequent slots can use `aria-label` (for example, `Character 2 of 6`).
+Label the OTP control on the root (`OTPField`) with `aria-label` or a visible `FieldLabel`. Slots are not separate inputs, so they take no labels of their own.
 
 ### OTPFieldSeparator
 
-Visual separator between slot groups. Uses the design-system `Separator` inside `OTPField.Separator` for layout and accessibility.
+Visual separator between slot groups. Styled wrapper for `OTPInputSeparator` from UI SDK.
 
 ## Examples
 
@@ -69,9 +70,9 @@ Visual separator between slot groups. Uses the design-system `Separator` inside 
 
 <ComponentPreview name="otp-field-4" />
 
-### Custom normalization
+### Custom pattern
 
-Set `validation-type="none"` with `normalize-value` when you need to normalize pasted input before it reaches state, or to enforce custom character rules. Use `input-mode` for the virtual keyboard hint, and `@value-invalid` when you want to react to characters that were rejected after normalization.
+Pass a regular expression as `pattern` to enforce custom character rules; characters that do not match are dropped when typed or pasted. Use `input-mode` for the virtual keyboard hint.
 
 <ComponentPreview name="otp-field-6" />
 
@@ -81,13 +82,13 @@ Set `validation-type="none"` with `normalize-value` when you need to normalize p
 
 ### Alphanumeric
 
-Use `validation-type="alphanumeric"` for recovery, backup, or invite codes that mix letters and numbers.
+Use `pattern="alphanumeric"` for recovery, backup, or invite codes that mix letters and numbers.
 
 <ComponentPreview name="otp-field-8" />
 
 ### Placeholder hints
 
-Each slot is a real `<input>`, so `placeholder` and CSS behave as usual. Hide the placeholder on focus when the active slot should not show a hint.
+Pass `placeholder` to a slot to show a hint while it is empty. The hint hides in the active slot, where the caret is.
 
 <ComponentPreview name="otp-field-9" />
 

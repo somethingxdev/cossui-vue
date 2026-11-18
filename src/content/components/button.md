@@ -33,7 +33,7 @@ import { Button } from '@/components/ui/button'
 
 ## API Reference
 
-This is a custom component built on Vase UI's `useRender`, not a direct Vase UI wrapper.
+This is a custom component, not a wrapper of a UI SDK part. It renders a `button`, or the element or component you pass as `as`.
 
 ### Button
 

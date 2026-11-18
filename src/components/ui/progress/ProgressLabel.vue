@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { ProgressLabelProps } from '@vase-ui/vue/progress'
 import type { HTMLAttributes } from 'vue'
-import { Progress as ProgressPrimitive } from '@vase-ui/vue/progress'
+import * as ProgressPrimitive from '@ui-sdk/vue/progress'
 import { cn } from '../../../lib/utils'
+
+type ProgressLabelProps = InstanceType<typeof ProgressPrimitive.ProgressLabel>['$props']
 
 interface Props extends /* @vue-ignore */ ProgressLabelProps {
   class?: HTMLAttributes['class']
@@ -12,10 +13,9 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <ProgressPrimitive.Label
-    data-slot="progress-label"
+  <ProgressPrimitive.ProgressLabel
     :class="cn('font-medium text-sm', props.class)"
   >
     <slot />
-  </ProgressPrimitive.Label>
+  </ProgressPrimitive.ProgressLabel>
 </template>

@@ -32,7 +32,7 @@ const items = [
         <AutocompleteEmpty>No items found.</AutocompleteEmpty>
         <AutocompleteList>
           <template #item="{ item }">
-            <AutocompleteItem :key="item.value" :value="item">
+            <AutocompleteItem :key="item.value" :value="item.value">
               {{ item.label }}
             </AutocompleteItem>
           </template>

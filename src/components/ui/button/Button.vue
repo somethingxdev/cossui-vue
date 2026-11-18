@@ -1,17 +1,15 @@
 <script lang="ts">
-import type { UseRenderComponentProps, UseRenderElementProps } from '@vase-ui/vue/use-render'
-import type { HTMLAttributes } from 'vue'
+import type { ButtonHTMLAttributes, Component, HTMLAttributes } from 'vue'
 import type { ButtonVariants } from './variants'
 </script>
 
 <script setup lang="ts">
-import { mergeProps } from '@vase-ui/vue/merge-props'
-import { useRender } from '@vase-ui/vue/use-render'
 import { cn } from '../../../lib/utils'
 import { Spinner } from '../spinner'
 import { buttonVariants } from './variants'
 
-export interface ButtonProps extends UseRenderComponentProps, /* @vue-ignore */ UseRenderElementProps<'button'> {
+export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
+  as?: string | Component
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
   loading?: boolean
@@ -21,30 +19,20 @@ export interface ButtonProps extends UseRenderComponentProps, /* @vue-ignore */ 
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<ButtonProps>()
-
-defineSlots<{
-  default: () => unknown
-  render: useRender.RenderProp
-}>()
-
-const { element, elementProps, tag } = useRender(props, {
-  defaultTagName: 'button',
-  props: attrs => mergeProps<'button'>({
-    'class': cn(buttonVariants({ variant: props.variant, size: props.size }), props.class),
-    'data-slot': 'button',
-    'disabled': props.loading || props.disabled,
-    'aria-disabled': props.loading || undefined,
-    'data-loading': props.loading ? '' : undefined,
-  }, attrs),
-})
-
-defineExpose({ element })
+const props = withDefaults(defineProps<ButtonProps>(), { as: 'button' })
 </script>
 
 <template>
-  <slot v-if="$slots.render" name="render" :props="elementProps()" :state="{}" />
-  <component :is="tag" v-else v-bind="elementProps()">
+  <!-- $attrs last: a part that renders as this button (`:as="Button"`) keeps its own data-slot. -->
+  <component
+    :is="props.as"
+    data-slot="button"
+    :class="cn(buttonVariants({ variant: props.variant, size: props.size }), props.class)"
+    :disabled="props.loading || props.disabled"
+    :aria-disabled="props.loading || undefined"
+    :data-loading="props.loading ? '' : undefined"
+    v-bind="$attrs"
+  >
     <slot />
     <Spinner
       v-if="props.loading"

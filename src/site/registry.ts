@@ -18,7 +18,8 @@ const pages = import.meta.glob<ComponentPage>('../content/components/*.md')
 const componentSources = import.meta.glob<string>('../components/ui/*/*.{vue,ts}', { query: '?raw', import: 'default' })
 
 const KNOWN_DEPENDENCIES = [
-  '@vase-ui/vue',
+  '@ui-sdk/vue',
+  '@ui-sdk/core',
   'class-variance-authority',
   '@lucide/vue',
   '@vueuse/core',
@@ -59,5 +60,7 @@ export function componentDependencies(slug: string, files: SourceFile[]): string
 }
 
 export function packageDependencies(files: SourceFile[]): string[] {
-  return KNOWN_DEPENDENCIES.filter(dep => files.some(file => file.code.includes(`'${dep}`)))
+  // @ui-sdk/core is a peer dependency of @ui-sdk/vue, so it comes along with it.
+  const used = (dep: string): boolean => files.some(file => file.code.includes(`'${dep}`))
+  return KNOWN_DEPENDENCIES.filter(dep => used(dep) || (dep === '@ui-sdk/core' && used('@ui-sdk/vue')))
 }

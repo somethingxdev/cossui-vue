@@ -16,14 +16,14 @@ import { Input } from '@/components/ui/input'
 
 ### Input
 
-Styled wrapper for `Input` from Vase UI with custom size options.
+Styled wrapper for [`Input`](https://ui-sdk.dev/docs/components/input) from UI SDK with custom size options.
 
-| Prop          | Type                                  | Default     | Description                                                                                |
-| ------------- | ------------------------------------- | ----------- | ------------------------------------------------------------------------------------------ |
-| `size`        | `"sm" \| "default" \| "lg" \| number` | `"default"` | Controls the input height. Number values are passed to the native `size` attribute         |
-| `unstyled`    | `boolean`                             | `false`     | When true, removes the wrapper styling (border, shadow, etc.)                              |
-| `nativeInput` | `boolean`                             | `false`     | When true, renders a plain `<input>` instead of the Vase UI `Input` (no field integration) |
-| `value`       | `string \| number`                    | -           | The input value. Use `v-model:value` for two-way binding                                   |
+| Prop          | Type                                  | Default     | Description                                                                               |
+| ------------- | ------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `size`        | `"sm" \| "default" \| "lg" \| number` | `"default"` | Controls the input height. Number values are passed to the native `size` attribute        |
+| `unstyled`    | `boolean`                             | `false`     | When true, removes the wrapper styling (border, shadow, etc.)                             |
+| `nativeInput` | `boolean`                             | `false`     | When true, renders a plain `<input>` instead of the UI SDK `Input` (no field integration) |
+| `value`       | `string`                              | -           | The input value. Use `v-model:value` for two-way binding                                  |
 
 Other attributes (`type`, `placeholder`, `disabled`, …) are passed to the inner `<input>`; `class` goes to the wrapper.
 

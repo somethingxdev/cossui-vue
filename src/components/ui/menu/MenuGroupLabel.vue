@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { MenuGroupLabelProps } from '@vase-ui/vue/menu'
 import type { HTMLAttributes } from 'vue'
-import { Menu as MenuPrimitive } from '@vase-ui/vue/menu'
+import * as MenuPrimitive from '@ui-sdk/vue/menu'
 import { cn } from '../../../lib/utils'
+
+type MenuGroupLabelProps = InstanceType<typeof MenuPrimitive.MenuGroupLabel>['$props']
 
 interface Props extends /* @vue-ignore */ MenuGroupLabelProps {
   inset?: boolean
@@ -13,11 +14,10 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <MenuPrimitive.GroupLabel
+  <MenuPrimitive.MenuGroupLabel
     :class="cn('px-2 py-1.5 font-medium text-muted-foreground text-xs data-inset:ps-9 sm:data-inset:ps-8', props.class)"
     :data-inset="props.inset || undefined"
-    data-slot="menu-label"
   >
     <slot />
-  </MenuPrimitive.GroupLabel>
+  </MenuPrimitive.MenuGroupLabel>
 </template>

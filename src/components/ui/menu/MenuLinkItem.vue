@@ -1,33 +1,22 @@
 <script setup lang="ts">
-import type { MenuLinkItemProps } from '@vase-ui/vue/menu'
-import type { HTMLAttributes } from 'vue'
-import { Menu as MenuPrimitive } from '@vase-ui/vue/menu'
-import { cn } from '../../../lib/utils'
+import type { Component } from 'vue'
+import MenuItem from './MenuItem.vue'
 
-interface Props extends /* @vue-ignore */ MenuLinkItemProps {
-  inset?: boolean
-  variant?: 'default' | 'destructive'
+type MenuItemProps = InstanceType<typeof MenuItem>['$props']
+
+interface Props extends /* @vue-ignore */ MenuItemProps {
+  as?: string | Component
   closeOnClick?: boolean
-  class?: HTMLAttributes['class']
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'default',
+  as: 'a',
   closeOnClick: true,
 })
 </script>
 
 <template>
-  <MenuPrimitive.LinkItem
-    :class="cn(
-      `flex min-h-8 cursor-default select-none items-center gap-2 rounded-sm px-2 py-1 text-base text-foreground outline-none data-disabled:pointer-events-none data-highlighted:bg-accent data-inset:ps-8 data-[variant=destructive]:text-destructive-foreground data-highlighted:text-accent-foreground data-disabled:opacity-64 sm:min-h-7 sm:text-sm [&>svg:not([class*='opacity-'])]:opacity-80 [&>svg:not([class*='size-'])]:size-4.5 sm:[&>svg:not([class*='size-'])]:size-4 [&>svg]:pointer-events-none [&>svg]:-mx-0.5 [&>svg]:shrink-0`,
-      props.class,
-    )"
-    :close-on-click="props.closeOnClick"
-    :data-inset="props.inset || undefined"
-    data-slot="menu-link-item"
-    :data-variant="props.variant"
-  >
+  <MenuItem :as="props.as" :close-on-select="props.closeOnClick">
     <slot />
-  </MenuPrimitive.LinkItem>
+  </MenuItem>
 </template>

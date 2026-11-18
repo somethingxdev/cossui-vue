@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import type { ToastPortalProps, ToastProviderProps as ToastPrimitiveProviderProps } from '@vase-ui/vue/toast'
 import type { ToastPosition } from './manager'
-import { Toast as ToastPrimitive } from '@vase-ui/vue/toast'
-import { toastManager } from './manager'
 import Toasts from './Toasts.vue'
 
-export interface ToastProviderProps extends /* @vue-ignore */ ToastPrimitiveProviderProps {
+export interface ToastProviderProps {
   position?: ToastPosition
-  portalProps?: ToastPortalProps
 }
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<ToastProviderProps>(), {
   position: 'bottom-right',
@@ -16,8 +14,6 @@ const props = withDefaults(defineProps<ToastProviderProps>(), {
 </script>
 
 <template>
-  <ToastPrimitive.Provider :toast-manager="toastManager">
-    <slot />
-    <Toasts :portal-props="props.portalProps" :position="props.position" />
-  </ToastPrimitive.Provider>
+  <slot />
+  <Toasts v-bind="$attrs" :position="props.position" />
 </template>

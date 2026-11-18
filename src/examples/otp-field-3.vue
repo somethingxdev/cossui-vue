@@ -15,13 +15,13 @@ const GROUP_LENGTH = 3
       <OTPFieldInput
         v-for="n in GROUP_LENGTH"
         :key="n"
-        :aria-label="n === 1 ? undefined : `Character ${n} of ${OTP_LENGTH}`"
+        :index="n - 1"
       />
       <OTPFieldSeparator />
       <OTPFieldInput
         v-for="n in OTP_LENGTH - GROUP_LENGTH"
         :key="n + GROUP_LENGTH"
-        :aria-label="`Character ${n + GROUP_LENGTH} of ${OTP_LENGTH}`"
+        :index="n + GROUP_LENGTH - 1"
       />
     </OTPField>
   </Field>

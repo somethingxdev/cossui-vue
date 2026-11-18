@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import type { ComboboxClearProps, ComboboxInputProps, ComboboxTriggerProps } from '@vase-ui/vue/combobox'
-import type { HTMLAttributes } from 'vue'
+import type { ComponentPublicInstance, HTMLAttributes } from 'vue'
 import { ChevronsUpDownIcon, XIcon } from '@lucide/vue'
-import { Combobox as ComboboxPrimitive } from '@vase-ui/vue/combobox'
-import { computed, useTemplateRef } from 'vue'
+import * as ComboboxPrimitive from '@ui-sdk/vue/combobox'
+import { computed, inject, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
 import { cn } from '../../../lib/utils'
 import ComboboxClear from './ComboboxClear.vue'
-import ComboboxTrigger from './ComboboxTrigger.vue'
+import { ComboboxContext, ComboboxPopupContext } from './context'
 
-interface Props extends /* @vue-ignore */ Omit<ComboboxInputProps, 'size'> {
+type ComboboxTriggerProps = InstanceType<typeof ComboboxPrimitive.ComboboxTrigger>['$props']
+type ComboboxClearProps = InstanceType<typeof ComboboxPrimitive.ComboboxClear>['$props']
+
+// The input's own attributes pass through `$attrs`; extending their type here is too complex for TypeScript with defaults.
+interface Props {
   showTrigger?: boolean
   showClear?: boolean
   size?: 'sm' | 'default' | 'lg' | number
@@ -31,19 +34,37 @@ const buttonClass = computed(() => cn(
     : 'end-0.5',
 ))
 
-const input = useTemplateRef<{ element: HTMLElement | null }>('input')
+const group = useTemplateRef<HTMLElement>('group')
+const input = useTemplateRef<ComponentPublicInstance>('input')
+
+const context = inject(ComboboxContext, null)
+const inPopup = inject(ComboboxPopupContext, false)
+
+onMounted(() => {
+  if (!context)
+    return
+  // Inside the popup the input only searches, so it starts empty: the trigger outside shows the value.
+  if (inPopup)
+    context.controller.setQuery('')
+  // The popup lines up with the bordered control, not with the `<input>` inside it.
+  else
+    context.anchorRef.value = group.value
+})
+
+onBeforeUnmount(() => {
+  if (context && !inPopup)
+    context.anchorRef.value = null
+})
 
 // The ref of coss ui goes to the `<input>`.
 defineExpose({
-  element: computed(() => input.value?.element ?? null),
+  element: computed<HTMLInputElement | null>(() => input.value?.$el ?? null),
 })
-
-// The markup of `Input` is inlined: the part needs its ref on the `<input>` and its `data-slot`
-// there, and `Input` gives neither (it exposes no `element` and forces `data-slot="input"`).
 </script>
 
 <template>
-  <ComboboxPrimitive.InputGroup
+  <div
+    ref="group"
     data-slot="combobox-input-group"
     class="relative not-has-[>*.w-full]:w-fit w-full text-foreground has-disabled:opacity-64"
   >
@@ -68,10 +89,10 @@ defineExpose({
         props.class,
       )"
     >
-      <ComboboxPrimitive.Input
+      <ComboboxPrimitive.ComboboxInput
         ref="input"
+        :autofocus="inPopup || undefined"
         v-bind="$attrs"
-        data-slot="combobox-input"
         :size="typeof props.size === 'number' ? props.size : undefined"
         :class="cn(
           'h-8.5 w-full min-w-0 rounded-[inherit] px-[calc(--spacing(3)-1px)] text-foreground leading-8.5 outline-none [transition:background-color_5000000s_ease-in-out_0s] placeholder:text-muted-foreground/72 sm:h-7.5 sm:leading-7.5 autofill:[-webkit-text-fill-color:var(--foreground)]',
@@ -80,13 +101,11 @@ defineExpose({
         )"
       />
     </span>
-    <ComboboxTrigger v-if="props.showTrigger" :class="buttonClass" v-bind="props.triggerProps">
-      <ComboboxPrimitive.Icon data-slot="combobox-icon">
-        <ChevronsUpDownIcon />
-      </ComboboxPrimitive.Icon>
-    </ComboboxTrigger>
-    <ComboboxClear v-if="props.showClear" :class="buttonClass" v-bind="props.clearProps">
+    <ComboboxPrimitive.ComboboxTrigger v-if="props.showTrigger" aria-label="Toggle list" :class="buttonClass" v-bind="props.triggerProps">
+      <ChevronsUpDownIcon />
+    </ComboboxPrimitive.ComboboxTrigger>
+    <ComboboxClear v-if="props.showClear" aria-label="Clear" :class="buttonClass" v-bind="props.clearProps">
       <XIcon />
     </ComboboxClear>
-  </ComboboxPrimitive.InputGroup>
+  </div>
 </template>

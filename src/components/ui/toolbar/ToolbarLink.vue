@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { ToolbarLinkProps } from '@vase-ui/vue/toolbar'
-import { Toolbar as ToolbarPrimitive } from '@vase-ui/vue/toolbar'
+import * as ToolbarPrimitive from '@ui-sdk/vue/toolbar'
+
+type ToolbarLinkProps = InstanceType<typeof ToolbarPrimitive.ToolbarLink>['$props']
 
 interface Props extends /* @vue-ignore */ ToolbarLinkProps {}
 
@@ -8,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <ToolbarPrimitive.Link data-slot="toolbar-link">
+  <ToolbarPrimitive.ToolbarLink>
     <slot />
-  </ToolbarPrimitive.Link>
+  </ToolbarPrimitive.ToolbarLink>
 </template>

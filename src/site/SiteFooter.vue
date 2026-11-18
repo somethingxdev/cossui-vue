@@ -13,7 +13,7 @@ const props = defineProps<{
       <span>is an unofficial Vue port of</span>
       <a class="underline underline-offset-4 hover:text-foreground" href="https://coss.com/ui" target="_blank" rel="noreferrer">coss ui</a>,
       <span>built on</span>
-      <a class="underline underline-offset-4 hover:text-foreground" href="https://vase-ui.com" target="_blank" rel="noreferrer">Vase UI</a>.
+      <a class="underline underline-offset-4 hover:text-foreground" href="https://ui-sdk.dev" target="_blank" rel="noreferrer">UI SDK</a>.
     </div>
   </footer>
 </template>

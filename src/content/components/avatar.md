@@ -65,9 +65,13 @@ Because the property is inherited, one declaration on a container sizes every av
 
 ### Avatar
 
-Root component. Styled wrapper for `Avatar.Root` from Vase UI, round by default and sized from `--avatar-size`.
+Root component. Styled wrapper for `Avatar` from UI SDK, round by default and sized from `--avatar-size`.
 
-It declares no props of its own; everything from `Avatar.Root` passes through, including `class` and `as`.
+Besides `as` it declares no props of its own; everything from `Avatar` passes through, including `class`.
+
+| Event                   | Payload             | Description                                                                       |
+| ----------------------- | ------------------- | --------------------------------------------------------------------------------- |
+| `loading-status-change` | `(status, details)` | Fired when loading status changes: `"idle"`, `"loading"`, `"loaded"` or `"error"` |
 
 It renders a `<span>`. To make an avatar interactive, use `as` rather than wrapping it:
 
@@ -85,19 +89,11 @@ An interactive avatar needs an accessible name. `AvatarImage`'s `alt` supplies o
 
 ### AvatarImage
 
-Image element. Styled wrapper for `Avatar.Image` from Vase UI.
-
-| Prop           | Type      | Default | Description                                                                                |
-| -------------- | --------- | ------- | ------------------------------------------------------------------------------------------ |
-| `keep-mounted` | `boolean` | `false` | Keep the image mounted and let it load in place, for `loading="lazy"` and image components |
-
-| Event                   | Payload              | Description                                                                       |
-| ----------------------- | -------------------- | --------------------------------------------------------------------------------- |
-| `loading-status-change` | `ImageLoadingStatus` | Fired when loading status changes: `"idle"`, `"loading"`, `"loaded"` or `"error"` |
+Image element. Styled wrapper for `AvatarImage` from UI SDK. It renders a real `<img>` that stays mounted and hidden until it loads, and accepts the attributes of one, such as `srcset` and `loading`.
 
 ### AvatarFallback
 
-Shown while the image loads or when it fails, and whenever no image is given. Vase UI unmounts it once the image loads.
+Shown while the image loads or when it fails, and whenever no image is given. UI SDK unmounts it once the image loads.
 
 | Prop    | Type     | Default | Description                                      |
 | ------- | -------- | ------- | ------------------------------------------------ |

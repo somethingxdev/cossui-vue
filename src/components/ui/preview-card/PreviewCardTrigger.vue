@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { PreviewCardTriggerProps } from '@vase-ui/vue/preview-card'
-import { PreviewCard as PreviewCardPrimitive } from '@vase-ui/vue/preview-card'
+import type { Component } from 'vue'
+import * as PreviewCardPrimitive from '@ui-sdk/vue/hover-card'
 
-interface Props extends /* @vue-ignore */ PreviewCardTriggerProps {}
+type HoverCardTriggerProps = InstanceType<typeof PreviewCardPrimitive.HoverCardTrigger>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ HoverCardTriggerProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <PreviewCardPrimitive.Trigger data-slot="preview-card-trigger">
-    <slot />
-  </PreviewCardPrimitive.Trigger>
+  <PreviewCardPrimitive.HoverCardTrigger>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </PreviewCardPrimitive.HoverCardTrigger>
 </template>

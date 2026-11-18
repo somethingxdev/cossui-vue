@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { ComboboxClearProps } from '@vase-ui/vue/combobox'
-import { Combobox as ComboboxPrimitive } from '@vase-ui/vue/combobox'
+import type { Component } from 'vue'
+import * as ComboboxPrimitive from '@ui-sdk/vue/combobox'
 
-interface Props extends /* @vue-ignore */ ComboboxClearProps {}
+type ComboboxClearProps = InstanceType<typeof ComboboxPrimitive.ComboboxClear>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ ComboboxClearProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <ComboboxPrimitive.Clear data-slot="combobox-clear">
-    <slot />
-  </ComboboxPrimitive.Clear>
+  <ComboboxPrimitive.ComboboxClear>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </ComboboxPrimitive.ComboboxClear>
 </template>

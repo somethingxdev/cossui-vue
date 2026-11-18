@@ -6,6 +6,7 @@ preview: date-picker-1
 
 ```ts
 import { CalendarIcon } from '@lucide/vue'
+import { formatDate } from '@ui-sdk/vue/date'
 import { shallowRef } from 'vue'
 
 import { Button } from '@/components/ui/button'
@@ -19,7 +20,7 @@ import {
 
 ```vue
 <script setup lang="ts">
-const date = shallowRef<Temporal.PlainDate | null>(null)
+const date = shallowRef<string | null>(null)
 </script>
 
 <template>
@@ -30,7 +31,7 @@ const date = shallowRef<Temporal.PlainDate | null>(null)
       variant="outline"
     >
       <CalendarIcon />
-      <span v-if="date">{{ date.toLocaleString('en-US', { dateStyle: 'long' }) }}</span>
+      <span v-if="date">{{ formatDate(date, 'en-US', { dateStyle: 'long' }) }}</span>
       <span v-else>Pick a date</span>
     </DatePickerTrigger>
     <DatePickerPopup align="start">
@@ -42,22 +43,27 @@ const date = shallowRef<Temporal.PlainDate | null>(null)
 
 ## API Reference
 
-This component wraps Vase UI's DatePicker. Dates are [Temporal](https://tc39.es/proposal-temporal/docs/) values.
+This component wraps UI SDK's [Date Picker](https://ui-sdk.dev/docs/components/date-picker). Dates are ISO strings like `"2026-10-16"`. The popup sits in the browser's top layer, so there is no portal.
 
 ### DatePicker
 
-The root. It holds the value and the open state of the popup.
+The root. It holds the value, the open state of the popup and the options of the calendar.
 
-| Prop                      | Type                                                                             | Default           | Description                              |
-| ------------------------- | -------------------------------------------------------------------------------- | ----------------- | ---------------------------------------- |
-| `value` / `v-model:value` | `Temporal.PlainDate \| Temporal.PlainDateTime \| Temporal.ZonedDateTime \| null` | -                 | The selected date                        |
-| `defaultValue`            | same as `value`                                                                  | -                 | The selected date when uncontrolled      |
-| `open` / `v-model:open`   | `boolean`                                                                        | -                 | Whether the popup is open                |
-| `closeOnSelect`           | `boolean`                                                                        | `true` for a date | Whether selecting a day closes the popup |
-| `minDate` / `maxDate`     | `Temporal.PlainDate`                                                             | -                 | The earliest and latest selectable dates |
-| `unavailableDates`        | `DateMatcher`                                                                    | -                 | Dates the picker refuses                 |
-| `disabled`                | `boolean`                                                                        | `false`           | Ignore user interaction                  |
-| `name`                    | `string`                                                                         | -                 | Name of the hidden input for forms       |
+| Prop                      | Type                | Default   | Description                                                            |
+| ------------------------- | ------------------- | --------- | ---------------------------------------------------------------------- |
+| `value` / `v-model:value` | `string \| null`    | -         | The selected date                                                      |
+| `defaultValue`            | `string \| null`    | -         | The selected date when uncontrolled                                    |
+| `open` / `v-model:open`   | `boolean`           | -         | Whether the popup is open                                              |
+| `month` / `v-model:month` | `string`            | -         | The first month the calendar shows, like `"2026-10"`                   |
+| `months`                  | `number`            | `1`       | Number of months the calendar shows side by side                       |
+| `pageBy`                  | `"month" \| "page"` | `"month"` | Whether the navigation buttons move by one month or by `months` months |
+| `closeOnSelect`           | `boolean`           | `true`    | Whether selecting a day closes the popup                               |
+| `min` / `max`             | `string`            | -         | The earliest and latest selectable dates                               |
+| `unavailable`             | `DateMatchers`      | -         | Dates the picker refuses                                               |
+| `disabled`                | `boolean`           | `false`   | Ignore user interaction                                                |
+| `name`                    | `string`            | -         | Name of the hidden input for forms                                     |
+
+For the full list of props, see the [UI SDK Date Picker documentation](https://ui-sdk.dev/docs/components/date-picker).
 
 ### DatePickerTrigger
 
@@ -65,17 +71,17 @@ A button that opens the popup. Use the `as` prop to render it as a `Button`.
 
 ### DatePickerField
 
-A segmented date input with a calendar trigger button. Takes `size`: `"sm" | "default" | "lg"`.
+A text input with a calendar trigger button. The user types a date in the format of the page's language, and Enter or leaving the input commits it. Takes `size`: `"sm" | "default" | "lg"`. Its other attributes, like `id` and `placeholder`, go to the input.
 
 ### DatePickerPopup
 
-The popup. Takes `side`, `align`, `sideOffset` and `alignOffset`.
+The popup. Takes `side`, `align`, `sideOffset`, `alignOffset`, `anchor` and `collisionPadding`.
 
 ### DatePickerCalendar
 
-The calendar inside the popup. Takes the props of [Calendar](/docs/components/calendar) except the value, e.g. `captionLayout`, `numberOfMonths` and `v-model:month`.
+The calendar inside the popup. Takes `captionLayout`, `showWeekNumber`, `classNames` and the `day` slot of [Calendar](/docs/components/calendar). The other calendar options, like `months`, `month` and `showOutsideDays`, go on `DatePicker`.
 
-For a range of dates, use `DateRangePicker` from `@/components/ui/date-range-picker`.
+For a range of dates, pass `mode="range"` to `DatePicker`. Its `v-model:value` is then a `[start, end]` tuple of ISO dates, or `null`.
 
 ## Examples
 

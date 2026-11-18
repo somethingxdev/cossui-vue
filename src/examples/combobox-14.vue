@@ -29,15 +29,13 @@ const items: Fruit[] = [
 </script>
 
 <template>
-  <Combobox :default-value="[items[0], items[3]]" :items="items" multiple>
+  <Combobox :default-value="['apple', 'grape']" :items="items" multiple>
     <ComboboxChips>
       <template #start-addon>
         <SearchIcon />
       </template>
-      <ComboboxValue v-slot="{ value }: { value: Fruit[] }">
-        <ComboboxChip v-for="item in value" :key="item.value" :aria-label="item.label">
-          {{ item.label }}
-        </ComboboxChip>
+      <ComboboxValue v-slot="{ value }: { value: string[] }">
+        <ComboboxChip v-for="item in value" :key="item" :value="item" />
         <ComboboxChipsInput
           aria-label="Select a item"
           :placeholder="value.length > 0 ? undefined : 'Select a item...'"
@@ -48,7 +46,7 @@ const items: Fruit[] = [
       <ComboboxEmpty>No items found.</ComboboxEmpty>
       <ComboboxList>
         <template #item="{ item }">
-          <ComboboxItem :key="item.value" :value="item">
+          <ComboboxItem :key="item.value" :value="item.value">
             {{ item.label }}
           </ComboboxItem>
         </template>

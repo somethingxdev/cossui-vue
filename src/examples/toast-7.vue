@@ -20,7 +20,7 @@ async function handleCopy(event: MouseEvent) {
     positionerProps: {
       anchor,
     },
-    timeout: toastTimeout,
+    duration: toastTimeout,
     title: 'Copied!',
   })
 }

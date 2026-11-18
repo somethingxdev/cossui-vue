@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { CollapsibleRootProps } from '@vase-ui/vue/collapsible'
-import { Collapsible as CollapsiblePrimitive } from '@vase-ui/vue/collapsible'
+import * as CollapsiblePrimitive from '@ui-sdk/vue/collapsible'
 
-interface Props extends /* @vue-ignore */ CollapsibleRootProps {}
+type CollapsibleProps = InstanceType<typeof CollapsiblePrimitive.Collapsible>['$props']
+
+interface Props extends /* @vue-ignore */ CollapsibleProps {}
 
 defineProps<Props>()
 </script>
 
 <template>
-  <CollapsiblePrimitive.Root data-slot="collapsible">
+  <CollapsiblePrimitive.Collapsible>
     <slot />
-  </CollapsiblePrimitive.Root>
+  </CollapsiblePrimitive.Collapsible>
 </template>

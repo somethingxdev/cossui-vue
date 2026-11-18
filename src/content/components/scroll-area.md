@@ -27,19 +27,19 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 
 ### ScrollArea
 
-Root component. Styled wrapper for `ScrollArea.Root` from Vase UI with custom scrollbar styling. It renders the viewport, content wrapper, both scrollbars and the corner for you.
+Root component. Styled wrapper for `ScrollArea` from UI SDK with custom scrollbar styling. It renders the viewport, content wrapper, both scrollbars and the corner for you.
 
 | Prop                      | Type      | Default | Description                                                                                                                  |
 | ------------------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `scroll-fade`             | `boolean` | `false` | Masks viewport edges so content fades in/out as you scroll                                                                   |
 | `scrollbar-gutter`        | `boolean` | `false` | Reserves space for the scrollbar to prevent layout shifts                                                                    |
 | `fill`                    | `boolean` | `false` | Applies `size-full` to the scroll area content wrapper so flex layouts (e.g. `mt-auto` footers) can fill the viewport height |
-| `clamp-content-min-width` | `boolean` | `true`  | Sets `minWidth: 0` on the content wrapper to avoid spurious horizontal scrollbars in vertical layouts                        |
+| `clamp-content-min-width` | `boolean` | `true`  | Sets `min-width: 0` on the content wrapper to avoid spurious horizontal scrollbars in vertical layouts                       |
 | `overscroll-contain`      | `boolean` | `false` | Prevents scroll chaining into parent scrollers when the viewport overflows                                                   |
 
 ### ScrollBar
 
-Scrollbar track and thumb. Styled wrapper for `ScrollArea.Scrollbar` and `ScrollArea.Thumb` from Vase UI. `ScrollArea` already renders a vertical and a horizontal one; use `ScrollBar` only when composing your own scroll area from `ScrollAreaPrimitive`.
+Scrollbar track and thumb. Styled wrapper for `ScrollAreaScrollbar` and `ScrollAreaThumb` from UI SDK, shown while it has `data-visible`. `ScrollArea` already renders a vertical and a horizontal one; use `ScrollBar` only when composing your own scroll area from `ScrollAreaPrimitive`.
 
 | Prop          | Type                         | Default      | Description                       |
 | ------------- | ---------------------------- | ------------ | --------------------------------- |
@@ -100,6 +100,6 @@ Leave it at the default (`false`) for standalone scroll areas where natural scro
 
 ### Content min-width
 
-Vase UI sets `min-width: fit-content` on the content wrapper, which often causes unwanted horizontal scroll in vertical lists and panels (dialogs, comboboxes, sidebars). **`clamp-content-min-width`** defaults to **`true`** and applies `minWidth: 0` to prevent that.
+UI SDK sets `min-width: fit-content` on the content wrapper, which often causes unwanted horizontal scroll in vertical lists and panels (dialogs, comboboxes, sidebars). **`clamp-content-min-width`** defaults to **`true`** and applies `min-width: 0` to prevent that.
 
 Horizontal scroll still works when children define their own width (e.g. `w-max`, table min-width). Set **`:clamp-content-min-width="false"`** only if horizontal scroll stops working and the child has no explicit width. These are rare cases, like certain flex chains or long unbreakable inline text without overflow handling.

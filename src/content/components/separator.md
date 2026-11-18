@@ -16,7 +16,7 @@ import { Separator } from '@/components/ui/separator'
 
 ### Separator
 
-Styled wrapper for `Separator` from Vase UI. Renders as a horizontal line by default with muted background color.
+Styled wrapper for `Separator` from UI SDK. Renders as a horizontal line by default with muted background color.
 
 | Prop          | Type                         | Default        | Description                      |
 | ------------- | ---------------------------- | -------------- | -------------------------------- |

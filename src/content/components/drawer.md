@@ -8,7 +8,6 @@ preview: drawer-1
 import {
   Drawer,
   DrawerClose,
-  DrawerContent,
   DrawerCreateHandle,
   DrawerDescription,
   DrawerFooter,
@@ -49,34 +48,34 @@ import {
 
 ### Drawer
 
-Root component. Wraps `Drawer.Root` from Vase UI with automatic `swipeDirection` mapping based on `position`.
+Root component. Wraps `Drawer` from [UI SDK](https://ui-sdk.dev/docs/components/drawer) and passes `position` to it as `side`.
 
-| Prop             | Type                                     | Default    | Description                                                                                                                        |
-| ---------------- | ---------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `position`       | `"right" \| "left" \| "top" \| "bottom"` | `"bottom"` | Controls which edge the drawer opens from. Sets the swipe direction automatically and flows to child components via provide/inject |
-| `swipeDirection` | `"up" \| "down" \| "left" \| "right"`    | derived    | Overrides the swipe direction derived from `position`. Use when you need different swipe behavior                                  |
+| Prop       | Type                                     | Default    | Description                                                                                                   |
+| ---------- | ---------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------- |
+| `position` | `"right" \| "left" \| "top" \| "bottom"` | `"bottom"` | Controls which edge the drawer opens from and is swiped back to. Flows to child components via provide/inject |
 
-All other props from `Drawer.Root` are supported, including `v-model:open`, `modal`, `snapPoints`, `v-model:snap-point`, and `snapToSequentialPoints`. Note: Snap points only work for bottom drawers.
+All other props from UI SDK's `Drawer` are supported, including `v-model:open`, `modal`, `dismissible`, `snapPoints`, `defaultSnapPoint`, `v-model:snap-point`, and `expandOnScroll`. A snap point is a fraction of the screen up to `1`, a pixel number above `1`, a `"300px"`, `"20rem"` or `"50%"` string, or `"content"`.
 
 ### DrawerCreateHandle
 
-Creates a handle for detached drawer triggers. Use it when triggers and drawer content need to be coordinated across different parts of the tree.
+Creates a controller for detached drawer triggers. Alias for `createDrawerController` from UI SDK. Pass it as `controller` to `Drawer` and to triggers outside it, or call its `open()`, `close()` and `setSnapPoint()` yourself.
 
 ### DrawerTrigger
 
-Trigger button that opens the drawer. Styled wrapper for `Drawer.Trigger` from Vase UI.
+Trigger button that opens the drawer. Wrapper for `DrawerTrigger` from UI SDK. Pass `as` to render another component, such as `Button`.
 
 ### DrawerPopup
 
-Popup container that displays the drawer content.
+Popup container that displays the drawer content. Styled wrapper for `DrawerContent` from UI SDK, which renders in the browser's top layer, positions the sheet and moves it, so there is no portal or viewport.
 
 | Prop              | Type                                     | Default     | Description                                                                                                              |
 | ----------------- | ---------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `variant`         | `"default" \| "straight" \| "inset"`     | `"default"` | Controls the drawer style. `straight` removes rounded corners, `inset` adds spacing around the drawer on desktop screens |
 | `showCloseButton` | `boolean`                                | `false`     | When true, displays a close button in the top-right corner                                                               |
 | `showBar`         | `boolean`                                | `false`     | When true, displays a drag bar indicator                                                                                 |
-| `position`        | `"right" \| "left" \| "top" \| "bottom"` | inherited   | Overrides the position provided by the parent `Drawer`                                                                   |
-| `portalProps`     | `DrawerPortalProps`                      | -           | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Drawer portal API                 |
+| `position`        | `"right" \| "left" \| "top" \| "bottom"` | inherited   | Styles the popup for another edge than the parent `Drawer` provides. The edge it opens from is always the `Drawer`'s     |
+
+Other props, such as `keepMounted`, `container`, `initialFocus` and `finalFocus`, are forwarded to `DrawerContent`.
 
 **Example:**
 
@@ -106,36 +105,36 @@ Popup container that displays the drawer content.
 
 Container for the drawer title and description.
 
-| Prop             | Type      | Default | Description                                                                                             |
-| ---------------- | --------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| `allowSelection` | `boolean` | `false` | When true, wraps the header in `DrawerContent` to reduce swipe interference during mouse text selection |
+| Prop             | Type      | Default | Description                                                                                 |
+| ---------------- | --------- | ------- | ------------------------------------------------------------------------------------------- |
+| `allowSelection` | `boolean` | `false` | When true, a mouse drag that starts on the header selects text instead of moving the drawer |
 
 ### DrawerFooter
 
 Footer section for action buttons.
 
-| Prop             | Type                  | Default     | Description                                                                                             |
-| ---------------- | --------------------- | ----------- | ------------------------------------------------------------------------------------------------------- |
-| `variant`        | `"default" \| "bare"` | `"default"` | Controls the footer styling. `default` includes border and background, `bare` removes them              |
-| `allowSelection` | `boolean`             | `true`      | When true, wraps the footer in `DrawerContent` to reduce swipe interference during mouse text selection |
+| Prop             | Type                  | Default     | Description                                                                                 |
+| ---------------- | --------------------- | ----------- | ------------------------------------------------------------------------------------------- |
+| `variant`        | `"default" \| "bare"` | `"default"` | Controls the footer styling. `default` includes border and background, `bare` removes them  |
+| `allowSelection` | `boolean`             | `true`      | When true, a mouse drag that starts on the footer selects text instead of moving the drawer |
 
 ### DrawerTitle
 
-Title component. Styled wrapper for `Drawer.Title` from Vase UI.
+Title component. Styled wrapper for `DrawerTitle` from UI SDK.
 
 ### DrawerDescription
 
-Description component. Styled wrapper for `Drawer.Description` from Vase UI.
+Description component. Styled wrapper for `DrawerDescription` from UI SDK.
 
 ### DrawerPanel
 
 Content container. When `scrollable` is true (default), wraps content in a `ScrollArea` component.
 
-| Prop             | Type      | Default | Description                                                                                            |
-| ---------------- | --------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| `scrollable`     | `boolean` | `true`  | When true, wraps content in a `ScrollArea`. Set to false for non-scrollable content                    |
-| `scrollFade`     | `boolean` | `true`  | When true, shows a fade effect at scroll edges (only applies when `scrollable` is true)                |
-| `allowSelection` | `boolean` | `true`  | When true, wraps the panel in `DrawerContent` to reduce swipe interference during mouse text selection |
+| Prop             | Type      | Default | Description                                                                                |
+| ---------------- | --------- | ------- | ------------------------------------------------------------------------------------------ |
+| `scrollable`     | `boolean` | `true`  | When true, wraps content in a `ScrollArea`. Set to false for non-scrollable content        |
+| `scrollFade`     | `boolean` | `true`  | When true, shows a fade effect at scroll edges (only applies when `scrollable` is true)    |
+| `allowSelection` | `boolean` | `true`  | When true, a mouse drag that starts on the panel selects text instead of moving the drawer |
 
 ### DrawerMenu
 
@@ -166,7 +165,7 @@ Label for a `DrawerMenuGroup` section. Renders muted, smaller text above a group
 
 ### DrawerMenuTrigger
 
-Trigger that opens a nested drawer. Styled like a menu item with a trailing chevron. Use for menu items that open nested drawers (e.g. "Add to Playlist" → nested drawer with playlist options). Wraps `Drawer.Trigger` internally.
+Trigger that opens a nested drawer. Styled like a menu item with a trailing chevron. Use for menu items that open nested drawers (e.g. "Add to Playlist" → nested drawer with playlist options). Wraps `DrawerTrigger` from UI SDK internally.
 
 **Example:** `<DrawerMenuTrigger>Add to Playlist</DrawerMenuTrigger>` opens a nested drawer when tapped.
 
@@ -184,31 +183,15 @@ Radio menu item. Must be used inside `DrawerMenuRadioGroup` with a `value` prop.
 
 ### DrawerClose
 
-Close button component. Styled wrapper for `Drawer.Close` from Vase UI.
-
-### DrawerPortal
-
-Portal component for rendering outside the DOM hierarchy. Alias for `Drawer.Portal` from Vase UI.
+Close button component. Wrapper for `DrawerClose` from UI SDK. Pass `as` to render another component.
 
 ### DrawerBackdrop
 
-Backdrop/overlay component. Styled wrapper for `Drawer.Backdrop` from Vase UI.
-
-### DrawerViewport
-
-Viewport component for positioning. Styled wrapper for `Drawer.Viewport` from Vase UI. Typically not used directly. `DrawerPopup` renders it internally.
+Backdrop/overlay component. Styled wrapper for `DrawerBackdrop` from UI SDK, which drives its opacity as the drawer moves. `DrawerPopup` renders it internally.
 
 ### DrawerBar
 
 Drag handle indicator shown when `showBar` is true on `DrawerPopup`. Typically not used directly.
-
-### DrawerSwipeArea
-
-An invisible edge area that opens the drawer when swiped. Styled wrapper for `Drawer.SwipeArea` from Vase UI, positioned at the edge given by the drawer's `position`.
-
-### DrawerContent
-
-Primitive content wrapper that reduces swipe interference during text selection. Alias for `Drawer.Content` from Vase UI.
 
 ## Examples
 
@@ -226,7 +209,7 @@ Primitive content wrapper that reduces swipe interference during text selection.
 
 ### Software keyboard
 
-Bottom drawers automatically handle software-keyboard focus and spacing for inputs, textareas, and contenteditable fields. No additional prop is needed. Drawers without a focused input keep their normal layout. With snap points, the drawer moves up as needed while the keyboard is open and returns to the selected snap point when it closes.
+UI SDK shrinks the drawer's viewport while the software keyboard is open, so the sheet stays above it and the focused field can scroll into view. No additional prop is needed.
 
 Put scrolling fields in `DrawerPanel`. For a persistent input or action row, place it after the panel, outside its scroll area. Set `--drawer-height` on `DrawerPopup` when the layout needs a fixed height; keyboard handling does not set the drawer height.
 

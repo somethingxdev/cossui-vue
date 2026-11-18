@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { addDays, todayDate } from '@ui-sdk/vue/date'
 import { shallowRef } from 'vue'
-import { RangeCalendar } from '../components/ui/range-calendar'
+import { Calendar } from '../components/ui/calendar'
 
-const today = Temporal.Now.plainDateISO()
-const range = shallowRef<[Temporal.PlainDate | null, Temporal.PlainDate | null]>([
+const today = todayDate()
+const range = shallowRef<[string, string] | null>([
   today,
-  today.add({ days: 7 }),
+  addDays(today, 7),
 ])
 </script>
 
 <template>
-  <RangeCalendar v-model:value="range" />
+  <Calendar v-model:value="range" mode="range" />
 </template>

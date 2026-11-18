@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { RadioRootProps } from '@vase-ui/vue/radio'
 import type { HTMLAttributes } from 'vue'
-import { Radio as RadioPrimitive } from '@vase-ui/vue/radio'
+import * as RadioPrimitive from '@ui-sdk/vue/radio'
 import { cn } from '../../../lib/utils'
 
-interface Props extends /* @vue-ignore */ RadioRootProps<string> {
+type RadioProps = InstanceType<typeof RadioPrimitive.Radio>['$props']
+
+interface Props extends /* @vue-ignore */ RadioProps {
   value: string
   class?: HTMLAttributes['class']
 }
@@ -13,16 +14,15 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <RadioPrimitive.Root
-    data-slot="drawer-menu-radio-item"
+  <RadioPrimitive.Radio
     :value="props.value"
     :class="cn(
-      `grid min-h-9 w-full cursor-default select-none items-center gap-2 rounded-sm px-2 py-1 text-base text-foreground outline-none hover:bg-accent hover:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-64 sm:min-h-8 sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0`,
+      `grid min-h-9 w-full cursor-default select-none items-center gap-2 rounded-sm px-2 py-1 text-start text-base text-foreground outline-none hover:bg-accent hover:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-64 sm:min-h-8 sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0`,
       'grid-cols-[1rem_minmax(0,1fr)] items-center pe-4',
       props.class,
     )"
   >
-    <RadioPrimitive.Indicator class="col-start-1">
+    <RadioPrimitive.RadioIndicator class="col-start-1">
       <svg
         fill="none"
         height="24"
@@ -36,7 +36,7 @@ const props = defineProps<Props>()
       >
         <path d="M5.252 12.7 10.2 18.63 18.748 5.37" />
       </svg>
-    </RadioPrimitive.Indicator>
+    </RadioPrimitive.RadioIndicator>
     <span class="wrap-anywhere col-start-2 min-w-0"><slot /></span>
-  </RadioPrimitive.Root>
+  </RadioPrimitive.Radio>
 </template>

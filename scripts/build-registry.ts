@@ -30,22 +30,12 @@ const ITEM_SCHEMA = 'https://shadcn-vue.com/schema/registry-item.json'
 const UI_DIR = 'src/components/ui'
 const OUT_DIR = 'public/r'
 const PACKAGES = [
-  '@vase-ui/vue',
+  '@ui-sdk/vue',
+  '@ui-sdk/core',
   'class-variance-authority',
   '@lucide/vue',
   '@vueuse/core',
 ]
-const TEMPORAL_PARTS = [
-  'calendar',
-  'range-calendar',
-  'date-field',
-  'time-field',
-  'date-picker',
-  'date-range-picker',
-  'time-clock',
-  'time-picker',
-]
-const TEMPORAL_DOCS = 'These components need the global `Temporal`. For browsers without it, put `import \'temporal-polyfill/global\'` first in your entry file.'
 
 /** Points the imports between components at the aliases that the shadcn-vue CLI rewrites for each project. */
 function toRegistryImports(code: string): string {
@@ -70,10 +60,10 @@ function componentItem(slug: string, title: string, description: string): Regist
   const internal = [
     ...code.matchAll(/from '@\/components\/ui\/([a-z-]+)/g),
   ].map(([, name]) => name!)
-  const usesTemporal = TEMPORAL_PARTS.some(part => code.includes(`'@vase-ui/vue/${part}'`))
   const dependencies = PACKAGES.filter(dep => code.includes(`'${dep}`))
-  if (usesTemporal)
-    dependencies.push('temporal-polyfill')
+  // @ui-sdk/core is a peer dependency of @ui-sdk/vue.
+  if (dependencies.includes('@ui-sdk/vue') && !dependencies.includes('@ui-sdk/core'))
+    dependencies.push('@ui-sdk/core')
 
   return {
     $schema: ITEM_SCHEMA,
@@ -86,9 +76,6 @@ function componentItem(slug: string, title: string, description: string): Regist
       ...new Set(internal),
     ].filter(name => name !== slug).sort().map(name => `${NAMESPACE}/${name}`),
     files,
-    ...(usesTemporal
-      ? { docs: TEMPORAL_DOCS }
-      : {}),
   }
 }
 
@@ -144,8 +131,12 @@ function styleItem(): RegistryItem {
     type: 'registry:style',
     title: 'Style',
     description: 'The coss ui design tokens for light and dark themes, with the base styles and animations.',
-    dependencies: ['@vase-ui/vue', 'class-variance-authority', '@lucide/vue'],
-    registryDependencies: [`${NAMESPACE}/utils`],
+    dependencies: [
+      '@ui-sdk/vue',
+      '@ui-sdk/core',
+      'class-variance-authority',
+      '@lucide/vue',
+    ],
     cssVars: {
       theme,
       light: declarations(blockAfter(css, ':root')),
@@ -158,7 +149,7 @@ function styleItem(): RegistryItem {
         'body': { '@apply bg-background text-foreground': {} },
       },
     },
-    docs: 'Give the root element of your app `isolation: isolate`, so that popups in portals always show above it.',
+    docs: 'Put `@layer ui-sdk;` on the first line of your global stylesheet, above `@import \'tailwindcss\'`, so that your classes win over the few rules UI SDK adds.',
   }
 }
 

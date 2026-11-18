@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import type { DialogCloseProps } from '@vase-ui/vue/dialog'
-import { Dialog as DialogPrimitive } from '@vase-ui/vue/dialog'
+import type { Component } from 'vue'
+import * as DialogPrimitive from '@ui-sdk/vue/dialog'
 
-interface Props extends /* @vue-ignore */ DialogCloseProps {}
+type DialogCloseProps = InstanceType<typeof DialogPrimitive.DialogClose>['$props']
 
-defineProps<Props>()
+interface Props extends /* @vue-ignore */ DialogCloseProps {
+  as?: string | Component
+}
+
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <DialogPrimitive.Close data-slot="dialog-close">
-    <slot />
-  </DialogPrimitive.Close>
+  <DialogPrimitive.DialogClose>
+    <template v-if="props.as" #render="{ props: part }">
+      <component :is="props.as" v-bind="part">
+        <slot />
+      </component>
+    </template>
+    <template v-else #default>
+      <slot />
+    </template>
+  </DialogPrimitive.DialogClose>
 </template>

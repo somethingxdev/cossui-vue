@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { NumberFieldRootProps } from '@vase-ui/vue/number-field'
 import type { HTMLAttributes } from 'vue'
-import { NumberField as NumberFieldPrimitive } from '@vase-ui/vue/number-field'
+import * as NumberFieldPrimitive from '@ui-sdk/vue/number-input'
 import { computed, provide, useId } from 'vue'
 import { cn } from '../../../lib/utils'
 import { NumberFieldContext } from './context'
+
+type NumberFieldRootProps = InstanceType<typeof NumberFieldPrimitive.NumberInput>['$props']
 
 interface Props extends /* @vue-ignore */ NumberFieldRootProps {
   id?: string
@@ -25,13 +26,11 @@ provide(NumberFieldContext, { fieldId })
 </script>
 
 <template>
-  <NumberFieldPrimitive.Root
+  <NumberFieldPrimitive.NumberInput
     v-bind="$attrs"
-    :id="fieldId"
-    data-slot="number-field"
     :data-size="props.size"
     :class="cn('flex w-full flex-col items-start gap-2', props.class)"
   >
     <slot />
-  </NumberFieldPrimitive.Root>
+  </NumberFieldPrimitive.NumberInput>
 </template>

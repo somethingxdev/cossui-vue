@@ -38,26 +38,25 @@ import {
 
 ### Dialog
 
-Root component. Alias for `Dialog.Root` from Vase UI. Supports `v-model:open`.
+Root component. Alias for `Dialog` from UI SDK. Supports `v-model:open`.
 
 ### DialogTrigger
 
-Trigger button that opens the dialog. Styled wrapper for `Dialog.Trigger` from Vase UI.
+Trigger button that opens the dialog. Wrapper for `DialogTrigger` from UI SDK. Pass `as` to render it as another component, such as `Button`.
 
-### DialogCreateHandle
+### createDialogController
 
-Creates a handle for detached dialog triggers. Use it when the trigger and popup need to be coordinated across different parts of the tree.
+Creates a controller for detached dialog triggers, from UI SDK. Pass it as `controller` to the `Dialog` and to triggers elsewhere in the tree, or call `open()` and `close()` on it.
 
 ### DialogPopup
 
-Popup container that displays the dialog content. Also exported as `DialogContent`.
+Popup container that displays the dialog content, with its backdrop. Styled wrapper for `DialogContent` from UI SDK, which renders in the browser's top layer. Also exported as `DialogContent`.
 
-| Prop                  | Type                | Default | Description                                                                                              |
-| --------------------- | ------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `showCloseButton`     | `boolean`           | `true`  | When true, displays a close button in the top-right corner                                               |
-| `bottomStickOnMobile` | `boolean`           | `true`  | When true, sticks to the bottom of the screen on mobile devices                                          |
-| `closeProps`          | `DialogCloseProps`  | -       | Props forwarded to the internal close button                                                             |
-| `portalProps`         | `DialogPortalProps` | -       | Props forwarded to the internal portal (`keepMounted`, `container`, etc.); see Vase UI Dialog portal API |
+| Prop                  | Type               | Default | Description                                                     |
+| --------------------- | ------------------ | ------- | --------------------------------------------------------------- |
+| `showCloseButton`     | `boolean`          | `true`  | When true, displays a close button in the top-right corner      |
+| `bottomStickOnMobile` | `boolean`          | `true`  | When true, sticks to the bottom of the screen on mobile devices |
+| `closeProps`          | `DialogCloseProps` | -       | Props forwarded to the internal close button                    |
 
 ### DialogHeader
 
@@ -89,11 +88,11 @@ Footer section for action buttons.
 
 ### DialogTitle
 
-Title component. Styled wrapper for `Dialog.Title` from Vase UI.
+Title component. Styled wrapper for `DialogTitle` from UI SDK.
 
 ### DialogDescription
 
-Description component. Styled wrapper for `Dialog.Description` from Vase UI.
+Description component. Styled wrapper for `DialogDescription` from UI SDK.
 
 ### DialogPanel
 
@@ -114,19 +113,11 @@ Scrollable content container. Automatically wraps content in a `ScrollArea` comp
 
 ### DialogClose
 
-Close button component. Styled wrapper for `Dialog.Close` from Vase UI.
-
-### DialogPortal
-
-Portal component for rendering outside the DOM hierarchy. Alias for `Dialog.Portal` from Vase UI.
+Close button component. Wrapper for `DialogClose` from UI SDK. Pass `as` to render it as another component, such as `Button`.
 
 ### DialogBackdrop
 
-Backdrop/overlay component. Also exported as `DialogOverlay`. Styled wrapper for `Dialog.Backdrop` from Vase UI.
-
-### DialogViewport
-
-Viewport component for positioning. Styled wrapper for `Dialog.Viewport` from Vase UI.
+Backdrop/overlay component. Also exported as `DialogOverlay`. Styled wrapper for `DialogBackdrop` from UI SDK.
 
 ## Examples
 

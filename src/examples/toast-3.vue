@@ -5,6 +5,7 @@ import { toastManager } from '../components/ui/toast'
 function showToast() {
   toastManager.add({
     description: 'Please wait while we process your request.',
+    duration: 5000,
     title: 'Loading…',
     type: 'loading',
   })

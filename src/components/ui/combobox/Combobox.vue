@@ -1,31 +1,46 @@
-<script setup lang="ts" generic="Value, Multiple extends boolean | undefined = false, Item = Value">
-import type { ComboboxRootActions, ComboboxRootProps } from '@vase-ui/vue/combobox'
-import { Combobox as ComboboxPrimitive } from '@vase-ui/vue/combobox'
-import { computed, provide, shallowRef, useTemplateRef } from 'vue'
+<script setup lang="ts" generic="T = string, Multiple extends boolean | undefined = false">
+import type { ComboboxOptions } from '@ui-sdk/vue/combobox'
+import * as ComboboxPrimitive from '@ui-sdk/vue/combobox'
+import { computed, provide, shallowRef, useAttrs } from 'vue'
 import { ComboboxContext } from './context'
 
-interface Props extends /* @vue-ignore */ ComboboxRootProps<Value, Multiple, Item> {
-  multiple?: Multiple & boolean
-}
+// Every prop goes straight to the part, which is generic the same way.
+type Props = /* @vue-ignore */ ComboboxOptions<T, Multiple>
 
-const props = defineProps<Props>()
+defineProps<Props>()
+
+const attrs = useAttrs()
+const anchorRef = shallowRef<HTMLElement | null>(null)
+
+// The parts reach the root through a controller: the one passed in, or one of our own.
+const controller = (attrs.controller as ComboboxPrimitive.ComboboxController<any, any> | undefined)
+  ?? ComboboxPrimitive.createComboboxController<any, any>()
 
 provide(ComboboxContext, {
-  chipsRef: shallowRef(null),
-  multiple: computed(() => !!props.multiple),
+  anchorRef,
+  controller,
+  multiple: computed(() => attrs.multiple != null && attrs.multiple !== false),
 })
 
-const root = useTemplateRef<ComboboxRootActions & { inputElement: HTMLInputElement | null }>('root')
+// An input inside the popup leaves with it while focused, so focus goes back to the trigger.
+let focusInPopup = false
 
-defineExpose({
-  inputElement: computed(() => root.value?.inputElement ?? null),
-  unmount: () => root.value?.unmount(),
-  close: () => root.value?.close(),
-})
+function onOpenChange(open: boolean) {
+  focusInPopup = !open && !!document.activeElement?.closest('[data-slot=combobox-content]')
+}
+
+function onOpenChangeComplete(open: boolean) {
+  if (!open && focusInPopup && document.activeElement === document.body)
+    anchorRef.value?.focus()
+}
 </script>
 
 <template>
-  <ComboboxPrimitive.Root ref="root" :multiple="props.multiple">
+  <ComboboxPrimitive.Combobox
+    :controller="controller"
+    @open-change="onOpenChange"
+    @open-change-complete="onOpenChangeComplete"
+  >
     <slot />
-  </ComboboxPrimitive.Root>
+  </ComboboxPrimitive.Combobox>
 </template>

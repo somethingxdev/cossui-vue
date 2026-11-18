@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { MenuRadioItemProps } from '@vase-ui/vue/menu'
 import type { HTMLAttributes } from 'vue'
-import { Menu as MenuPrimitive } from '@vase-ui/vue/menu'
+import * as MenuPrimitive from '@ui-sdk/vue/menu'
 import { cn } from '../../../lib/utils'
+
+type MenuRadioItemProps = InstanceType<typeof MenuPrimitive.MenuRadioItem>['$props']
 
 interface Props extends /* @vue-ignore */ MenuRadioItemProps {
   value: MenuRadioItemProps['value']
@@ -13,15 +14,14 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <MenuPrimitive.RadioItem
+  <MenuPrimitive.MenuRadioItem
     :class="cn(
-      `grid min-h-8 in-data-[side=none]:min-w-[calc(var(--anchor-width)+1.25rem)] cursor-default grid-cols-[.75rem_1fr] items-center gap-2 rounded-sm py-1 ps-2 pe-4 text-base text-foreground outline-none data-disabled:pointer-events-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:opacity-64 sm:min-h-7 sm:text-sm [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0`,
+      `grid min-h-8 cursor-default grid-cols-[.75rem_1fr] items-center gap-2 rounded-sm py-1 ps-2 pe-4 text-base text-foreground outline-none data-disabled:pointer-events-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:opacity-64 sm:min-h-7 sm:text-sm [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0`,
       props.class,
     )"
-    data-slot="menu-radio-item"
     :value="props.value"
   >
-    <MenuPrimitive.RadioItemIndicator class="col-start-1 -ms-0.5">
+    <MenuPrimitive.MenuItemIndicator class="col-start-1 -ms-0.5">
       <svg
         aria-hidden="true"
         fill="none"
@@ -36,7 +36,7 @@ const props = defineProps<Props>()
       >
         <path d="M5.252 12.7 10.2 18.63 18.748 5.37" />
       </svg>
-    </MenuPrimitive.RadioItemIndicator>
+    </MenuPrimitive.MenuItemIndicator>
     <span class="col-start-2"><slot /></span>
-  </MenuPrimitive.RadioItem>
+  </MenuPrimitive.MenuRadioItem>
 </template>

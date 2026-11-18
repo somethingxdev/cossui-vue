@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
       v-bind="$attrs"
       data-slot="dialog-panel"
       :class="cn(
-        'p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-header])]:pt-1 in-[[data-slot=dialog-popup]:has([data-slot=dialog-footer]:not(.border-t))]:pb-1',
+        'p-6 in-[[data-slot=dialog-content]:has([data-slot=dialog-header])]:pt-1 in-[[data-slot=dialog-content]:has([data-slot=dialog-footer]:not(.border-t))]:pb-1',
         props.class,
       )"
     >

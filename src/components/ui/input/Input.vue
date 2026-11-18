@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { InputProps as InputPrimitiveProps } from '@vase-ui/vue/input'
-import type { HTMLAttributes } from 'vue'
-import { Input as InputPrimitive } from '@vase-ui/vue/input'
+import type { Component, ComponentPublicInstance, HTMLAttributes } from 'vue'
+import * as InputPrimitive from '@ui-sdk/vue/input'
 import { unrefElement } from '@vueuse/core'
 import { computed, useTemplateRef } from 'vue'
 import { cn } from '../../../lib/utils'
 
-export interface InputProps extends /* @vue-ignore */ Omit<InputPrimitiveProps, 'size'> {
+// Extending InputHTMLAttributes or the part's props makes TypeScript fail with TS2590, so only our own props are typed.
+export interface InputProps {
   size?: 'sm' | 'default' | 'lg' | number
   type?: string
   unstyled?: boolean
@@ -20,8 +20,8 @@ const props = withDefaults(defineProps<InputProps>(), {
   size: 'default',
 })
 
-const control = useTemplateRef('control')
-// Vase UI parts that render this component through `as` focus and read the exposed input.
+const control = useTemplateRef<ComponentPublicInstance | HTMLInputElement>('control')
+// The root is the wrapper, so the inner input is exposed for focus and reads.
 const element = computed(() => unrefElement(control) as HTMLInputElement | null | undefined)
 
 defineExpose({ element })
@@ -45,7 +45,7 @@ const inputClass = computed(() => cn(
     ) || undefined"
   >
     <component
-      :is="props.nativeInput ? 'input' : InputPrimitive"
+      :is="(props.nativeInput ? 'input' : InputPrimitive.Input) as Component"
       ref="control"
       data-slot="input"
       v-bind="$attrs"

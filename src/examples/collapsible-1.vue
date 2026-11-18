@@ -11,7 +11,7 @@ const keys = ['4829-1735-6621', '9182-6407-5532', '3051-7924-9018']
 
 <template>
   <Collapsible>
-    <CollapsibleTrigger class="inline-flex items-center gap-2 font-medium text-sm data-panel-open:[&_svg]:rotate-180">
+    <CollapsibleTrigger class="inline-flex items-center gap-2 font-medium text-sm data-open:[&_svg]:rotate-180">
       Show recovery keys
       <ChevronDownIcon class="size-4" />
     </CollapsibleTrigger>

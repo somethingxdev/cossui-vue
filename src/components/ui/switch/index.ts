@@ -1,2 +1,2 @@
 export { default as Switch } from './Switch.vue'
-export { Switch as SwitchPrimitive } from '@vase-ui/vue/switch'
+export * as SwitchPrimitive from '@ui-sdk/vue/switch'

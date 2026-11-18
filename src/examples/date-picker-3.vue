@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CalendarIcon } from '@lucide/vue'
+import { formatDate, todayDate } from '@ui-sdk/vue/date'
 import { shallowRef } from 'vue'
 import { Button } from '../components/ui/button'
 import {
@@ -8,19 +9,18 @@ import {
   DatePickerPopup,
   DatePickerTrigger,
 } from '../components/ui/date-picker'
-import { Field, FieldLabel } from '../components/ui/field'
+import { Field } from '../components/ui/field'
+import { Label } from '../components/ui/label'
 
-const date = shallowRef<Temporal.PlainDate | null>(null)
-const minDate = Temporal.PlainDate.from('1900-01-01')
-const maxDate = Temporal.Now.plainDateISO()
+const date = shallowRef<string | null>(null)
 </script>
 
 <template>
   <Field>
-    <FieldLabel for="date-picker-3-start">
+    <Label for="date-picker-3-start">
       Start date
-    </FieldLabel>
-    <DatePicker v-model:value="date" :min-date="minDate" :max-date="maxDate">
+    </Label>
+    <DatePicker v-model:value="date" min="1900-01-01" :max="todayDate()">
       <DatePickerTrigger
         id="date-picker-3-start"
         :as="Button"
@@ -28,7 +28,7 @@ const maxDate = Temporal.Now.plainDateISO()
         variant="outline"
       >
         <CalendarIcon aria-hidden="true" />
-        {{ date ? date.toLocaleString('en-US', { dateStyle: 'long' }) : 'Pick a date' }}
+        {{ date ? formatDate(date, 'en-US', { dateStyle: 'long' }) : 'Pick a date' }}
       </DatePickerTrigger>
       <DatePickerPopup aria-label="Choose a start date">
         <DatePickerCalendar caption-layout="dropdown" />

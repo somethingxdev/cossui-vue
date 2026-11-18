@@ -2,14 +2,13 @@
 import { BoldIcon, ItalicIcon, UnderlineIcon } from '@lucide/vue'
 import { ToggleGroup, ToggleGroupItem } from '../components/ui/toggle-group'
 import {
+  createTooltipController,
   Tooltip,
-  TooltipCreateHandle,
   TooltipPopup,
-  TooltipProvider,
   TooltipTrigger,
 } from '../components/ui/tooltip'
 
-const tooltipHandle = TooltipCreateHandle<string>()
+const tooltipHandle = createTooltipController<string>()
 
 const items = [
   {
@@ -34,26 +33,24 @@ const items = [
 </script>
 
 <template>
-  <TooltipProvider>
-    <ToggleGroup :default-value="['bold']" multiple>
-      <TooltipTrigger
-        v-for="item in items"
-        :key="item.value"
-        :as="ToggleGroupItem"
-        :aria-label="item.label"
-        class="after:absolute after:left-full after:h-full after:w-1"
-        :handle="tooltipHandle"
-        :payload="item.hint"
-        :value="item.value"
-      >
-        <component :is="item.icon" aria-hidden="true" />
-      </TooltipTrigger>
-    </ToggleGroup>
+  <ToggleGroup :default-value="['bold']" multiple>
+    <TooltipTrigger
+      v-for="item in items"
+      :key="item.value"
+      :as="ToggleGroupItem"
+      :aria-label="item.label"
+      class="after:absolute after:left-full after:h-full after:w-1"
+      :controller="tooltipHandle"
+      :payload="item.hint"
+      :value="item.value"
+    >
+      <component :is="item.icon" aria-hidden="true" />
+    </TooltipTrigger>
+  </ToggleGroup>
 
-    <Tooltip v-slot="{ payload }" :handle="tooltipHandle">
-      <TooltipPopup>
-        <span>{{ payload }}</span>
-      </TooltipPopup>
-    </Tooltip>
-  </TooltipProvider>
+  <Tooltip :controller="tooltipHandle">
+    <TooltipPopup v-slot="{ state }">
+      <span>{{ state.payload }}</span>
+    </TooltipPopup>
+  </Tooltip>
 </template>

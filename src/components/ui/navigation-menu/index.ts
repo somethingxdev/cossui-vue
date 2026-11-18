@@ -1,8 +1,0 @@
-export { default as NavigationMenu } from './NavigationMenu.vue'
-export { default as NavigationMenuContent } from './NavigationMenuContent.vue'
-export { default as NavigationMenuItem } from './NavigationMenuItem.vue'
-export { default as NavigationMenuLink } from './NavigationMenuLink.vue'
-export { default as NavigationMenuList } from './NavigationMenuList.vue'
-export { default as NavigationMenuPopup } from './NavigationMenuPopup.vue'
-export { default as NavigationMenuTrigger } from './NavigationMenuTrigger.vue'
-export { NavigationMenu as NavigationMenuPrimitive } from '@vase-ui/vue/navigation-menu'

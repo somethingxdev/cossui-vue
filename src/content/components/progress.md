@@ -22,23 +22,23 @@ Note: If you render slot content inside `Progress`, you must also include `Progr
 
 ### Progress
 
-Root component. Styled wrapper for `Progress.Root` from Vase UI. When no slot content is provided, automatically renders a track and indicator.
+Root component. Styled wrapper for `Progress` from UI SDK. When no slot content is provided, automatically renders a track and indicator.
 
 ### ProgressTrack
 
-Track container for the progress indicator. Styled wrapper for `Progress.Track` from Vase UI.
+Track container for the progress indicator. Styled wrapper for `ProgressTrack` from UI SDK.
 
 ### ProgressIndicator
 
-Visual indicator showing the current progress. Styled wrapper for `Progress.Indicator` from Vase UI.
+Visual indicator showing the current progress. Styled wrapper for `ProgressIndicator` from UI SDK.
 
 ### ProgressLabel
 
-Label text for the progress bar. Styled wrapper for `Progress.Label` from Vase UI.
+Label text for the progress bar. Styled wrapper for `ProgressLabel` from UI SDK.
 
 ### ProgressValue
 
-Displays the current value. Styled wrapper for `Progress.Value` from Vase UI. Use the default slot (`v-slot="{ formattedValue, value }"`) to customize the rendered text.
+Displays the current value. Styled wrapper for `ProgressValue` from UI SDK. Use the default slot (`v-slot="{ formattedValue, value }"`) to customize the rendered text.
 
 ## Examples
 

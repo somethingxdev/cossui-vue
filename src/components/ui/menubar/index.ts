@@ -1,5 +1,0 @@
-export { default as Menubar } from './Menubar.vue'
-export { default as MenubarContent, default as MenubarPopup } from './MenubarPopup.vue'
-export { default as MenubarTrigger } from './MenubarTrigger.vue'
-export { MenuRoot as MenubarMenu } from '@vase-ui/vue/menu'
-export { Menubar as MenubarPrimitive } from '@vase-ui/vue/menubar'

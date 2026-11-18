@@ -16,7 +16,7 @@ import { Switch } from '@/components/ui/switch'
 
 ### Switch
 
-Styled wrapper for `Switch.Root` from Vase UI with built-in thumb. Size is controlled via the `--thumb-size` CSS variable. Supports `v-model:checked`.
+Styled wrapper for [`Switch`](https://ui-sdk.dev/docs/components/switch) from UI SDK with built-in thumb. Size is controlled via the `--thumb-size` CSS variable. Supports `v-model:checked`.
 
 ## Examples
 

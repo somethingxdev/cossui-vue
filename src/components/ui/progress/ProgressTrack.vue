@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { ProgressTrackProps } from '@vase-ui/vue/progress'
 import type { HTMLAttributes } from 'vue'
-import { Progress as ProgressPrimitive } from '@vase-ui/vue/progress'
+import * as ProgressPrimitive from '@ui-sdk/vue/progress'
 import { cn } from '../../../lib/utils'
+
+type ProgressTrackProps = InstanceType<typeof ProgressPrimitive.ProgressTrack>['$props']
 
 interface Props extends /* @vue-ignore */ ProgressTrackProps {
   class?: HTMLAttributes['class']
@@ -12,10 +13,9 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <ProgressPrimitive.Track
-    data-slot="progress-track"
+  <ProgressPrimitive.ProgressTrack
     :class="cn('block h-1.5 w-full overflow-hidden rounded-full bg-input', props.class)"
   >
     <slot />
-  </ProgressPrimitive.Track>
+  </ProgressPrimitive.ProgressTrack>
 </template>

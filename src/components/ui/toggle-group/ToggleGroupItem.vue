@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { ToggleProps } from '@vase-ui/vue/toggle'
 import type { ToggleVariants } from '../toggle'
 import { computed, inject } from 'vue'
 import { Toggle } from '../toggle'
 import { ToggleGroupContext } from './context'
+
+type ToggleProps = InstanceType<typeof Toggle>['$props']
 
 interface Props extends /* @vue-ignore */ ToggleProps {
   variant?: ToggleVariants['variant']
