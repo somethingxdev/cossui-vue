@@ -5,7 +5,7 @@ import SiteFooter from './SiteFooter.vue'
 const props = defineProps<{
   title: string
   description: string
-  toc?: { id: string, title: string }[]
+  toc?: { id: string, title: string, depth?: number }[]
 }>()
 </script>
 
@@ -53,6 +53,7 @@ const props = defineProps<{
           :key="item.id"
           :href="`#${item.id}`"
           class="text-muted-foreground transition-colors hover:text-foreground"
+          :class="{ 'pl-3': item.depth === 3 }"
         >
           {{ item.title }}
         </a>

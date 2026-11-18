@@ -1,0 +1,171 @@
+---
+preview: avatar-1
+---
+
+## Usage
+
+```ts
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from '@/components/ui/avatar'
+```
+
+```vue
+<Avatar>
+  <AvatarImage src="/avatars/01.png" alt="User avatar" />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
+```
+
+Use `keep-mounted` when the image relies on native lazy loading or an optimized image component. The fallback remains visible while the image loads or if it fails:
+
+```vue
+<Avatar>
+  <AvatarImage
+    src="/avatars/01.png"
+    alt="User avatar"
+    loading="lazy"
+    keep-mounted
+  />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
+```
+
+## Sizing
+
+Every dimension of an avatar comes from one inherited custom property, `--avatar-size`. It defaults to 32px, and the font size, the group overlap, the gap and the initials nudge are all derived from it.
+
+Set it on the avatar, on a group, or on any ancestor:
+
+```vue
+<Avatar class="[--avatar-size:--spacing(12)]">
+…
+</Avatar>
+
+<AvatarGroup class="[--avatar-size:--spacing(6)]">
+…
+</AvatarGroup>
+
+<div class="[--avatar-size:--spacing(10)]">
+  <!-- every avatar below is 40px -->
+</div>
+```
+
+A `size-*` utility still resizes a single avatar, because tailwind-merge replaces the base size utility. It does **not** update `--avatar-size`, so the font size and any group geometry stay at the inherited value. Prefer `--avatar-size` and reach for `size-*` only when you want the box to change and nothing else.
+
+<ComponentPreview name="avatar-3" />
+
+Because the property is inherited, one declaration on a container sizes every avatar inside it.
+
+## API Reference
+
+### Avatar
+
+Root component. Styled wrapper for `Avatar.Root` from Vase UI, round by default and sized from `--avatar-size`.
+
+It declares no props of its own; everything from `Avatar.Root` passes through, including `class` and `as`.
+
+It renders a `<span>`. To make an avatar interactive, use `as` rather than wrapping it:
+
+```vue
+<Avatar as="button" type="button">
+…
+</Avatar>
+
+<Avatar as="a" href="/people/ada">
+…
+</Avatar>
+```
+
+An interactive avatar needs an accessible name. `AvatarImage`'s `alt` supplies one; a fallback-only avatar does not, so add `aria-label`.
+
+### AvatarImage
+
+Image element. Styled wrapper for `Avatar.Image` from Vase UI.
+
+| Prop           | Type      | Default | Description                                                                                |
+| -------------- | --------- | ------- | ------------------------------------------------------------------------------------------ |
+| `keep-mounted` | `boolean` | `false` | Keep the image mounted and let it load in place, for `loading="lazy"` and image components |
+
+| Event                   | Payload              | Description                                                                       |
+| ----------------------- | -------------------- | --------------------------------------------------------------------------------- |
+| `loading-status-change` | `ImageLoadingStatus` | Fired when loading status changes: `"idle"`, `"loading"`, `"loaded"` or `"error"` |
+
+### AvatarFallback
+
+Shown while the image loads or when it fails, and whenever no image is given. Vase UI unmounts it once the image loads.
+
+| Prop    | Type     | Default | Description                                      |
+| ------- | -------- | ------- | ------------------------------------------------ |
+| `delay` | `number` | `0`     | Milliseconds to wait before showing the fallback |
+
+It inherits its font size from the avatar, so it scales automatically. Override it on the fallback when a specific size is needed:
+
+```vue
+<AvatarFallback class="text-[10px]">
+JD
+</AvatarFallback>
+```
+
+### AvatarGroup
+
+Lays out overlapping avatars. Each avatar is masked with a circle matching its neighbour, so the avatars are separated by a **transparent gap rather than a ring**. The stack therefore holds its shape on gradients, images and translucent panels, where a ring tinted with the page background would not.
+
+| Prop      | Type                | Default   | Description                                  |
+| --------- | ------------------- | --------- | -------------------------------------------- |
+| `topmost` | `"first" \| "last"` | `"first"` | Which end of the stack stays a whole circle. |
+
+Geometry is derived from the inherited `--avatar-size`, so sizing a stack is the same gesture as sizing one avatar. Three further properties tune the layout, and all of them inherit:
+
+| Property           | Default                                                   | Description                                                                              |
+| ------------------ | --------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `--avatar-overlap` | `calc(var(--avatar-size) * 0.3)`                          | How far each avatar sits over the previous one.                                          |
+| `--avatar-gap`     | `calc(var(--avatar-size) / 16)`                           | Thickness of the transparent gap.                                                        |
+| `--avatar-nudge`   | `calc((var(--avatar-overlap) + var(--avatar-gap)) * 0.3)` | How far initials shift out of the clipped edge. Set to `0` to centre them geometrically. |
+
+```vue
+<AvatarGroup class="[--avatar-size:--spacing(12)] [--avatar-overlap:--spacing(7)]">
+  …
+</AvatarGroup>
+```
+
+**Constraints worth knowing:**
+
+- Every avatar in a group must be the same size. The mask is positioned from the group's `--avatar-size`, so a per-avatar override misplaces the cut. Set the size on the group.
+- A status dot or badge on a clipped avatar is clipped with it, and is cropped to the circle. Put one on the avatar that stays whole: the first with `topmost="first"`, the last with `topmost="last"`.
+- Browsers without `mask-composite` (Chrome and Edge 111–119) fall back to a plain overlap with no gap. Nothing else degrades.
+
+### AvatarGroupCount
+
+The "+N" chip that ends a group. It is an `Avatar` with a fallback, so it is sized, overlapped and clipped like its neighbours; its label uses `text-muted-foreground`.
+
+```vue
+<AvatarGroup>
+  <Avatar>…</Avatar>
+  <AvatarGroupCount>+2</AvatarGroupCount>
+</AvatarGroup>
+```
+
+## Examples
+
+### Fallback Only
+
+<ComponentPreview name="avatar-2" />
+
+### Different Radius
+
+<ComponentPreview name="avatar-4" />
+
+### Group Avatars
+
+<ComponentPreview name="avatar-5" />
+
+### Last Avatar On Top
+
+Set `topmost="last"` for the conventional order, where the last avatar is the one left intact.
+
+<ComponentPreview name="avatar-16" />
